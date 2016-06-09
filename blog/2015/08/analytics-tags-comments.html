@@ -62,67 +62,67 @@
     </div>
   </nav>
 
+
 <div class="wrapper">
   <div class="content">
     <div class="container container-center">
       <div class="row">
         <div class="col-md-8">
-          <div class="well">
-            <h3 id="dark-version-of-jekyll-clean-theme">Dark version of jekyll-clean theme</h3>
+          <div class="article">
+            <div class="well">
+              <h1><a href="http://www.ashwinnarayan.com/blog/2015/08/analytics-tags-comments">Analytics, tags and comments</a></h1>
+              <div class="post-meta">
+                <div class="post-time">
+                  <!--<i class="fa fa-calendar"></i>-->
+		  Posted on:
+                  <time>01 Aug 2015</time>
+                </div>
+                <ul>
+		  <li>Tags: </li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/jekyll">jekyll</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/analytics">analytics</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/tags">tags</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/comments">comments</a></li>
+                  
+                </ul>
+              </div>
+              <div class="post-content">
+                <div id="toc" class="toc"></div>
+                <h2 id="analytics">Analytics</h2>
 
-<p>This theme was created on top of Jekyll Clean theme by Scotte, you can view the originnal version in action <a href="https://scotte.github.io">on his blog</a>.</p>
+<h4 id="google-analyticshttpwwwgooglecomanalytics"><a href="http://www.google.com/analytics/">Google Analytics</a></h4>
 
-<ul>
-  <li>Get it from <a href="https://github.com/streetturtle/jekyll-clean-dark">github</a>.</li>
-  <li>See the <a href="http://pavelmakhov.com/jekyll-clean-dark">live demo</a>.</li>
-  <li>See it <a href="http://pavelmakhov.com">in action on my own blog</a>.</li>
-</ul>
+<p>To enable Google Analytics create an account <a href="https://analytics.google.com">here</a>. Then add your tracking id in <code class="highlighter-rouge">config.xml</code>, it should look something like <code class="highlighter-rouge">UA-********-1</code></p>
 
-<p>This theme uses some parts of Twitter Bootstrap, which allows it to look nice on a mobile devices using a collapsable nav bar and hiding the<br />
-sidebar.</p>
+<h4 id="yandex-metricahttpmetricayandexcom"><a href="http://metrica.yandex.com">Yandex Metrica</a></h4>
 
-<p>Optionally you can use:</p>
+<p>To enable Yandex Metrica you need to register, create a ‘counter’ and then copy-paste it’s code in <code class="highlighter-rouge">/_includes/yandex-metrika.html</code> file.</p>
 
-<ul>
-  <li><a href="http://disqus.com">Disqus</a> as a comments system;</li>
-  <li><a href="http://www.google.com/analytics/">Google Analyticse</a>;</li>
-  <li><a href="http://metrica.yandex.com">Yandex Metrika</a>;</li>
-  <li>Blog tags.</li>
-</ul>
+<h2 id="tags">Tags</h2>
 
-<p>All these features could be set up in <code class="highlighter-rouge">_config.yml</code>. Also you can have social icons which could lead to your social acounts. Out-of-the box it has: LinkedIn, GitHub, StackOverflow, LastFm, Instagram. You can easily add more by putting svg images in a /css/social folder.</p>
+<p>Using tags in Jekyll is a bit tricky topic, I used this approach: <a href="http://charliepark.org/tags-in-jekyll/">charliepark.org/tags-in-jekyll/</a>. You can read technical details there. To simply use tags provide list of tags in post header:</p>
 
-<h1 id="installation">Installation</h1>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">tags:
+ - jekyll
+ - analytics
+ - tags
+ - comments</code></pre></figure>
 
-<p>If you dont’t have your own blog you can clone this repository and put your articles in a <code class="highlighter-rouge">_posts</code> folder.<br />
-If you already have your own blog then I think you can clone this repository and copy-paste content keeping your <code class="highlighter-rouge">_posts</code> folder.</p>
+<p>And then before pushing your changes to github copy generated folder <code class="highlighter-rouge">/_site/tag</code> in your blog’s root folder, since github pages will not generate it automatically.</p>
 
-<p>After you will have to set up your <code class="highlighter-rouge">_config.yml</code></p>
+<h2 id="comments">Comments</h2>
 
-<h1 id="license">License</h1>
+<p>To enable <a href="http://disqus.com">Disqus</a> register on the site and then just put your name in <code class="highlighter-rouge">_config.xml</code>. Comments could be switched on and off on per post basis, just put <code class="highlighter-rouge">comments: true</code> to enable them.</p>
 
-<p>The content of this theme is distributed and licensed under a<br />
-<a href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 License</a></p>
+                
 
-<blockquote>
-  <p>This license lets others distribute, remix, tweak, and build upon your work,<br />
-even commercially, as long as they credit you for the original creation. This<br />
-is the most accommodating of licenses offered. Recommended for maximum<br />
-dissemination and use of licensed materials.</p>
-</blockquote>
-
-<p>In other words: you can do anything you want with this theme on any site, just please<br />
-provide a link to the original theme on github.</p>
-
-<p>This theme includes the following files which are the properties of their<br />
-respective owners:</p>
-
-<ul>
-  <li>js/bootstrap.min.js - <a href="http://getbootstrap.com">bootstrap</a></li>
-  <li>css/bootstrap.min.css - <a href="http://getbootstrap.com">bootstrap</a></li>
-  <li>js/jquery.min.js - <a href="https://jquery.com">jquery</a></li>
-</ul>
-
+              </div>
+              
+            </div>
           </div>
         </div>
         <div class="col-md-4 hidden-xs">
@@ -183,6 +183,8 @@ respective owners:</p>
         </div>
       </div>
     </div>
+    
+
   </div>
       <footer class="footer-distributed">
       <div class="container">

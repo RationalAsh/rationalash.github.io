@@ -62,67 +62,94 @@
     </div>
   </nav>
 
+
 <div class="wrapper">
   <div class="content">
     <div class="container container-center">
       <div class="row">
         <div class="col-md-8">
-          <div class="well">
-            <h3 id="dark-version-of-jekyll-clean-theme">Dark version of jekyll-clean theme</h3>
+          <div class="article">
+            <div class="well">
+              <h1><a href="http://www.ashwinnarayan.com/blog/2015/11/text-formatting">Text formatting</a></h1>
+              <div class="post-meta">
+                <div class="post-time">
+                  <!--<i class="fa fa-calendar"></i>-->
+		  Posted on:
+                  <time>02 Nov 2015</time>
+                </div>
+                <ul>
+		  <li>Tags: </li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/jekyll">jekyll</a></li>
+                  
+                </ul>
+              </div>
+              <div class="post-content">
+                <div id="toc" class="toc"></div>
+                <p>Some examples of text formating for some common text elements.</p>
 
-<p>This theme was created on top of Jekyll Clean theme by Scotte, you can view the originnal version in action <a href="https://scotte.github.io">on his blog</a>.</p>
+<h1 id="headers">Headers</h1>
 
-<ul>
-  <li>Get it from <a href="https://github.com/streetturtle/jekyll-clean-dark">github</a>.</li>
-  <li>See the <a href="http://pavelmakhov.com/jekyll-clean-dark">live demo</a>.</li>
-  <li>See it <a href="http://pavelmakhov.com">in action on my own blog</a>.</li>
-</ul>
+<h1 id="header1">Header1</h1>
 
-<p>This theme uses some parts of Twitter Bootstrap, which allows it to look nice on a mobile devices using a collapsable nav bar and hiding the<br />
-sidebar.</p>
+<h2 id="header2">Header2</h2>
 
-<p>Optionally you can use:</p>
+<h3 id="header3">Header3</h3>
 
-<ul>
-  <li><a href="http://disqus.com">Disqus</a> as a comments system;</li>
-  <li><a href="http://www.google.com/analytics/">Google Analyticse</a>;</li>
-  <li><a href="http://metrica.yandex.com">Yandex Metrika</a>;</li>
-  <li>Blog tags.</li>
-</ul>
+<h4 id="header4">Header4</h4>
 
-<p>All these features could be set up in <code class="highlighter-rouge">_config.yml</code>. Also you can have social icons which could lead to your social acounts. Out-of-the box it has: LinkedIn, GitHub, StackOverflow, LastFm, Instagram. You can easily add more by putting svg images in a /css/social folder.</p>
+<h1 id="emphasis">Emphasis</h1>
 
-<h1 id="installation">Installation</h1>
+<p>Italics: <code class="highlighter-rouge">*asterisks*</code> -&gt; <em>asterisks</em> or <code class="highlighter-rouge">_underscores_</code> -&gt; <em>underscores</em>.</p>
 
-<p>If you dont’t have your own blog you can clone this repository and put your articles in a <code class="highlighter-rouge">_posts</code> folder.<br />
-If you already have your own blog then I think you can clone this repository and copy-paste content keeping your <code class="highlighter-rouge">_posts</code> folder.</p>
+<p>Bold: <code class="highlighter-rouge">**asterisks**</code> -&gt; <strong>asterisks</strong> or <code class="highlighter-rouge">__underscores__</code> -&gt; <strong>underscores</strong>.</p>
 
-<p>After you will have to set up your <code class="highlighter-rouge">_config.yml</code></p>
+<p>You also can combine them: <code class="highlighter-rouge">**asterisks and _underscores_**</code> -&gt; <strong>asterisks and <em>underscores</em></strong>.</p>
 
-<h1 id="license">License</h1>
+<h1 id="blockquotes-and-notes">Blockquotes and notes</h1>
 
-<p>The content of this theme is distributed and licensed under a<br />
-<a href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 License</a></p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">&gt;Blockquotes</code></pre></figure>
 
 <blockquote>
-  <p>This license lets others distribute, remix, tweak, and build upon your work,<br />
-even commercially, as long as they credit you for the original creation. This<br />
-is the most accommodating of licenses offered. Recommended for maximum<br />
-dissemination and use of licensed materials.</p>
+  <p>Blockquotes</p>
 </blockquote>
 
-<p>In other words: you can do anything you want with this theme on any site, just please<br />
-provide a link to the original theme on github.</p>
+<p>Using very cool <a href="http://kramdown.gettalong.org/quickref.html#block-attributes">feature</a> of kramdown which allows to assign any attribute to a block-level element I’ve added note and warning:</p>
 
-<p>This theme includes the following files which are the properties of their<br />
-respective owners:</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">&gt;Note 
+<span class="o">{</span>: .note<span class="o">}</span></code></pre></figure>
 
-<ul>
-  <li>js/bootstrap.min.js - <a href="http://getbootstrap.com">bootstrap</a></li>
-  <li>css/bootstrap.min.css - <a href="http://getbootstrap.com">bootstrap</a></li>
-  <li>js/jquery.min.js - <a href="https://jquery.com">jquery</a></li>
-</ul>
+<blockquote class="note">
+  <p>Note</p>
+</blockquote>
 
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">&gt;Warning 
+<span class="o">{</span>: .note .warning<span class="o">}</span></code></pre></figure>
+
+<blockquote class="note warning">
+  <p>Warning</p>
+</blockquote>
+
+<h1 id="keyboard-buttons">Keyboard buttons</h1>
+
+<p>In case you need to show some keyboard shortcut like <code class="key highlighter-rouge">Ctrl</code>+<code class="key highlighter-rouge">A</code> use following construction:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="sb">`</span>Ctrl<span class="sb">`</span><span class="o">{</span>: .key<span class="o">}</span>+<span class="sb">`</span>A<span class="sb">`</span><span class="o">{</span>:.key<span class="o">}</span></code></pre></figure>
+
+<p>Example of keyboard shortcut in terminal:</p>
+
+<p><code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">A</code> = Move cursor to beginning of line<br />
+<code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">E</code> = Move cursor to end of line<br />
+<code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">C</code> = kills the current process.<br />
+<code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">Z</code> = sends the current process to the background.<br />
+<code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">D</code> = logs you out.<br />
+<code class="key highlighter-rouge">Ctrl</code> + <code class="key highlighter-rouge">R</code> = finds the last command matching the entered letters.</p>
+
+                
+
+              </div>
+              
+            </div>
           </div>
         </div>
         <div class="col-md-4 hidden-xs">
@@ -183,6 +210,8 @@ respective owners:</p>
         </div>
       </div>
     </div>
+    
+
   </div>
       <footer class="footer-distributed">
       <div class="container">

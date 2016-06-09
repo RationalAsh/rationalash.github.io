@@ -7,40 +7,6 @@
 		<atom:link href="http://www.ashwinnarayan.com/blog/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
-				<title>Share buttons</title>
-				<description>&lt;h1 id=&quot;share-buttons&quot;&gt;Share buttons&lt;/h1&gt;
-
-&lt;p&gt;This theme comes with built-in share buttons. You can see them in the bottom f this post.&lt;br /&gt;
-To turn them on in the header of your post add:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yml&quot; data-lang=&quot;yml&quot;&gt;&lt;span class=&quot;s&quot;&gt;share&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;If you want to disable some of them - go to &lt;strong&gt;_config.yml&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yml&quot; data-lang=&quot;yml&quot;&gt;&lt;span class=&quot;s&quot;&gt;share&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;facebook&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;twitter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;gplus&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;linkedin&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;pinterest&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h1 id=&quot;add-new-buttons&quot;&gt;Add new buttons&lt;/h1&gt;
-
-&lt;p&gt;To add new buttons:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;add icon name in &lt;strong&gt;_config.yml&lt;/strong&gt;;&lt;/li&gt;
-  &lt;li&gt;add section in &lt;strong&gt;_includes/share.html&lt;/strong&gt;;&lt;/li&gt;
-  &lt;li&gt;add styles in &lt;strong&gt;css/theme.css&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-				<pubDate>Sun, 15 May 2016 21:55:06 +0530</pubDate>
-				<link>http://www.ashwinnarayan.com/blog/2016/05/share-buttons</link>
-				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2016/05/share-buttons</guid>
-			</item>
-		
-			<item>
 				<title>Unsupervised Learning: Self Organizing Maps</title>
 				<description>&lt;div dir=&quot;ltr&quot; style=&quot;text-align: left;&quot; trbidi=&quot;on&quot;&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;Most machine learning techniques like logistic regression, linear regression, and neural networks do something that is called supervised learning. This means that we need to supply examples of &quot;correct&quot; data to the machine learning algorithm for it to learn the patterns in the data. The goal of unsupervised learning is to automatically find clusters of similar data in a huge unlabeled set of data. Humans can do this easily with some types of data. If you saw a 2D scatter plot of points you&#39;d easily be able to identify clusters in the data by visual examination. I&#39;ve always considered unsupervised learning cooler than supervised mostly because it feels like that&#39;s what a general AI should be able to do.&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;Self organizing maps (SOMs) are one technique used to find these clusters in the data. A self organizing map looks a little similar to a neural network at first. But the kind of operation that it does is very different. An SOM has a lattice of nodes. This lattice is usually one dimensional(arranged in a linear array) or 2 dimensional (arranged in a matrix). As the self organizing map is trained, the lattice of will be partitioned into separate classes. Since one of the main uses of self organizing maps is visualizing higher dimensional data, the lattice is is rarely more than two dimensions wide. The clusters in the higher dimensional data can be visualized on the 2D lattice. &amp;nbsp;Associated with each of the nodes in the lattice is a weight vector that has the same dimension as the input data vectors. To train the self organizing map we take each element in the data set and find the node with the weight that&#39;s closest to the element (Using the euclidean distance as the measure of closeness. Other measures can be used too.). Then we define a neighbourhood of nodes that are &#39;close&#39; to this best matching unit and we adjust the weights of this entire neighbourhood of weights to be a little closer to the value of the element from the dataset. How much the weights are adjusted depends on the neighbour falloff function and on the learning rate. This can be expressed in one simple equation.&lt;br /&gt;$$W_{uv}(t+1) = W_{uv}(t)&amp;nbsp;+ \Omega (u,v,t) \alpha (t)[x_n - W_{uv}(t)]&amp;nbsp;$$&lt;br /&gt;In each iteration, the learning rate and the size of the neighbourhood function is reduced by a small amount. The neighbourhood size is initially set to a large value. This allows the algorithm to initially affect the weights on a global scale and then over time adjust smaller and smaller regions of the map to train it.&lt;br /&gt;&lt;br /&gt;&lt;script src=&quot;https://gist.github.com/RationalAsh/8c2c6cf4fde3834550a91da2ab95394b.js&quot;&gt;&lt;/script&gt;&lt;br /&gt;&lt;br /&gt;In my implementation I used a Gaussian neighbourhood function whose variance decayed exponentially. The learning rate started off at 0.1 and decayed exponentially from there.&lt;br /&gt;&lt;br /&gt;To check my implementation, I tested something that is a common use for SOMs. Clustering colors in an RGB color space. Colors are easy to visualize and I thought it would make a good demo. I first generated a random data set of bluish, reddish, greenish and dark bluish colors.&lt;br /&gt;&lt;br /&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;https://3.bp.blogspot.com/--qTzM7ansnA/VvtX29YCZCI/AAAAAAAAJQ8/loHqT6d-RF0WhE2bK7bkgzzrrX7jRqdOw/s1600/som_colors.png&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;492&quot; src=&quot;https://3.bp.blogspot.com/--qTzM7ansnA/VvtX29YCZCI/AAAAAAAAJQ8/loHqT6d-RF0WhE2bK7bkgzzrrX7jRqdOw/s640/som_colors.png&quot; width=&quot;640&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;A random sampling of 4 different colors for the dataset.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;I initialized the weights randomly and started the training. For this particular experiment I used a 2D 50x50 lattice of nodes. Since each node has a weight that is a 3 dimensional vector that represents a color, we can visualize the SOM node lattice as an RGB image. Stacking together the weight visualization after each epoch (One pass through the training set) of training gave me this really beautiful looking animation! :D&lt;br /&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://i.imgur.com/abO2QQe.gif&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://i.imgur.com/abO2QQe.gif&quot; height=&quot;640&quot; width=&quot;640&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;Animation that shows the self organizing map after each epoch of training.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&amp;nbsp;You can clearly see the different clusters of color slowly resolving as the training happens. The initial changes are more global due to the large neighbourhood. But as the training progresses the adjustments to the weights become more and more local. There is also a very nice separation of the different colors that were present in the first image. You can see that the brighter colors seem to be congregating towards the top of the image and the darker colors towards the bottom. The darkest blue (maybe even a little black) ended up in the bottom left corner surrounded by the darker hues of red, green and blue.&lt;br /&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;https://3.bp.blogspot.com/-YZi_65gGP8c/Vvtq5aBCXvI/AAAAAAAAJRM/7ZgSUZ8JFSwOx9WHaoOzXHVFaQ7uw55qQ/s1600/figure_30.png&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;640&quot; src=&quot;https://3.bp.blogspot.com/-YZi_65gGP8c/Vvtq5aBCXvI/AAAAAAAAJRM/7ZgSUZ8JFSwOx9WHaoOzXHVFaQ7uw55qQ/s640/figure_30.png&quot; width=&quot;640&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;The final map after 30 epochs of training.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
@@ -66,35 +32,6 @@ To turn them on in the header of your post add:&lt;/p&gt;
 			</item>
 		
 			<item>
-				<title>Jekyll Dark Clean Theme</title>
-				<description>&lt;p&gt;Here is a sample post for Jekyll-Clean-Dark theme.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Get it from &lt;a href=&quot;https://github.com/streetturtle/jekyll-clean-dark&quot;&gt;github&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;See the &lt;a href=&quot;http://pavelmakhov.com/jekyll-clean-dark&quot;&gt;live demo&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;See it &lt;a href=&quot;http://pavelmakhov.com&quot;&gt;in action on my blog&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This theme was created on top of &lt;a href=&quot;https://scotte.github.io&quot;&gt;Jekyll Clean theme&lt;/a&gt; by Scotte.&lt;/p&gt;
-
-&lt;p&gt;This theme uses some parts of Twitter Bootstrap, which allows it looks nice on a mobile devices using a collapsable nav bar and hiding the sidebar.&lt;/p&gt;
-
-&lt;p&gt;Here how it looks like on some portable devices:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://www.ashwinnarayan.com/blog/images/iphone_portrait.PNG&quot; alt=&quot;My helpful screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;em&gt;iPhone 5 portrait&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://www.ashwinnarayan.com/blog/images/iphone_landscape.PNG&quot; alt=&quot;My helpful screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;em&gt;iPhone 5 landscape&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://www.ashwinnarayan.com/blog/images/ipad_portrait.PNG&quot; alt=&quot;My helpful screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;em&gt;iPad mini portrait&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://www.ashwinnarayan.com/blog/images/ipad_landscape.PNG&quot; alt=&quot;My helpful screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;em&gt;iPad mini landscape&lt;/em&gt;&lt;/p&gt;
-</description>
-				<pubDate>Tue, 01 Dec 2015 21:55:06 +0530</pubDate>
-				<link>http://www.ashwinnarayan.com/blog/2015/12/jekyll-clean-theme</link>
-				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2015/12/jekyll-clean-theme</guid>
-			</item>
-		
-			<item>
 				<title>Prime Spirals in Python</title>
 				<description>&lt;div dir=&quot;ltr&quot; style=&quot;text-align: left;&quot; trbidi=&quot;on&quot;&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;iframe allowfullscreen=&quot;&quot; class=&quot;YOUTUBE-iframe-video&quot; data-thumbnail-src=&quot;https://i.ytimg.com/vi/iFuR97YcSLM/0.jpg&quot; frameborder=&quot;0&quot; height=&quot;266&quot; src=&quot;https://www.youtube.com/embed/iFuR97YcSLM?feature=player_embedded&quot; width=&quot;320&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;br /&gt;I watched this really fascinating video on prime spirals recently and decided to see if I could write my own code to generate them. It&#39;s not terribly efficient but it works! Code is &lt;a href=&quot;https://gist.github.com/RationalAsh/88276a1043f63af2db14&quot; target=&quot;_blank&quot;&gt;on github&lt;/a&gt;! :D&lt;br /&gt;&lt;br /&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-YjEXAevkes8/Vk9MzS2I4mI/AAAAAAAAHJA/MzEPhZIKZnM/s1600/prime_spiral.png&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: 1em; margin-right: 1em;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;328&quot; src=&quot;http://4.bp.blogspot.com/-YjEXAevkes8/Vk9MzS2I4mI/AAAAAAAAHJA/MzEPhZIKZnM/s640/prime_spiral.png&quot; width=&quot;640&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;br /&gt;&lt;/div&gt;</description>
 				<pubDate>Fri, 20 Nov 2015 22:22:00 +0530</pubDate>
@@ -111,114 +48,19 @@ To turn them on in the header of your post add:&lt;/p&gt;
 			</item>
 		
 			<item>
-				<title>Text formatting</title>
-				<description>&lt;p&gt;Some examples of text formating for some common text elements.&lt;/p&gt;
-
-&lt;h1 id=&quot;headers&quot;&gt;Headers&lt;/h1&gt;
-
-&lt;h1 id=&quot;header1&quot;&gt;Header1&lt;/h1&gt;
-
-&lt;h2 id=&quot;header2&quot;&gt;Header2&lt;/h2&gt;
-
-&lt;h3 id=&quot;header3&quot;&gt;Header3&lt;/h3&gt;
-
-&lt;h4 id=&quot;header4&quot;&gt;Header4&lt;/h4&gt;
-
-&lt;h1 id=&quot;emphasis&quot;&gt;Emphasis&lt;/h1&gt;
-
-&lt;p&gt;Italics: &lt;code class=&quot;highlighter-rouge&quot;&gt;*asterisks*&lt;/code&gt; -&amp;gt; &lt;em&gt;asterisks&lt;/em&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;_underscores_&lt;/code&gt; -&amp;gt; &lt;em&gt;underscores&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Bold: &lt;code class=&quot;highlighter-rouge&quot;&gt;**asterisks**&lt;/code&gt; -&amp;gt; &lt;strong&gt;asterisks&lt;/strong&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;__underscores__&lt;/code&gt; -&amp;gt; &lt;strong&gt;underscores&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;You also can combine them: &lt;code class=&quot;highlighter-rouge&quot;&gt;**asterisks and _underscores_**&lt;/code&gt; -&amp;gt; &lt;strong&gt;asterisks and &lt;em&gt;underscores&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h1 id=&quot;blockquotes-and-notes&quot;&gt;Blockquotes and notes&lt;/h1&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;gt;Blockquotes&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Blockquotes&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Using very cool &lt;a href=&quot;http://kramdown.gettalong.org/quickref.html#block-attributes&quot;&gt;feature&lt;/a&gt; of kramdown which allows to assign any attribute to a block-level element I’ve added note and warning:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;gt;Note 
-&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;: .note&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;blockquote class=&quot;note&quot;&gt;
-  &lt;p&gt;Note&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&amp;gt;Warning 
-&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;: .note .warning&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;blockquote class=&quot;note warning&quot;&gt;
-  &lt;p&gt;Warning&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;keyboard-buttons&quot;&gt;Keyboard buttons&lt;/h1&gt;
-
-&lt;p&gt;In case you need to show some keyboard shortcut like &lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt;+&lt;code class=&quot;key highlighter-rouge&quot;&gt;A&lt;/code&gt; use following construction:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;Ctrl&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;: .key&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;+&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;A&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;:.key&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Example of keyboard shortcut in terminal:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;A&lt;/code&gt; = Move cursor to beginning of line&lt;br /&gt;
-&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;E&lt;/code&gt; = Move cursor to end of line&lt;br /&gt;
-&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;C&lt;/code&gt; = kills the current process.&lt;br /&gt;
-&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;Z&lt;/code&gt; = sends the current process to the background.&lt;br /&gt;
-&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;D&lt;/code&gt; = logs you out.&lt;br /&gt;
-&lt;code class=&quot;key highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; + &lt;code class=&quot;key highlighter-rouge&quot;&gt;R&lt;/code&gt; = finds the last command matching the entered letters.&lt;/p&gt;
-</description>
-				<pubDate>Mon, 02 Nov 2015 21:55:06 +0530</pubDate>
-				<link>http://www.ashwinnarayan.com/blog/2015/11/text-formatting</link>
-				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2015/11/text-formatting</guid>
-			</item>
-		
-			<item>
-				<title>Installation</title>
-				<description>&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
-
-&lt;p&gt;If you dont’t have your own blog you can clone this repository and put your articles in a &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder.&lt;br /&gt;
-If you already have your own blog then I think you can clone this repository and copy-paste content keeping your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;p&gt;After you will have to set up your &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;license&quot;&gt;License&lt;/h2&gt;
-
-&lt;p&gt;The content of this theme is distributed and licensed under a &lt;a href=&quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;&gt;Creative Commons Attribution 4.0 License&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;This license lets others distribute, remix, tweak, and build upon your work,&lt;br /&gt;
-even commercially, as long as they credit you for the original creation. This&lt;br /&gt;
-is the most accommodating of licenses offered. Recommended for maximum&lt;br /&gt;
-dissemination and use of licensed materials.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In other words: you can do anything you want with this theme on any site, just please&lt;br /&gt;
-provide a link to the original theme on github.&lt;/p&gt;
-
-&lt;p&gt;This theme includes the following files which are the properties of their&lt;br /&gt;
-respective owners:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;js/bootstrap.min.js - &lt;a href=&quot;http://getbootstrap.com&quot;&gt;bootstrap&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;css/bootstrap.min.css - &lt;a href=&quot;http://getbootstrap.com&quot;&gt;bootstrap&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;js/jquery.min.js - &lt;a href=&quot;https://jquery.com&quot;&gt;jquery&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-				<pubDate>Sun, 01 Nov 2015 21:55:06 +0530</pubDate>
-				<link>http://www.ashwinnarayan.com/blog/2015/11/installation</link>
-				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2015/11/installation</guid>
-			</item>
-		
-			<item>
 				<title>Simulating a Double Pendulum in Mathematica</title>
 				<description>&lt;div dir=&quot;ltr&quot; style=&quot;text-align: left;&quot; trbidi=&quot;on&quot;&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;I&#39;ve been playing around with Mathematica&#39;s Non-Linear Control Systems toolbox over the past few days and it&#39;s been brilliant! One of the first systems that I tried to simulate is the double pendulum since it&#39;s such a commonly used sample problem in non-linear controls.&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;The first step is to write down the total kinetic and potential energies of the system and find the Lagrangian. Once you have that, you just need to run the Lagrangian through Mathematica&#39;s EulerEquations function and then set up a non-linear state space model using the differential equations.&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-IJGBfdq3hRA/Vh9nrBVyg8I/AAAAAAAAGh4/ssi2K1It4cY/s1600/dpend_blgopost1.PNG&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: 1em; margin-right: 1em;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;640&quot; src=&quot;http://4.bp.blogspot.com/-IJGBfdq3hRA/Vh9nrBVyg8I/AAAAAAAAGh4/ssi2K1It4cY/s640/dpend_blgopost1.PNG&quot; width=&quot;560&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;Once you have the system model it&#39;s really simple to get the response and make a simple simulation.&lt;/div&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-bvBuKzQSno0/Vh9oblK45dI/AAAAAAAAGiA/XVOhrHmf0uA/s1600/dpend_blgopost2.PNG&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: 1em; margin-right: 1em;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;228&quot; src=&quot;http://4.bp.blogspot.com/-bvBuKzQSno0/Vh9oblK45dI/AAAAAAAAGiA/XVOhrHmf0uA/s640/dpend_blgopost2.PNG&quot; width=&quot;640&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;And out pops a wonderful demonstration of chaos! Here are are three simulations with slightly different initial conditions showing diverging trajectories.&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-rADFQApLTiM/Vh9oqQ7ut2I/AAAAAAAAGiI/gIeG6HlQbJM/s1600/dpend_sim.gif&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;320&quot; src=&quot;http://4.bp.blogspot.com/-rADFQApLTiM/Vh9oqQ7ut2I/AAAAAAAAGiI/gIeG6HlQbJM/s320/dpend_sim.gif&quot; width=&quot;266&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;Initial conditions: {160, -160}&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://1.bp.blogspot.com/-1eUjsWkxzAs/ViB1uvAOUbI/AAAAAAAAGjE/nb0J_JoykZo/s1600/dpend_sim2.gif&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;320&quot; src=&quot;http://1.bp.blogspot.com/-1eUjsWkxzAs/ViB1uvAOUbI/AAAAAAAAGjE/nb0J_JoykZo/s320/dpend_sim2.gif&quot; width=&quot;266&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;Initial Conditions: {161, -160}&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br /&gt;&lt;table align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;tr-caption-container&quot; style=&quot;margin-left: auto; margin-right: auto; text-align: center;&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-K9Vvt701QBg/ViC89F058BI/AAAAAAAAGjY/9PKmVkL_bvk/s1600/dpend_sim2.gif&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;320&quot; src=&quot;http://4.bp.blogspot.com/-K9Vvt701QBg/ViC89F058BI/AAAAAAAAGjY/9PKmVkL_bvk/s320/dpend_sim2.gif&quot; width=&quot;266&quot; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;tr-caption&quot; style=&quot;text-align: center;&quot;&gt;Initial Conditions: {161,-161}&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br /&gt;&lt;br /&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;The next thing I tested was whether I could make a simple controller to stabilize this double pendulum pointing straight up. I went with a standard Linear Quadratic regulator. In this simulation there is only one actuator at the elbow joint. So this is also an example of an underactuated robotic system. Works great! :D&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;a href=&quot;http://4.bp.blogspot.com/-hGoCN1Jex2c/Vh9pJxvo-yI/AAAAAAAAGiU/2BZg75LI5EI/s1600/dpend_stable.gif&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: 1em; margin-right: 1em;&quot;&gt;&lt;img border=&quot;0&quot; height=&quot;320&quot; src=&quot;http://4.bp.blogspot.com/-hGoCN1Jex2c/Vh9pJxvo-yI/AAAAAAAAGiU/2BZg75LI5EI/s320/dpend_stable.gif&quot; width=&quot;266&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;/div&gt;</description>
 				<pubDate>Thu, 15 Oct 2015 14:32:00 +0530</pubDate>
 				<link>http://www.ashwinnarayan.com/blog/2015/10/simulating-double-pendulum-in</link>
 				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2015/10/simulating-double-pendulum-in</guid>
+			</item>
+		
+			<item>
+				<title>Simulating Mechanical Systems in Mathematica</title>
+				<description>&lt;div dir=&quot;ltr&quot; style=&quot;text-align: left;&quot; trbidi=&quot;on&quot;&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;I&#39;ve been trying a lot of different software for simulating mechanical systems for my project. By far, the most fun I&#39;ve had is when I was simulating it on Mathematica. Mathematica is a seriously cool piece of software. I got a simulation of the simple pendulum up and running almost 3 times faster than I did when I was working with Python and Matplotlib. Although, to be fair, the time I did it in Python was the first time I was doing the simulation. So I was learning about how to do the simulation as well as trying to make it. So that might have affected the amount of time I took.&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;a href=&quot;http://1.bp.blogspot.com/-aExL2TP7TEg/VhngQrIbPnI/AAAAAAAAGcY/94e_Ep1oMXc/s1600/SimplePendulum.jpg&quot; imageanchor=&quot;1&quot; style=&quot;margin-left: 1em; margin-right: 1em;&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://1.bp.blogspot.com/-aExL2TP7TEg/VhngQrIbPnI/AAAAAAAAGcY/94e_Ep1oMXc/s1600/SimplePendulum.jpg&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;separator&quot; style=&quot;clear: both; text-align: center;&quot;&gt;&lt;iframe width=&quot;320&quot; height=&quot;266&quot; class=&quot;YOUTUBE-iframe-video&quot; data-thumbnail-src=&quot;https://i.ytimg.com/vi/2Wv9EApnTzE/0.jpg&quot; src=&quot;https://www.youtube.com/embed/2Wv9EApnTzE?feature=player_embedded&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;br /&gt;&lt;/div&gt;&lt;/div&gt;</description>
+				<pubDate>Sun, 11 Oct 2015 09:38:00 +0530</pubDate>
+				<link>http://www.ashwinnarayan.com/blog/2015/10/simulating-mechanical-systems-in</link>
+				<guid isPermaLink="true">http://www.ashwinnarayan.com/blog/2015/10/simulating-mechanical-systems-in</guid>
 			</item>
 		
 	</channel>

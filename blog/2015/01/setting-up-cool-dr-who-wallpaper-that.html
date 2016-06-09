@@ -1,0 +1,247 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scientia Potestas Est</title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://www.ashwinnarayan.com/blog/js/jquery.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/bootstrap.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/header.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/toc.js"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <link href="http://www.ashwinnarayan.com/blog/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/theme.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/syntax.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://www.ashwinnarayan.com/blog/">Scientia Potestas Est</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+	  <li><a href="http://www.ashwinnarayan.com">Ashwin</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/">/home</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/archive.html">/archive</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/tags.html">/tags</a></li>
+          <!--<li><a href="http://www.ashwinnarayan.com/blog/about.html">/about</a></li>-->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<div class="wrapper">
+  <div class="content">
+    <div class="container container-center">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="article">
+            <div class="well">
+              <h1><a href="http://www.ashwinnarayan.com/blog/2015/01/setting-up-cool-dr-who-wallpaper-that">Setting Up a Cool Dr. Who Wallpaper That Changes Every Hour on Linux</a></h1>
+              <div class="post-meta">
+                <div class="post-time">
+                  <!--<i class="fa fa-calendar"></i>-->
+		  Posted on:
+                  <time>05 Jan 2015</time>
+                </div>
+                <ul>
+		  <li>Tags: </li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/cool stuff">cool stuff</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/linux">linux</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/technical">technical</a></li>
+                  
+                </ul>
+              </div>
+              <div class="post-content">
+                <div id="toc" class="toc"></div>
+                <div dir="ltr" style="text-align: left;" trbidi="on">I came across this really cool idea by someone on reddit to take this awesome wallpaper of the 12 regenerations of the doctor and highlight each Doctor by the hour. This is easy enough to do on Windows which has wallpapers which can change every <x> minutes. Being a user of linux, I was interested in trying to get a similar thing to work on linux.</x><br /><br />First here is the set of all the wallpapers.<br /><br /><a href="https://imgur.com/a/av5TP">https://imgur.com/a/av5TP</a><br /><br />Download the wallpapers and put it all in a folder somewhere on your system. Say you put it in /home/ash/Pictures/whopaper/<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-cf3pZbIjsKw/VKq0xoCJ-jI/AAAAAAAACMw/kqFE-7MY7j8/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A27%3A19%2BIST%2B2015.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="124" src="http://3.bp.blogspot.com/-cf3pZbIjsKw/VKq0xoCJ-jI/AAAAAAAACMw/kqFE-7MY7j8/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A27%3A19%2BIST%2B2015.png" width="640" /></a></div><br /><br />Rename each picture so that the filename corresponds the the regeneration number. The first doctor's highlighted picture should be named 01.jpg and the second doctor's should be named 02.jpg and so on till 12.jpg.<br /><br />Then set up a cronjob that is executed every hour that checks the hour on the clock and sets the background to that. For doing this I installed a program called "feh" (sudo apt-get install feh) which allows me to set my desktop wallpaper from the terminal. I also installed a program called gnome-schedule (sudo apt-get install gnome-schedule) which allows me to easily edit the crontab file.<br /><br />Run gnome-schedule and click on "New" to add a new cronjob. Select "A task that launches recurrently". Add a short description (like "Cool Doctor Who Wallpaper" and in the command field enter the following command:<br /><br />env DISPLAY=:0 /usr/bin/feh --bg-scale "/home/rationalash/Pictures/Wallpapers/DRWHO/$(date +\%I).jpg"&gt;&gt;sys.log<br /><br /><b>Replace the path to the wallpaper in the command to the folder in which you saved the wallpapers.</b><br /><br />Under the &nbsp;"Time &amp; Date" section select "Basic" and set the task to run every hour.<br /><br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-_2VTWO7LVp8/VKq1U9kG-gI/AAAAAAAACM4/Da902jC_JXQ/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A30%3A01%2BIST%2B2015.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="510" src="http://4.bp.blogspot.com/-_2VTWO7LVp8/VKq1U9kG-gI/AAAAAAAACM4/Da902jC_JXQ/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A30%3A01%2BIST%2B2015.png" width="640" /></a></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">And that's it! Now if you don't keep your computer on all the time the wall paper might be wrong for some time because the cronjob only runs every hour. If you want to be sure that the wallpaper is always the same as the hour on the clock even if your turn your computer on a lot edit the frequency of the cronjob so that it runs more often. (Say once a minute). &nbsp;The wrong wallpaper won't be there for longer than a minute.</div><br /></div>
+                
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 hidden-xs">
+          <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
+    
+    <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
+    
+    <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
+    
+    <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
+    
+    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul>
+    
+      <li><a href="/blog/tag/opencv">opencv</a></li>
+    
+      <li><a href="/blog/tag/programming">programming</a></li>
+    
+      <li><a href="/blog/tag/technical">technical</a></li>
+    
+      <li><a href="/blog/tag/free will">free will</a></li>
+    
+      <li><a href="/blog/tag/thoughts">thoughts</a></li>
+    
+      <li><a href="/blog/tag/philosophy">philosophy</a></li>
+    
+      <li><a href="/blog/tag/atheism">atheism</a></li>
+    
+      <li><a href="/blog/tag/linux">linux</a></li>
+    
+      <li><a href="/blog/tag/blogging">blogging</a></li>
+    
+      <li><a href="/blog/tag/web">web</a></li>
+    
+      <li><a href="/blog/tag/robotics">robotics</a></li>
+    
+      <li><a href="/blog/tag/inverse kinematics">inverse kinematics</a></li>
+    
+      <li><a href="/blog/tag/robotic arm">robotic arm</a></li>
+    
+      <li><a href="/blog/tag/boiling water">boiling water</a></li>
+    
+      <li><a href="/blog/tag/coffee">coffee</a></li>
+    
+      <li><a href="/blog/tag/fire">fire</a></li>
+    
+      <li><a href="/blog/tag/random stuff">random stuff</a></li>
+    
+      <li><a href="/blog/tag/electric kettle">electric kettle</a></li>
+    
+      <li><a href="/blog/tag/electronics">electronics</a></li>
+    
+      <li><a href="/blog/tag/fpga">fpga</a></li>
+    
+      <li><a href="/blog/tag/fun">fun</a></li>
+    
+      <li><a href="/blog/tag/cool stuff">cool stuff</a></li>
+    
+      <li><a href="/blog/tag/arduino">arduino</a></li>
+    
+      <li><a href="/blog/tag/productivity">productivity</a></li>
+    
+      <li><a href="/blog/tag/vga">vga</a></li>
+    
+      <li><a href="/blog/tag/python">python</a></li>
+    
+      <li><a href="/blog/tag/July 18">July 18</a></li>
+    
+      <li><a href="/blog/tag/maker faire">maker faire</a></li>
+    
+      <li><a href="/blog/tag/2015 at 10:24PM">2015 at 10:24PM</a></li>
+    
+      <li><a href="/blog/tag/math">math</a></li>
+    
+      <li><a href="/blog/tag/Mathematica">Mathematica</a></li>
+    
+      <li><a href="/blog/tag/machine learning">machine learning</a></li>
+    
+      <li><a href="/blog/tag/star wars">star wars</a></li>
+    
+  </ul>
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+      <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Ashwin Narayan &copy; 2016</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="RationalAsh on Github" href="https://github.com/RationalAsh" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="http://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="http://lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/blog/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+	  <p><a href="https://github.com/streetturtle/jekyll-clean-dark">Jekyll Clean Dark Theme</a> by Pavel Makhov</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+</div>

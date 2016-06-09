@@ -1,0 +1,253 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scientia Potestas Est</title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://www.ashwinnarayan.com/blog/js/jquery.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/bootstrap.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/header.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/toc.js"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <link href="http://www.ashwinnarayan.com/blog/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/theme.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/syntax.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://www.ashwinnarayan.com/blog/">Scientia Potestas Est</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+	  <li><a href="http://www.ashwinnarayan.com">Ashwin</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/">/home</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/archive.html">/archive</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/tags.html">/tags</a></li>
+          <!--<li><a href="http://www.ashwinnarayan.com/blog/about.html">/about</a></li>-->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<div class="wrapper">
+  <div class="content">
+    <div class="container container-center">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="article">
+            <div class="well">
+              <h1><a href="http://www.ashwinnarayan.com/blog/2015/02/vga-output-from-fpga">VGA Output from an FPGA</a></h1>
+              <div class="post-meta">
+                <div class="post-time">
+                  <!--<i class="fa fa-calendar"></i>-->
+		  Posted on:
+                  <time>02 Feb 2015</time>
+                </div>
+                <ul>
+		  <li>Tags: </li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/electronics">electronics</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/cool stuff">cool stuff</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/vga">vga</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/fun">fun</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/technical">technical</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/fpga">fpga</a></li>
+                  
+                </ul>
+              </div>
+              <div class="post-content">
+                <div id="toc" class="toc"></div>
+                <div dir="ltr" style="text-align: left;" trbidi="on">So after the simple 8 bit counter on the fpga I decided to get started with generating VGA output from my FPGA. Because that seemed to be a reasonably simple yet really cool looking project. Initially I thought I'd go the cheap way and solder up my own VGA circuit. But I just ended up wasting a lot of time and effort to get a really substandard circuit that would die on me all the time. So I got myself one of these <a href="http://numato.com/fpga-boards/expansion-modules/vga-display-module.html" target="_blank">VGA modules</a> from the Numato Labs website.<br /><br /><div class="separator" style="clear: both; text-align: center;"></div><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-qc5DyVlVPEw/VM9ge2Rae-I/AAAAAAAACN8/XhqjqPt9QSM/s1600/fpga_vga.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="480" src="http://1.bp.blogspot.com/-qc5DyVlVPEw/VM9ge2Rae-I/AAAAAAAACN8/XhqjqPt9QSM/s1600/fpga_vga.jpg" width="640" /></a></div><br /><br />First a bit about VGA signals. VGA was originally intended to work with CRT monitors. So the standard was built around the working of a CRT monitor. These type of monitors use a&nbsp;<a href="https://en.wikipedia.org/wiki/Cathode_ray_tube" target="_blank">Cathode Ray Tube</a>(CRT). Inside every CRT is an electron gun that produces a beam of really fast electrons. Electric fields are used to deflect this beam so that it can fall on different positions on a screen. The screen has dots(pixels) with phosphors that glow when hit by electrons and when all of these dots glow.<br /><br />CRT monitors build up an image by scanning this electron beam horizontally across the screen in one line, then moving the beam a short distance downward and scanning again and again. The image is built up line by line.<br /><br />So a VGA signal has two clocks called Vertical Sync (VS) and Horizontal Sync (HS). The HS pulses every time the screen starts scanning a new line. And the VS pulses every time the whole screen is scanned once. For more details on VGA signals, visit <a href="http://martin.hinner.info/vga/vga.html" target="_blank">this page</a>.<br /><br />The R, G and B, signals have nominal values of 0.7 volts. So 0 volts on the R line means no Red component and 0.7 volts means maximum red component. The inputs have impedances of 75 ohms.<br /><br />I took a look at the schematic of the VGA module.<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-7KMcvArF4qU/VMyapCRTvPI/AAAAAAAACNk/CgLWwhgp06Q/s1600/vgasch.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="362" src="http://4.bp.blogspot.com/-7KMcvArF4qU/VMyapCRTvPI/AAAAAAAACNk/CgLWwhgp06Q/s1600/vgasch.png" width="640" /></a></div><br />You'll notice that there are three pins connecting to the red and green input signal and 2 connecting to the blue input signal. The pins are connected through resistors whose values rise exponentially. This is a simple way to perform DAC. I decided to work through the equations to see what input voltage levels were available to me.<br /><br />For the Red and Green channels, I took the value of the smallest resistor as $R$ and the input voltage as V and went from there.<br /><br />$\frac{V-V_1}{4R} + \frac{V-V_2}{2R} + \frac{V-V_3}{R} + \frac{V}{R_L} = 0$ (Using KCL)<br /><br />Rearranging in terms of $V$ we get:<br /><br />$V = \frac{V_{cc}}{14 + \frac{4R}{R_L}} (2b_0 + 4b_1 + 8b_3)$ where I set $V_i = V_{CC} b_i$<br /><br />So after substituting all the numerical values. $(V_{CC} = 3.3V, R_L = 75 \varOmega R = 500 \varOmega)$ I get:<br /><br />$V = 0.09802(b_0 + 2b_1 + 4b_2)$ where $b_2 b_1 b_0$ is a 3 digit binary number. This allows me to have 8 different shades of red! Following a similar procedure I can get expressions for the other colors. And in total I need 8 bits (3 for red, 3 for green, 2 for blue (poor blue :( (I like using nested parantheses. (I should probably stop now.)))) to represent the color of one pixel. So I have a palette of 256 colors to work with.<br /><br />Now it's time to get started with generating the VGA sync signals.<br /><br />I'm learning from this textbook called FPGA Prototyping by Verilog Examples by P. Chu. It has a brilliant section on generating VGA output. However, I couldn't just copy the code in there and check if the circuit was working. I have a small external monitor which I use for testing purposes. It turns out that this monitor (because it's a very cheap monitor) only supports one video mode. 1368 x 768 @ 60 Hz refresh rate. Nothing else works. Following the signal timing information about this resolution from the <a href="http://tinyvga.com/vga-timing/1368x768@60Hz" target="_blank">tinyVGA website</a>, I modified the code (actually I typed it out line by line on my own so I could understand what was going on in each line. I highly recommend this technique when you're learning a new language.)<br /><br />It took quite a while for me to get the output working properly. First I tried using the ipcore wizard to generate a pixel clock that was exactly the same as the recommended one. But when I tried to get the ISE to compile the code, it complained about timing issues. So I used the ipcore wizard to generate a clock that was exactly twice that of the pixel clock and divided this clock by 2 inside the VGA synchronization module.<br /><br />Here's a video of the working VGA output:<br /><br /><div class="separator" style="clear: both; text-align: center;"><iframe allowfullscreen="" class="YOUTUBE-iframe-video" data-thumbnail-src="https://i.ytimg.com/vi/ZaaVGGRcFqk/0.jpg" frameborder="0" height="266" src="http://www.youtube.com/embed/ZaaVGGRcFqk?feature=player_embedded" width="320"></iframe></div><br />Now I think I'll get started on generating something interesting on the fpga. Maybe some fractals?</div>
+                
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 hidden-xs">
+          <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
+    
+    <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
+    
+    <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
+    
+    <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
+    
+    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul>
+    
+      <li><a href="/blog/tag/opencv">opencv</a></li>
+    
+      <li><a href="/blog/tag/programming">programming</a></li>
+    
+      <li><a href="/blog/tag/technical">technical</a></li>
+    
+      <li><a href="/blog/tag/free will">free will</a></li>
+    
+      <li><a href="/blog/tag/thoughts">thoughts</a></li>
+    
+      <li><a href="/blog/tag/philosophy">philosophy</a></li>
+    
+      <li><a href="/blog/tag/atheism">atheism</a></li>
+    
+      <li><a href="/blog/tag/linux">linux</a></li>
+    
+      <li><a href="/blog/tag/blogging">blogging</a></li>
+    
+      <li><a href="/blog/tag/web">web</a></li>
+    
+      <li><a href="/blog/tag/robotics">robotics</a></li>
+    
+      <li><a href="/blog/tag/inverse kinematics">inverse kinematics</a></li>
+    
+      <li><a href="/blog/tag/robotic arm">robotic arm</a></li>
+    
+      <li><a href="/blog/tag/boiling water">boiling water</a></li>
+    
+      <li><a href="/blog/tag/coffee">coffee</a></li>
+    
+      <li><a href="/blog/tag/fire">fire</a></li>
+    
+      <li><a href="/blog/tag/random stuff">random stuff</a></li>
+    
+      <li><a href="/blog/tag/electric kettle">electric kettle</a></li>
+    
+      <li><a href="/blog/tag/electronics">electronics</a></li>
+    
+      <li><a href="/blog/tag/fpga">fpga</a></li>
+    
+      <li><a href="/blog/tag/fun">fun</a></li>
+    
+      <li><a href="/blog/tag/cool stuff">cool stuff</a></li>
+    
+      <li><a href="/blog/tag/arduino">arduino</a></li>
+    
+      <li><a href="/blog/tag/productivity">productivity</a></li>
+    
+      <li><a href="/blog/tag/vga">vga</a></li>
+    
+      <li><a href="/blog/tag/python">python</a></li>
+    
+      <li><a href="/blog/tag/July 18">July 18</a></li>
+    
+      <li><a href="/blog/tag/maker faire">maker faire</a></li>
+    
+      <li><a href="/blog/tag/2015 at 10:24PM">2015 at 10:24PM</a></li>
+    
+      <li><a href="/blog/tag/math">math</a></li>
+    
+      <li><a href="/blog/tag/Mathematica">Mathematica</a></li>
+    
+      <li><a href="/blog/tag/machine learning">machine learning</a></li>
+    
+      <li><a href="/blog/tag/star wars">star wars</a></li>
+    
+  </ul>
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+      <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Ashwin Narayan &copy; 2016</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="RationalAsh on Github" href="https://github.com/RationalAsh" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="http://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="http://lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/blog/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+	  <p><a href="https://github.com/streetturtle/jekyll-clean-dark">Jekyll Clean Dark Theme</a> by Pavel Makhov</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+</div>

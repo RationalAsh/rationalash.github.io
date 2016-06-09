@@ -1,0 +1,249 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scientia Potestas Est</title>
+  <meta name="theme-color" content="#222222" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://www.ashwinnarayan.com/blog/js/jquery.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/bootstrap.min.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/header.js"></script>
+  <script src="http://www.ashwinnarayan.com/blog/js/toc.js"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <link href="http://www.ashwinnarayan.com/blog/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/theme.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/syntax.css" rel="stylesheet">
+  <link href="http://www.ashwinnarayan.com/blog/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  
+
+
+ <script type="text/javascript">
+  WebFontConfig = {
+    google: {
+      families: ['Ubuntu::latin']
+    }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://www.ashwinnarayan.com/blog/">Scientia Potestas Est</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+	  <li><a href="http://www.ashwinnarayan.com">Ashwin</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/">/home</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/archive.html">/archive</a></li>
+          <li><a href="http://www.ashwinnarayan.com/blog/tags.html">/tags</a></li>
+          <!--<li><a href="http://www.ashwinnarayan.com/blog/about.html">/about</a></li>-->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<div class="wrapper">
+  <div class="content">
+    <div class="container container-center">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="article">
+            <div class="well">
+              <h1><a href="http://www.ashwinnarayan.com/blog/2015/06/usrbinpythonimport-structimport">Analysing sound in Python</a></h1>
+              <div class="post-meta">
+                <div class="post-time">
+                  <!--<i class="fa fa-calendar"></i>-->
+		  Posted on:
+                  <time>19 Jun 2015</time>
+                </div>
+                <ul>
+		  <li>Tags: </li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/programming">programming</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/linux">linux</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/python">python</a></li>
+                  
+                    <li><a href="http://www.ashwinnarayan.com/blog/tag/technical">technical</a></li>
+                  
+                </ul>
+              </div>
+              <div class="post-content">
+                <div id="toc" class="toc"></div>
+                <div dir="ltr" style="text-align: left;" trbidi="on"><div data-mce-style="text-align: justify;" style="text-align: justify;">I'm  trying to build a simple word recognition system in python. As a first  step, I needed to find a way to get audio sample data from my microphone  and store it in a numpy array in Python. After a lot of searching and  experimenting I finally found a library that works well for this task: <a data-mce-href="http://larsimmisch.github.io/pyalsaaudio/index.html" href="http://larsimmisch.github.io/pyalsaaudio/index.html">pyalsaaudio</a>.</div><div data-mce-style="text-align: justify;" style="text-align: justify;"><br /></div><div data-mce-style="text-align: justify;" style="text-align: justify;">This small piece of code records roughly two seconds of audio from the default microphone and plots the spectrogram. This was actually a bit tricky to figure out so I thought I'd share the code for anyone out there who might be trying to do this.</div><pre class="brush:python;">#!/usr/bin/python<br /><br />import struct<br />import alsaaudio as aa<br />import numpy as np<br />import time<br />import matplotlib.pyplot as plt<br />from pylab import *<br /><br />SAMPLERATE = 8000<br />PERIODSIZE = 160<br />CHANNELS   = 1<br />CARD = 'default'<br /><br /><br />inp = aa.PCM(aa.PCM_CAPTURE, aa.PCM_NONBLOCK, CARD)<br />inp.setchannels(1)<br />inp.setrate(SAMPLERATE)<br />inp.setformat(aa.PCM_FORMAT_S16_LE)<br />inp.setperiodsize(PERIODSIZE)<br /><br />sound = np.array([0])<br /><br />if __name__=='__main__':<br />    ctr = 20000<br />    while ctr &gt; 0:<br />        ctr -= 1<br />        l,data = inp.read()<br />        if l:<br />            samples = struct.unpack('h'*l, data);<br />            sound = np.append(sound, np.array(samples))<br />        time.sleep(0.0001)<br /><br />    print(sound.size)<br /><br />    <br />    #plt.plot(sound)<br />    #plt.ylabel('amplitude')<br />    #plt.xlabel('time')<br />    #show()<br />    <br />    Pxx, freqs, bins, im = specgram(sound, NFFT=1024, Fs=8000, noverlap=900, cmap=cm.gist_heat)<br />    show()<br /></pre><br /></div>
+                
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 hidden-xs">
+          <div class="sidebar ">
+  <h2>Recent Posts</h2>
+  <ul>
+    
+    <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
+    
+    <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
+    
+    <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
+    
+    <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
+    
+    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
+    
+  </ul>
+</div>
+
+<div class="sidebar">
+  <h2>Tags</h2>
+  <ul>
+    
+      <li><a href="/blog/tag/opencv">opencv</a></li>
+    
+      <li><a href="/blog/tag/programming">programming</a></li>
+    
+      <li><a href="/blog/tag/technical">technical</a></li>
+    
+      <li><a href="/blog/tag/free will">free will</a></li>
+    
+      <li><a href="/blog/tag/thoughts">thoughts</a></li>
+    
+      <li><a href="/blog/tag/philosophy">philosophy</a></li>
+    
+      <li><a href="/blog/tag/atheism">atheism</a></li>
+    
+      <li><a href="/blog/tag/linux">linux</a></li>
+    
+      <li><a href="/blog/tag/blogging">blogging</a></li>
+    
+      <li><a href="/blog/tag/web">web</a></li>
+    
+      <li><a href="/blog/tag/robotics">robotics</a></li>
+    
+      <li><a href="/blog/tag/inverse kinematics">inverse kinematics</a></li>
+    
+      <li><a href="/blog/tag/robotic arm">robotic arm</a></li>
+    
+      <li><a href="/blog/tag/boiling water">boiling water</a></li>
+    
+      <li><a href="/blog/tag/coffee">coffee</a></li>
+    
+      <li><a href="/blog/tag/fire">fire</a></li>
+    
+      <li><a href="/blog/tag/random stuff">random stuff</a></li>
+    
+      <li><a href="/blog/tag/electric kettle">electric kettle</a></li>
+    
+      <li><a href="/blog/tag/electronics">electronics</a></li>
+    
+      <li><a href="/blog/tag/fpga">fpga</a></li>
+    
+      <li><a href="/blog/tag/fun">fun</a></li>
+    
+      <li><a href="/blog/tag/cool stuff">cool stuff</a></li>
+    
+      <li><a href="/blog/tag/arduino">arduino</a></li>
+    
+      <li><a href="/blog/tag/productivity">productivity</a></li>
+    
+      <li><a href="/blog/tag/vga">vga</a></li>
+    
+      <li><a href="/blog/tag/python">python</a></li>
+    
+      <li><a href="/blog/tag/July 18">July 18</a></li>
+    
+      <li><a href="/blog/tag/maker faire">maker faire</a></li>
+    
+      <li><a href="/blog/tag/2015 at 10:24PM">2015 at 10:24PM</a></li>
+    
+      <li><a href="/blog/tag/math">math</a></li>
+    
+      <li><a href="/blog/tag/Mathematica">Mathematica</a></li>
+    
+      <li><a href="/blog/tag/machine learning">machine learning</a></li>
+    
+      <li><a href="/blog/tag/star wars">star wars</a></li>
+    
+  </ul>
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+      <footer class="footer-distributed">
+      <div class="container">
+        <div class="footer">
+          <p>Ashwin Narayan &copy; 2016</p>
+          <h6>Follow me</h6>
+
+<ul class="social-media">
+
+  
+    <li>
+      <a title="RationalAsh on Github" href="https://github.com/RationalAsh" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on StackOverflow" href="http://stackoverflow.com/users/" target="_blank"><i class="fa fa-stack-overflow fa-2x"></i></a>
+    </li>
+  
+
+  
+
+  
+    <li>
+      <a title=" on Instagram" href="https://instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title=" on Last.fm" href="http://lastfm.com/user/" target="_blank"><i class="fa fa-lastfm fa-2x"></i></a>
+    </li>
+  
+
+  
+    <li>
+      <a title="feed.xml RSS" href="/blog/feed.xml" target="_blank"><i class="fa fa-rss fa-2x"></i></a>
+    </li>
+  
+
+</ul>
+
+	  <p><a href="https://github.com/streetturtle/jekyll-clean-dark">Jekyll Clean Dark Theme</a> by Pavel Makhov</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+</div>

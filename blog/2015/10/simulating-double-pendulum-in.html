@@ -101,8 +101,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div style="text-align: justify;">I've been playing around with Mathematica's Non-Linear Control Systems toolbox over the past few days and it's been brilliant! One of the first systems that I tried to simulate is the double pendulum since it's such a commonly used sample problem in non-linear controls.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">The first step is to write down the total kinetic and potential energies of the system and find the Lagrangian. Once you have that, you just need to run the Lagrangian through Mathematica's EulerEquations function and then set up a non-linear state space model using the differential equations.&nbsp;</div><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-IJGBfdq3hRA/Vh9nrBVyg8I/AAAAAAAAGh4/ssi2K1It4cY/s1600/dpend_blgopost1.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="640" src="http://4.bp.blogspot.com/-IJGBfdq3hRA/Vh9nrBVyg8I/AAAAAAAAGh4/ssi2K1It4cY/s640/dpend_blgopost1.PNG" width="560" /></a></div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Once you have the system model it's really simple to get the response and make a simple simulation.</div><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-bvBuKzQSno0/Vh9oblK45dI/AAAAAAAAGiA/XVOhrHmf0uA/s1600/dpend_blgopost2.PNG" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="228" src="http://4.bp.blogspot.com/-bvBuKzQSno0/Vh9oblK45dI/AAAAAAAAGiA/XVOhrHmf0uA/s640/dpend_blgopost2.PNG" width="640" /></a></div><div style="text-align: justify;"><br />And out pops a wonderful demonstration of chaos! Here are are three simulations with slightly different initial conditions showing diverging trajectories.&nbsp;</div><div style="text-align: justify;"><br /></div><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-rADFQApLTiM/Vh9oqQ7ut2I/AAAAAAAAGiI/gIeG6HlQbJM/s1600/dpend_sim.gif" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="320" src="http://4.bp.blogspot.com/-rADFQApLTiM/Vh9oqQ7ut2I/AAAAAAAAGiI/gIeG6HlQbJM/s320/dpend_sim.gif" width="266" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Initial conditions: {160, -160}</td></tr></tbody></table><div style="text-align: justify;"><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://1.bp.blogspot.com/-1eUjsWkxzAs/ViB1uvAOUbI/AAAAAAAAGjE/nb0J_JoykZo/s1600/dpend_sim2.gif" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="320" src="http://1.bp.blogspot.com/-1eUjsWkxzAs/ViB1uvAOUbI/AAAAAAAAGjE/nb0J_JoykZo/s320/dpend_sim2.gif" width="266" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Initial Conditions: {161, -160}</td></tr></tbody></table><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-K9Vvt701QBg/ViC89F058BI/AAAAAAAAGjY/9PKmVkL_bvk/s1600/dpend_sim2.gif" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="320" src="http://4.bp.blogspot.com/-K9Vvt701QBg/ViC89F058BI/AAAAAAAAGjY/9PKmVkL_bvk/s320/dpend_sim2.gif" width="266" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Initial Conditions: {161,-161}</td></tr></tbody></table><br /><br /></div><div style="text-align: justify;">The next thing I tested was whether I could make a simple controller to stabilize this double pendulum pointing straight up. I went with a standard Linear Quadratic regulator. In this simulation there is only one actuator at the elbow joint. So this is also an example of an underactuated robotic system. Works great! :D</div><div style="text-align: justify;"><br /></div><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-hGoCN1Jex2c/Vh9pJxvo-yI/AAAAAAAAGiU/2BZg75LI5EI/s1600/dpend_stable.gif" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://4.bp.blogspot.com/-hGoCN1Jex2c/Vh9pJxvo-yI/AAAAAAAAGiU/2BZg75LI5EI/s320/dpend_stable.gif" width="266" /></a></div><div style="text-align: justify;"><br /></div></div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -203,6 +209,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2015/10/simulating-double-pendulum-in";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

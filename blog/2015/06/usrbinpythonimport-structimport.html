@@ -101,8 +101,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div data-mce-style="text-align: justify;" style="text-align: justify;">I'm  trying to build a simple word recognition system in python. As a first  step, I needed to find a way to get audio sample data from my microphone  and store it in a numpy array in Python. After a lot of searching and  experimenting I finally found a library that works well for this task: <a data-mce-href="http://larsimmisch.github.io/pyalsaaudio/index.html" href="http://larsimmisch.github.io/pyalsaaudio/index.html">pyalsaaudio</a>.</div><div data-mce-style="text-align: justify;" style="text-align: justify;"><br /></div><div data-mce-style="text-align: justify;" style="text-align: justify;">This small piece of code records roughly two seconds of audio from the default microphone and plots the spectrogram. This was actually a bit tricky to figure out so I thought I'd share the code for anyone out there who might be trying to do this.</div><pre class="brush:python;">#!/usr/bin/python<br /><br />import struct<br />import alsaaudio as aa<br />import numpy as np<br />import time<br />import matplotlib.pyplot as plt<br />from pylab import *<br /><br />SAMPLERATE = 8000<br />PERIODSIZE = 160<br />CHANNELS   = 1<br />CARD = 'default'<br /><br /><br />inp = aa.PCM(aa.PCM_CAPTURE, aa.PCM_NONBLOCK, CARD)<br />inp.setchannels(1)<br />inp.setrate(SAMPLERATE)<br />inp.setformat(aa.PCM_FORMAT_S16_LE)<br />inp.setperiodsize(PERIODSIZE)<br /><br />sound = np.array([0])<br /><br />if __name__=='__main__':<br />    ctr = 20000<br />    while ctr &gt; 0:<br />        ctr -= 1<br />        l,data = inp.read()<br />        if l:<br />            samples = struct.unpack('h'*l, data);<br />            sound = np.append(sound, np.array(samples))<br />        time.sleep(0.0001)<br /><br />    print(sound.size)<br /><br />    <br />    #plt.plot(sound)<br />    #plt.ylabel('amplitude')<br />    #plt.xlabel('time')<br />    #show()<br />    <br />    Pxx, freqs, bins, im = specgram(sound, NFFT=1024, Fs=8000, noverlap=900, cmap=cm.gist_heat)<br />    show()<br /></pre><br /></div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -203,6 +209,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2015/06/usrbinpythonimport-structimport";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

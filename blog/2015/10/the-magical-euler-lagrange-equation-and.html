@@ -99,8 +99,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div style="text-align: justify;">I've been learning a lot about simulating and controlling mechanical systems for one of my projects. Of all the math that I learned, the most amazing was the Euler-Lagrange equation.&nbsp;</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">$\frac{d}{dt} \frac{\partial L}{\partial \dot{q_i}} - \frac{\partial L}{\partial q_i} = Q_i$<br /><br />The overarching theme of the control systems that I've been reading about is optimality. And wherever we need optmization, Calculus of variations tends come into the picture. Calculus of Variations is a branch of mathematics that studies the problem of finding functions that minimize the value of a functional (or cost function) in a particular range. As an example, take the range $x \in [0,1]$ on the real line and assume that $f(x)$ is a function that is defined in this range. There are an uncountably infinite different possible functions $f(x)$. A functional is an operation that maps the function $f(x)$ on to a real number. Think of this as a "cost" for the path that the function draws on the graph. The main problem that calculus of variations tries to solve &nbsp;is finding the function $f(x)$ that minimizes the "cost".<br /><br />This area of mathematics has applications in a <i>huge</i>&nbsp;variety of fields and arguably the most important of which is in the field of Physics. Long back some physicists found that the Newtonian Mechanics that everyone knows and loves can be reformulated as an optimization problem. They found that there is a quantity known as "action" (which is defined as kinetic energy - potential energy) that is minimized as particles and other things in the real world go about their daily business. This is commonly known as the "Principle of Least Action". Coming back to the Euler-Lagrange equation, mathematicians figured out that plugging in the functional into this equation gives the constraints of the system that cause it minimize the functional. This means that every single dynamic problem in Newtonian physics can be reformulated as an optimization problem! Pretty neat.<br /><br />So say you have a simple system like a simple pendulum and you want to figure out the equations of motion of system. The way people are used to doing it is drawing a diagram that shows the net forces acting on the system and then deriving the equations of motion using Newton's &nbsp;three laws of motion and energy constraints. Using the Euler-Lagrange equation, the procedure is slightly different and arguably simpler. The first step is to write down the Kinetic and Potential energies of the system.<br /><br />$T = \frac{1}{2} m l^2 \dot{\theta}^2$<br />$V = -m g l \cos{\theta}$<br />$L = \frac{1}{2} m l^2 \dot{\theta}^2 +&nbsp;m g l \cos{\theta}$<br /><br />To get the equations of motion of the system,<br /><br />$\frac{d}{dt}\frac{\partial L}{\partial \dot{\theta}} - \frac{\partial L}{\partial \theta} = -b\dot{\theta} + u$<br />Where U is the torque an actuator (motor) at the base of the pendulum gives to the pendulum.<br /><br />This gives:<br /><br />$I\ddot{\theta} + b\dot{\theta}&nbsp;+ m g l \sin{\theta} = u$<br /><br />No fiddling around with forces and no need to try and figure if the net force is zero or not. Just works with pure energies! This works every time as long as you write down the Lagrangian correctly. The first time I saw this, I couldn't believe it worked! For the following few weeks I'd take Lagrangians of random things for fun and check to see if it was giving the correct answers.<br /><br />This also makes me think about the amount of information we need to know 'everything' about a system. Before I learned about the Lagrangian, I had a 'gut-feeling' that in physics, fields were everything. Maybe this is because school and engineering level education in physics focuses a lot on field theories in physics. However, the fact that we can get the complete behaviour of a system from an expression that just encodes the total energy of the system implies that somehow, the energy of the system encodes all the necessary information to describe it completely. The equation suggests to me that potentials and energies are more 'fundamental' in a sense than fields.</div></div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -201,6 +207,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2015/10/the-magical-euler-lagrange-equation-and";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

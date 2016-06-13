@@ -99,8 +99,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div style="text-align: justify;">A few days ago I came across this new blogging platform called Ghost. It had a <b>very </b>successful funding campaign over at <a href="http://www.kickstarter.com/projects/johnonolan/ghost-just-a-blogging-platform" target="_blank">kickstarter.</a>&nbsp;It was funded 8 times above the goal!!</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">So to find out what all this fuss was about I decided to try it out! Go ahead and watch the demo video over at <a href="https://ghost.org/features" target="_blank">their website</a>. It gives a good overview of the thing. I was intrigued by their approach. Unlike most of the blogging platforms that exist today, it uses markdown to format the blogposts. Both blogger and wordpress use a WYSIWYG editor. I was skeptical about this approach. At first glance the markdown looked intimidating. I was unsure if it would be a good idea to replace simple WYSIWYG editors with markdown.</div><br /><span style="font-size: large;"><b>Setting it up</b></span><br /><br /><div style="text-align: justify;">Once I signed up for the thing I found out that they hadn't released a hosted version of their site yet. My dashboard said that I had to download the source code to try it out. &nbsp;The setup looked pretty simple. So I decided to go ahead with it.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">First I installed node.js and npm with a simple sudo apt-get install and followed the instructions over at <a href="http://docs.ghost.org/installation/linux/" target="_blank">this page</a>. There was a minor hiccup here. The thing didn't seem to have installed properly. Then I discovered that this was because apt-get installs an older version of the node.js libraries. So I followed the instructions <a href="http://stackoverflow.com/questions/16302436/install-nodejs-on-ubuntu-12-10" target="_blank">over here</a>&nbsp;and installed the latest version from the PPA.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">After that I ran `sudo rm -rf ` node modules to delete traces of the previous installation attempt and then ran npm install --production again and it worked fine.</div><br /><br /><span style="font-size: large;"><b>Impressions</b></span><br /><br />So here it is, up and running!<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-pyh6zdDVed0/UoyzpXoK9oI/AAAAAAAABZU/4A2Kmrs1uWA/s1600/Screenshot+from+2013-11-20+18:34:48.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://4.bp.blogspot.com/-pyh6zdDVed0/UoyzpXoK9oI/AAAAAAAABZU/4A2Kmrs1uWA/s640/Screenshot+from+2013-11-20+18:34:48.png" height="360" width="640" /></a></div><br /><br /><div style="text-align: justify;">Then I created a test post to test out the syntax of the markdown and I was blown away! It was much better than it looked in the video! The markdown is surprisingly intuitive once you start typing. A lot of the syntax is very similar to the Org mode in emacs and the syntax for adding links and images is exactly the same as on reddit. I found myself formatting it quite naturally without needing to refer to the syntax guide.</div><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/-7rSAZb2XzY8/Uoy3rll2klI/AAAAAAAABZg/kb1k3rYF40k/s1600/Screenshot+from+2013-11-20+18:52:05.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://2.bp.blogspot.com/-7rSAZb2XzY8/Uoy3rll2klI/AAAAAAAABZg/kb1k3rYF40k/s640/Screenshot+from+2013-11-20+18:52:05.png" height="360" width="640" /></a></div><br /><br /><div style="text-align: justify;">Although the idea of using markdown didn't sound so inviting when I saw the video I liked it once I actually started typing. Although there were a few small hiccups(like the list formatting not working if I didn't leave an empty line before it. I think this one's my fault though XD) I really liked the overall idea. It's definitely convenient to not have to interrupt my typing for using the WYSIWYG editor buttons.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">One other big advantage that I see is the ease with which I can import and export posts with all the formatting preserved. Since all the formatting information is contained in plain text, I just have do a simple copy paste! I think I'll migrate all my personal blogs to my local version of Ghost.</div><br /><span style="font-size: large;"><b>Final Verdict</b></span><br /><br /><div style="text-align: justify;">I think it's an awesome idea! Although the platform is &nbsp;a bit short on features now I think that's mostly because it's under active development. I think it's really good idea and that it has the potential to become something really big. This could turn out to be the future of blogging. Also, they say on their website that the company will be registering as a non profit company and that the platform itself is open source! I think Ghost is to blogging what GNOME is to user interfaces.</div></div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -201,6 +207,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2013/11/the-ghost-blogging-platform-review";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

@@ -99,8 +99,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on">So I was happily working on my FPGA for a while on my Linux system. One day, due to some work I had to do on a piece of software that only worked on Windows, I had to boot into my windows partition.<br /><br />When one of my friends came over to take a look at the FPGA I plugged it right into the laptop because I already had a binary config file in the FPGA and all I needed was for the board to be powered up. Big mistake. The moment I plugged the fpga in, the red light on the board (which usually only comes on when the board i being programmed) came on and stayed on. And no matter how many times I re installed the drivers, the board just would not cooperate. I didn't really think much of it at the time. I thought that this was just a minor issue with the drivers on the windows side and thought that everything would be fine when I plugged my board in when I booted back into my Linux partition.<br /><br />The next day, I booted back into Linux and the board was doing the same thing. The red programming led was coming on but the board wouldn't work.<br /><br />I have no clue what happened but I wonder if it is related to that recent incident where the FTDI company pushed a driver update to windows that would brick fake ftdi chips that acted as a USB to UART bridge. The funny thing is, the Numato labs board <i>doesn't have</i>&nbsp;an ftdi chip on board. I think it has a PIC microcontroller programmed to do the USB to UART bridging. I wonder if the PIC device was emulating the ftdi chip? Or it could just be a coincidence. Whatever the case, the board was bricked.<br /><br />I sent an email to the Numato labs customer service people about the issue without really expecting a response. To their credit however, not only did they respond, they offered to replace my board with a new one if I shipped my bricked board back to them! :D Never expected that! So the new board arrived today and I plugged it in and everything seems to be working fine.<br /><br />Time to resume work on that project! :D</div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -201,6 +207,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2014/11/fpga-minor-hiccup";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

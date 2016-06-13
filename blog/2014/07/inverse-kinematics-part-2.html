@@ -101,8 +101,14 @@
               <div class="post-content">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div style="text-align: justify;">On to part two of exploring inverse kinematics! This time I think I will add two additional degrees of freedom to the arm and calculate the inverse kinematics.&nbsp;</div><div style="text-align: justify;"><br /></div><div class="separator" style="clear: both; text-align: justify;"><a href="http://4.bp.blogspot.com/-6dV0EsVrqG8/U8J0IzqZpJI/AAAAAAAACEg/b9C1m9QOMBQ/s1600/3RARM.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="352" src="http://4.bp.blogspot.com/-6dV0EsVrqG8/U8J0IzqZpJI/AAAAAAAACEg/b9C1m9QOMBQ/s1600/3RARM.png" width="640" /></a></div><div style="text-align: justify;">$l_1$ - Length of the first link</div><div style="text-align: justify;">$l_2$ - Length of the second link</div><div style="text-align: justify;">$l_3$ - Length of the third link</div><div style="text-align: justify;">$\theta_0$ - The angle of the base drum.</div><div style="text-align: justify;">$\theta_1$ - The angle of the first link from the ground</div><div style="text-align: justify;">$\theta_2$ - The angle of the second link w.r.t the first</div><div style="text-align: justify;">$\theta_3$ - The angle of the third link w.r.t the second</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">First let's ignore the third link and consider the two links plus the rotating base. This extension is relatively simple to handle. If the value of $\theta_0$ is found then the problem can again be reduced to a planar 2D problem which already has a nice solution.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">It's easy to see that:</div><div style="text-align: justify;">$\theta_0 = atan2(z, x)$</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Once this is found, then we can find the absolute distance in the x-z plane $d = \sqrt{x^2 + z^2}$. Then the inverse kinematics for the two links can be found by replacing $x$ with $d$ in all the equations.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Now it's time to add the third link into the equations. This third link is special. It's not <i>really</i>&nbsp;an additional degree of freedom. Two links and a rotating base are all that's needed to reach any point in 3D space. So why the third link? Imagine that there was a gripper attached to the third link. This gripper grabs a glass of water. If that third link were not there, this gripper would tilt with the angle of the second link and whatever liquid is in the glass would spill all over the place. This third link in the arm will adjust its angle to the second link so that it maintains a constant angle from the ground plane. Now if the arm is holding a glass of water and moving around, the glass will always be pointed in the right direction. It won't tilt and spill its contents all over the place. Let the constant angle between the third link and the ground be $\phi$ degrees. Applying this constraint we get: $\theta_3 = \theta_1 - \theta_2 - \phi$.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">So all we need to do is subtract the vector of the third link from the target coordinates, apply the 2-link plus base inverse kinematics on this coordinates and then calculate phi using the value of $\theta_1$ and $\theta_2$ that we get from those calculations.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">I've implemented all this in the invkin4() function in <a href="https://github.com/RationalAsh/invkin/blob/master/invkin.py">this python script</a>.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">I'll post a processing simulation of this soon. I'm still fiddling around with the P3D. I haven't got used to it yet.<br /><br />EDIT: <a href="https://rationalash.github.io/invkin/" target="_blank">Go here</a>&nbsp;to see a processing simulation of the inverse kinematics script. :D</div></div>
+
                 
 
+              </div>
+              
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
               </div>
               
             </div>
@@ -203,6 +209,23 @@
       </div>
     </div>
     
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'rationalash'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2014/07/inverse-kinematics-part-2";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
   </div>
       <footer class="footer-distributed">

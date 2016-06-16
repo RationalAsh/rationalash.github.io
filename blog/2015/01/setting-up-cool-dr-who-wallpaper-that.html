@@ -96,7 +96,7 @@
                   
                 </ul>
               </div>
-              <div class="post-content">
+              <div class="post-content text-justify">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on">I came across this really cool idea by someone on reddit to take this awesome wallpaper of the 12 regenerations of the doctor and highlight each Doctor by the hour. This is easy enough to do on Windows which has wallpapers which can change every <x> minutes. Being a user of linux, I was interested in trying to get a similar thing to work on linux.</x><br /><br />First here is the set of all the wallpapers.<br /><br /><a href="https://imgur.com/a/av5TP">https://imgur.com/a/av5TP</a><br /><br />Download the wallpapers and put it all in a folder somewhere on your system. Say you put it in /home/ash/Pictures/whopaper/<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://3.bp.blogspot.com/-cf3pZbIjsKw/VKq0xoCJ-jI/AAAAAAAACMw/kqFE-7MY7j8/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A27%3A19%2BIST%2B2015.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="124" src="http://3.bp.blogspot.com/-cf3pZbIjsKw/VKq0xoCJ-jI/AAAAAAAACMw/kqFE-7MY7j8/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A27%3A19%2BIST%2B2015.png" width="640" /></a></div><br /><br />Rename each picture so that the filename corresponds the the regeneration number. The first doctor's highlighted picture should be named 01.jpg and the second doctor's should be named 02.jpg and so on till 12.jpg.<br /><br />Then set up a cronjob that is executed every hour that checks the hour on the clock and sets the background to that. For doing this I installed a program called "feh" (sudo apt-get install feh) which allows me to set my desktop wallpaper from the terminal. I also installed a program called gnome-schedule (sudo apt-get install gnome-schedule) which allows me to easily edit the crontab file.<br /><br />Run gnome-schedule and click on "New" to add a new cronjob. Select "A task that launches recurrently". Add a short description (like "Cool Doctor Who Wallpaper" and in the command field enter the following command:<br /><br />env DISPLAY=:0 /usr/bin/feh --bg-scale "/home/rationalash/Pictures/Wallpapers/DRWHO/$(date +\%I).jpg"&gt;&gt;sys.log<br /><br /><b>Replace the path to the wallpaper in the command to the folder in which you saved the wallpapers.</b><br /><br />Under the &nbsp;"Time &amp; Date" section select "Basic" and set the task to run every hour.<br /><br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-_2VTWO7LVp8/VKq1U9kG-gI/AAAAAAAACM4/Da902jC_JXQ/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A30%3A01%2BIST%2B2015.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="510" src="http://4.bp.blogspot.com/-_2VTWO7LVp8/VKq1U9kG-gI/AAAAAAAACM4/Da902jC_JXQ/s1600/Screensho%2Bfrom%2BMon%2BJan%2B%2B5%2B21%3A30%3A01%2BIST%2B2015.png" width="640" /></a></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">And that's it! Now if you don't keep your computer on all the time the wall paper might be wrong for some time because the cronjob only runs every hour. If you want to be sure that the wallpaper is always the same as the hour on the clock even if your turn your computer on a lot edit the frequency of the cronjob so that it runs more often. (Say once a minute). &nbsp;The wrong wallpaper won't be there for longer than a minute.</div><br /></div>
 
@@ -117,6 +117,8 @@
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/blog/2016/06/new-website-and-blog">New Website and Blog</a></li>
+    
     <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
     
     <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
@@ -124,8 +126,6 @@
     <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
     
     <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
-    
-    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
     
   </ul>
 </div>

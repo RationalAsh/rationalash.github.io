@@ -96,7 +96,7 @@
                   
                 </ul>
               </div>
-              <div class="post-content">
+              <div class="post-content text-justify">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on"><div dir="ltr" style="text-align: left;" trbidi="on">Last week my college hosted a technical fest. It was pretty cool. There was some really cool tech on display at for the exhibitions, some awesome guest lectures, robotics competitions and a lot of workshops. It was quite a busy and interesting week. I attended this really interesting workshop that introduced us to image processing using Matlab. We managed to get matlab to track a ball in the field of view of my laptop's webcam and use this motion to control windows media player and the movement of wheeled bots. Recently, I've become really interested in the field of Artificial Intelligence so this simple computer vision exercise got me excited. I came back to my room that evening and started exploring my options.<br /><div><br /></div><div>That evening I discovered an excellent Open Source alternative for doing image processing called <a href="http://opencv.org/" target="_blank">OpenCV</a>. I decided to abandon Matlab and do image processing in OpenCV instead (Because it's freeeeeeee!). That very evening I got OpenCV compiled and set up on my Ubuntu partition and started learning image processing.</div><div><br /></div><div>I had a bit of difficulty starting out because I'd never really learnt C++ 'officially'. So I had to use my basic knowledge of C and a lot of googling to understand the basics of setting things up. The biggest hurdle was understanding how classes and objects worked. It took a few hours to smooth those concepts out. As soon as I had a rudimentary grasp of what they meant I could start writing my first image processing program.</div><div><br /></div><div>So fooled around with flipping and adding noise to images for the last week. Then I got a brilliant idea. I was having a bit of trouble visualizing what I was learning in math class. We were doing conformal maps. So I thought that it might be a good idea to use OpenCV to visualize conformal maps. So I set out trying to apply conformal maps to Lenna, &nbsp;one of the most famous test images used in image processing.<br /><br />It took me a couple of days to make the code completely bug free. There were some really annoying bugs. The fact that images were stored in matrices whose indices followed a left handed coordinate system added to the difficulty of implementation. I had to apply multiple transformations in series to get the code to work. But in end everything came together and this was the result!<br /><br /><table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://2.bp.blogspot.com/-xZaAvCb0lN0/UT4iJHHT6JI/AAAAAAAABNg/2QCIc0C-NCg/s1600/Result.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="360" src="http://2.bp.blogspot.com/-xZaAvCb0lN0/UT4iJHHT6JI/AAAAAAAABNg/2QCIc0C-NCg/s640/Result.png" width="640" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">The result of applying the transformation $w = z^{2}$.</td></tr></tbody></table>Right now, the only transformation that works perfectly is $w = z^{2}$. Other functions give really weird outputs. I'll figure them out eventually.<br /><br />And I've decided to open source the code I used for this! It's very messy because it's not the final version of the code and it's full of commented code and random cout statements. &nbsp;But maybe somebody will find it useful.<br /><br />The code can be found here:&nbsp;<a href="http://pastebin.com/kBBP2ASe" target="_blank">http://pastebin.com/kBBP2ASe</a></div></div><script>MathJax.Hub.Queue(["Typeset",MathJax.Hub]); </script></div>
 
@@ -117,6 +117,8 @@
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/blog/2016/06/new-website-and-blog">New Website and Blog</a></li>
+    
     <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
     
     <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
@@ -124,8 +126,6 @@
     <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
     
     <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
-    
-    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
     
   </ul>
 </div>

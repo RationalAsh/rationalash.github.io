@@ -96,7 +96,7 @@
                   
                 </ul>
               </div>
-              <div class="post-content">
+              <div class="post-content text-justify">
                 <div id="toc" class="toc"></div>
                 <div dir="ltr" style="text-align: left;" trbidi="on">So I was happily working on my FPGA for a while on my Linux system. One day, due to some work I had to do on a piece of software that only worked on Windows, I had to boot into my windows partition.<br /><br />When one of my friends came over to take a look at the FPGA I plugged it right into the laptop because I already had a binary config file in the FPGA and all I needed was for the board to be powered up. Big mistake. The moment I plugged the fpga in, the red light on the board (which usually only comes on when the board i being programmed) came on and stayed on. And no matter how many times I re installed the drivers, the board just would not cooperate. I didn't really think much of it at the time. I thought that this was just a minor issue with the drivers on the windows side and thought that everything would be fine when I plugged my board in when I booted back into my Linux partition.<br /><br />The next day, I booted back into Linux and the board was doing the same thing. The red programming led was coming on but the board wouldn't work.<br /><br />I have no clue what happened but I wonder if it is related to that recent incident where the FTDI company pushed a driver update to windows that would brick fake ftdi chips that acted as a USB to UART bridge. The funny thing is, the Numato labs board <i>doesn't have</i>&nbsp;an ftdi chip on board. I think it has a PIC microcontroller programmed to do the USB to UART bridging. I wonder if the PIC device was emulating the ftdi chip? Or it could just be a coincidence. Whatever the case, the board was bricked.<br /><br />I sent an email to the Numato labs customer service people about the issue without really expecting a response. To their credit however, not only did they respond, they offered to replace my board with a new one if I shipped my bricked board back to them! :D Never expected that! So the new board arrived today and I plugged it in and everything seems to be working fine.<br /><br />Time to resume work on that project! :D</div>
 
@@ -117,6 +117,8 @@
   <h2>Recent Posts</h2>
   <ul>
     
+    <li><a href="/blog/2016/06/new-website-and-blog">New Website and Blog</a></li>
+    
     <li><a href="/blog/2016/03/unsupervised-learning-self-organizing">Unsupervised Learning: Self Organizing Maps</a></li>
     
     <li><a href="/blog/2016/03/machine-learning-part-2-implementing">Machine Learning Part 2: Implementing Multi Class Logistic Regression</a></li>
@@ -124,8 +126,6 @@
     <li><a href="/blog/2016/02/my-first-build-of-bb-8">My First Build of BB-8</a></li>
     
     <li><a href="/blog/2015/11/prime-spirals-in-python">Prime Spirals in Python</a></li>
-    
-    <li><a href="/blog/2015/11/machine-learning-implementing-linear">Machine Learning: Implementing Linear Regression and Gradient Descent in Python</a></li>
     
   </ul>
 </div>

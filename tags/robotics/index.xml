@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robotics on Ashwin Narayan</title>
+    <link>http://www.ashwinnarayan.com/tags/robotics/</link>
+    <description>Recent content in Robotics on Ashwin Narayan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Ashwin Narayan</copyright>
+    <lastBuildDate>Sun, 14 May 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/robotics/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Modelling and Controlling a BB8 Droid</title>
+      <link>http://www.ashwinnarayan.com/project/bb8-control/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.ashwinnarayan.com/project/bb8-control/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

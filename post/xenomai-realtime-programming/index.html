@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.20.7" />
+  <meta name="author" content="Ashwin Narayan">
+  <meta name="description" content="PhD Student">
+
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/highlight.min.css">
+    
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/academicons.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono">
+  <link rel="stylesheet" href="/css/hugo-academic.css">
+  
+
+  <link rel="alternate" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  <link rel="feed" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+
+  <link rel="canonical" href="http://www.ashwinnarayan.com/post/xenomai-realtime-programming/">
+
+  
+
+  <title>Real-Time Programming with Xenomai - Part 1: Installation and Basic Setup | Ashwin Narayan</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Personal Projects</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+  <div class="article-container">
+    <h1 itemprop="name">Real-Time Programming with Xenomai - Part 1: Installation and Basic Setup</h1>
+    
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    <time datetime="2017-05-17 00:07:36 &#43;0800 SGT" itemprop="datePublished">
+      Wed, May 17, 2017
+    </time>
+  </span>
+
+  
+
+  
+  
+  
+  <span class="article-tags">
+    <i class="fa fa-tags"></i>
+    
+    <a href="/tags/xenomai">xenomai</a
+    >, 
+    
+    <a href="/tags/real-time">real-time</a
+    >, 
+    
+    <a href="/tags/programming">programming</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming%2f"
+         target="_blank">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Real-Time%20Programming%20with%20Xenomai%20-%20Part%201%3a%20Installation%20and%20Basic%20Setup&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming%2f"
+         target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming%2f&amp;title=Real-Time%20Programming%20with%20Xenomai%20-%20Part%201%3a%20Installation%20and%20Basic%20Setup"
+         target="_blank">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming%2f&amp;title=Real-Time%20Programming%20with%20Xenomai%20-%20Part%201%3a%20Installation%20and%20Basic%20Setup"
+         target="_blank">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Real-Time%20Programming%20with%20Xenomai%20-%20Part%201%3a%20Installation%20and%20Basic%20Setup&amp;body=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>In my lab, we recently started moving away from Simulink&rsquo;s Real-Time packages and towards Real-Time Linux for implementing the low level control of our robots. I thought I would document what I went through to get <a href="https://xenomai.org/" target="_blank">Xenomai</a> (A Real-Time framework for linux) working stably as a resource for others trying to get started on the same thing.</p>
+
+<h2 id="what-is-real-time">What is Real-Time?</h2>
+
+<p>The word &ldquo;real-time&rdquo; is used in a lot of different fields to mean different things. Some people also mistake real-time systems for high performance systems. I use the word real-time to refer to systems that guarantee consistent responses to events within time constraints (also called <em>deadlines</em>) with low variability regardless of system load. This is something that&rsquo;s not easy to do. A normal linux operating system is not real-time. Say you want to implement a program in C on a regular linux computer that toggles a pin on the parallel port every millisecond. A naive implementation would be as a simple loop that toggles the pin and waits for 1 millisecond. This may work OK most of the time but the moment the system is loaded by something else, the program may start running its loops slower because the process may be preempted by the kernel or be swapped out of memory in favor of another memory intensive program. A real-time operating system will be designed so that regardless of the system load, the program that toggles the pin can do the operation every millisecond give or take a few microseconds. This is the reason that a high performance computer with the latest Core i7 processor running a non-realtime OS can be less &ldquo;real-time&rdquo; than a low end microcontroller running a single optimized control task. Real-time systems are used in mission critical control systems such as those on fly-by-wire aircraft, satellites, exoplanetary rovers, cardiac pacemakers or car engine control units.</p>
+
+<p>A real-time operating system (RTOS) usually has an API for creating and running real-time tasks and uses a scheduling algorithm that&rsquo;s different from what&rsquo;s used by general purpose operating systems like Windows and Linux. There are many RTOSs in the wild. <a href="https://en.wikipedia.org/wiki/Comparison_of_real-time_operating_systems" target="_blank">Wikipedia has a great list of them.</a> Some RTOS&rsquo;s like FreeRTOS are meant to be used in embedded microcontrollers. Some - like RTLinux are used when the real-time application needs to be run on a full blown operating system. Using real-time with full operating systems also allow you to take advantage of a lot of existing software and functionality that the operating system will have like networking and math libraries like GSL.</p>
+
+<h2 id="real-time-operating-systems-for-control">Real-Time Operating Systems for Control</h2>
+
+<p>When implementing a control system such as a PID controller digitally, real-time response times become very important. One of the assumptions made when developing digital control systems is that of constant sampling time. When you implement a control loop in code, if the constant sampling rate assumption is not met or if the controller responds too late to changes in the system state, it could lead to the system becoming unstable.</p>
+
+<p>The choice of using Xenomai to implement our real time controllers was mostly due to the fact that it has very good documentation apart from being free and open source.</p>
+
+<h2 id="installing-xenomai">Installing Xenomai</h2>
+
+<p>To get Xenomai running on a linux system, you need to compile a modified kernel. I used Lubuntu 12.04 (which ships with kernel 3.2). The version of the kernel that I compiled is 3.18.20. Choose a version of the kernel that is close in version number to the one that the distribution ships with to minimize issues.</p>
+
+<p>Before starting, create a fresh folder to act as your workspace. Also make sure you have plenty of disk space available. The 3.18.20 kernel requires just over 11 GB of free disk space to compile successfully. Newer versions of the kernel need more. 20 GB should be safe.</p>
+
+<p>These are the steps that I&rsquo;ve been following to get a freshly installed Lubuntu system working with xenomai. Keep in mind that if this is the first time you&rsquo;re compiling a kernel, things are bound to go wrong. Be willing to debug your compilation patiently. I had to go through the compilation process dozens of times, making tweaks at each step to get my first successful kernel image.</p>
+
+<ol>
+<li>Go to the downloads section of the xenomai website and look for an ipipe patch (it&rsquo;s a file with a .patch extension) that is for a kernel version that&rsquo;s close to the version your distribution ships with. This is the kernel version that you&rsquo;ll be compiling.</li>
+<li>Go to kernel.org and download the version of the linux kernel that exactly matches the kernel version on the ipipe patch file name.</li>
+<li>Download the xenomai source from the xenomai website.</li>
+<li>Unzip the files into separate folders.</li>
+<li>Apply the xenomai patch to the kernel:
+<code>xenomai-3.0.4/scripts/prepare-kernel.sh --linux=linux-&lt;version&gt; --ipipe=patch-&lt;patch-version&gt;.patch --arch=x86_64</code></li>
+<li><code>cd</code> into the kernel source directory and run <code>make menuconfig</code> and make the following changes:
+
+<ul>
+<li>Power Management and ACPI Options -&gt; CPU Frequency Scaling - DISABLE</li>
+<li>Power Management and ACPI Options -&gt; ACPI Support -&gt; Processor - DISABLE</li>
+<li>Power Management and ACPI Options -&gt; CPU Idle -&gt; CPU Idle PM Support - DISABLE</li>
+<li>Device Drivers -&gt; Input Device Support -&gt; Generic Input Layer -&gt; Miscellaneous Devices -&gt; PC Speaker Support - DISABLE</li>
+<li>Processor type and features -&gt; Processor family: Select the exact processor on the motherboard. This is important for things to work properly.</li>
+<li>Xenomai/cobalt -&gt; Core Features -&gt; Shared Interrupts - ENABLE (If you want shared interrupts to work)</li>
+<li>In the Xenomai/Cobalt drivers section enable all the drivers for the devices that you’ll be using. Consider compiling the drivers as modules (using the m key) so that it is easier to load and unload and debug using modprobe/insmod/rmmod</li>
+</ul></li>
+<li>Before compiling the kernel ensure that you have all the packages needed to compile the kernel. Use apt-get or any package manager.
+
+<ul>
+<li>gcc</li>
+<li>make</li>
+<li>Autoconf</li>
+<li>libtool</li>
+<li>kernel-package</li>
+<li>build-essential</li>
+<li>fakeroot</li>
+<li>dh-autoconf</li>
+</ul></li>
+<li><code>cd</code> into the kernel source folder again and compile the kernel using the command: <code>sudo CONCURRENCY_LEVEL=8 CLEAN_SOURCE=no fakeroot make-kpkg --initrd --append-to-version -xenomai-realtime --revision 1.0 kernel_image kernel_headers</code></li>
+<li>Once the compile is complete, in the directory above the kernel source, there should be two .deb files: One starting with linux-headers and one starting with linux-image. These are the kernel image and header debian packages that you can use to install the kernel.</li>
+<li>Use <code>sudo dpkg -i &lt;package-name&gt;</code> to install each of the packages</li>
+<li>Update the initramfs using the command <code>sudo update-initramfs -c -k &lt;kernel-version&gt;-xenomai-realtime &amp;&amp; sudo update-grub</code></li>
+<li><code>cd</code> into the unzipped xenomai source folder and run <code>sudo ./configure</code> followed by <code>sudo make &amp;&amp; make install</code></li>
+<li>Reboot and select the new kernel in the grub menu (Hold down shift at boot time to bring up the menu).</li>
+</ol>
+
+<p>If everything went well, xenomai should be installed on your system now. You might be tempted to start running some tests immediately but I think it&rsquo;s worth taking some more time to set up your build environment properly to make development easier.</p>
+
+<p>Some important xenomai related executables (including xeno-config) are in the <code>/usr/xenomai/bin</code> folder. You need to append this to the <code>PATH</code> environment variable. The library files that the code is linked against are installed in the <code>/usr/xenomai/lib</code> folder. You need to append this to the <code>LD_LIBRARY_PATH</code> environment variable. My preferred way of doing this is to edit the ~/.bashrc file with export statements. Open up your .bashrc file (it&rsquo;s in your home folder, hidden) by running <code>leafpad ~/.bashrc</code> and add the following two lines to it at the end.</p>
+
+<p><code>export PATH=”/usr/xenomai/bin:$PATH”
+export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”</code></p>
+
+<p>When you try to run a compiled xenomai application afterwards, you will need to run it as superuser (using the sudo command). It might complain that it cannot find the library files. This is because environment variables are cleared when running a program as root. To fix this permanently:</p>
+
+<ol>
+<li>Open up a terminal and go to the <code>/etc/ld.so.conf.d</code> folder.</li>
+<li>Create a new file called xenomai.conf (as superuser)</li>
+<li>Add the line <code>/usr/xenomai/lib</code> to the file.</li>
+<li>Run <code>sudo ldconfig</code></li>
+</ol>
+
+<p><em>Now</em> you can finally try to run some tests. If everything went well, running <code>sudo /usr/xenomai/bin/latency</code> should run the latency test program that outputs some numbers on to the terminal that shows you the latency figures of your system. It should be in the tens of microseconds range (If not something&rsquo;s wrong).</p>
+
+<p>The process of getting real-time linux with Xenomai or any other framework running for the first time can be a little painful but once your installation is stable, it&rsquo;ll serve you well for a very long time. Once you have a working compiled kernel package, installation on future hardware will also go much faster.</p>
+
+<p>In Part 2 of this series of blog posts, I will go through the process of writing a simple periodic real-time task using Xenomai&rsquo;s real-time API.</p>
+
+    </div>
+  </div>
+
+</article>
+
+<div class="container">
+  <nav>
+  <ul class="pager">
+    
+    <li class="previous"><a href="http://www.ashwinnarayan.com/post/welcome/"><span
+      aria-hidden="true">&larr;</span> Brand New Website!</a></li>
+    
+
+    
+  </ul>
+</nav>
+
+</div>
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'rationalash';
+    var disqus_identifier = 'http:\/\/www.ashwinnarayan.com\/post\/xenomai-realtime-programming\/';
+    var disqus_title = 'Real-Time Programming with Xenomai - Part 1: Installation and Basic Setup';
+    var disqus_url = 'http:\/\/www.ashwinnarayan.com\/post\/xenomai-realtime-programming\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Ashwin Narayan &middot; 
+
+      Powered by the <a href="https://github.com/gcushen/hugo-academic" target="_blank">Academic
+      theme</a> for <a href="http://gohugo.io" target="_blank">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-99092575-1', 'auto');
+        ga('send', 'pageview');
+
+         
+        var links = document.querySelectorAll('a');
+        Array.prototype.map.call(links, function(item) {
+            if (item.host != document.location.host) {
+                item.addEventListener('click', function() {
+                    var action = item.getAttribute('data-action') || 'follow';
+                    ga('send', 'event', 'outbound', action, item.href);
+                });
+            }
+        });
+    </script>
+    
+
+    
+    
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    
+
+  </body>
+</html>
+

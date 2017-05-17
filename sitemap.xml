@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/post/xenomai-realtime-programming/</loc>
+      <lastmod>2017-05-17T00:07:36+08:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/project/telegram-bot-music-control/</loc>
       <lastmod>2017-05-14T00:00:00+00:00</lastmod>
     </url>
@@ -144,7 +153,7 @@
     <url>
     
       <loc>http://www.ashwinnarayan.com/tags/programming/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
+      <lastmod>2017-05-17T00:07:36+08:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -172,6 +181,16 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/tags/real-time/</loc>
+      <lastmod>2017-05-17T00:07:36+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/tags/robotics/</loc>
       <lastmod>2017-05-14T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -184,6 +203,16 @@
     
       <loc>http://www.ashwinnarayan.com/tags/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/tags/xenomai/</loc>
+      <lastmod>2017-05-17T00:07:36+08:00</lastmod>
       <priority>0</priority>
     </url>
     

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.20.7" />
+  <meta name="author" content="Ashwin Narayan">
+  <meta name="description" content="PhD Student">
+
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/highlight.min.css">
+    
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/academicons.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono">
+  <link rel="stylesheet" href="/css/hugo-academic.css">
+  
+
+  <link rel="alternate" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  <link rel="feed" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+
+  <link rel="canonical" href="http://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/">
+
+  
+
+  <title>Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task. | Ashwin Narayan</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Personal Projects</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+  <div class="article-container">
+    <h1 itemprop="name">Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</h1>
+    
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    <time datetime="2017-05-20 23:10:16 &#43;0800 SGT" itemprop="datePublished">
+      Sat, May 20, 2017
+    </time>
+  </span>
+
+  
+
+  
+  
+  
+  <span class="article-tags">
+    <i class="fa fa-tags"></i>
+    
+    <a href="/tags/xenomai">xenomai</a
+    >, 
+    
+    <a href="/tags/real-time">real-time</a
+    >, 
+    
+    <a href="/tags/programming">programming</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming-part-2%2f"
+         target="_blank">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Real-Time%20Programming%20with%20Xenomai%203%20-%20Part%202%3a%20Writing%20a%20simple%20periodic%20task.&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming-part-2%2f"
+         target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming-part-2%2f&amp;title=Real-Time%20Programming%20with%20Xenomai%203%20-%20Part%202%3a%20Writing%20a%20simple%20periodic%20task."
+         target="_blank">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming-part-2%2f&amp;title=Real-Time%20Programming%20with%20Xenomai%203%20-%20Part%202%3a%20Writing%20a%20simple%20periodic%20task."
+         target="_blank">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Real-Time%20Programming%20with%20Xenomai%203%20-%20Part%202%3a%20Writing%20a%20simple%20periodic%20task.&amp;body=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fxenomai-realtime-programming-part-2%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    <div class="article-style" itemprop="articleBody">
+      <p>Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with. This patch adds an <em>interrupt pipeline</em> that sits between the hardware of the computer and any kernels running on the hardware. The interrupt pipeline has domains which can be assigned a priority. When any interrupt, system call or processor fault comes in, the domain with the higher priority is allowed to process them first. The Xenomai co-kernel has the higher priority in an ipipe patched kernel. The Xenomai website has a <a href="https://xenomai.org/documentation/branches/v2.3.x/Life-with-Adeos-rev_B.pdf" target="_blank">more detailed explanation of how it works</a>.</p>
+
+<p>Before I start with the explanation, here&rsquo;s the full code and Makefile for those who just want to compile some code and get started. The documentation for all the functions used in the code and more can be found <a href="https://xenomai.org/documentation/xenomai-3/pdf/xeno3prm.pdf" target="_blank">here</a>.</p>
+
+<p>The code:</p>
+
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;alchemy/task.h&gt;
+#include &lt;alchemy/timer.h&gt;
+#include &lt;math.h&gt;
+
+
+#define CLOCK_RES 1e-9 //Clock resolution is 1 ns by default
+#define LOOP_PERIOD 1e7 //Expressed in ticks
+//RTIME period = 1000000000;
+RT_TASK loop_task;
+
+void loop_task_proc(void *arg)
+{
+  RT_TASK *curtask;
+  RT_TASK_INFO curtaskinfo;
+  int iret = 0;
+
+  RTIME tstart, now;
+
+  curtask = rt_task_self();
+  rt_task_inquire(curtask, &amp;curtaskinfo);
+  int ctr = 0;
+
+  //Print the info
+  printf(&quot;Starting task %s with period of 10 ms ....\n&quot;, curtaskinfo.name);
+
+  //Make the task periodic with a specified loop period
+  rt_task_set_periodic(NULL, TM_NOW, LOOP_PERIOD);
+
+  tstart = rt_timer_read();
+
+  //Start the task loop
+  while(1){
+    printf(&quot;Loop count: %d, Loop time: %.5f ms\n&quot;, ctr, (rt_timer_read() - tstart)/1000000.0);
+    ctr++;
+    rt_task_wait_period(NULL);
+  }
+}
+
+int main(int argc, char **argv)
+{
+  char str[20];
+
+  //Lock the memory to avoid memory swapping for this program
+  mlockall(MCL_CURRENT | MCL_FUTURE);
+    
+  printf(&quot;Starting cyclic task...\n&quot;);
+
+  //Create the real time task
+  sprintf(str, &quot;cyclic_task&quot;);
+  rt_task_create(&amp;loop_task, str, 0, 50, 0);
+
+  //Since task starts in suspended mode, start task
+  rt_task_start(&amp;loop_task, &amp;loop_task_proc, 0);
+
+  //Wait for Ctrl-C
+  pause();
+
+  return 0;
+}
+</code></pre>
+
+<p>The Makefile</p>
+
+<pre><code class="language-Makefile">SKIN=alchemy
+MAIN_SRC=cyclic_test
+TARGET=cyclic_test
+
+LM=-lm
+
+CFLAGS := $(shell xeno-config --skin=alchemy --cflags)
+LDFLAGS := $(LM) $(shell xeno-config --skin=alchemy --ldflags)
+CC := $(shell xeno-config --cc)
+
+$(TARGET): $(MAIN_SRC).c
+	$(CC) -o $@ $&lt; $(CFLAGS) $(LDFLAGS)
+</code></pre>
+
+<p>First, the headers, defines and global variables:</p>
+
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;alchemy/task.h&gt;
+#include &lt;alchemy/timer.h&gt;
+#include &lt;math.h&gt;
+
+
+#define CLOCK_RES 1e-9 //Clock resolution is 1 ns by default
+#define LOOP_PERIOD 1e7 //Expressed in ticks
+//RTIME period = 1000000000;
+RT_TASK loop_task;
+</code></pre>
+
+<p>The includes are fairly standard. The Xenomai libraries are included by the <code>alchemy/task.h</code> and the <code>alchemy/timer.h</code> statements. I&rsquo;ve deifined CLOCK_RES (The resolution of the clock) and LOOP_PERIOD (The period with which I want the periodic task to run) for convenience. The variable <code>RT_TASK loop_task</code> will hold an address to a task descriptor for a Real-Time task/thread that Xenomai will create.</p>
+
+<p>Jumping ahead to <code>main()</code>, the first line that you come across that might be unfamiliar is:</p>
+
+<pre><code class="language-C">  //Lock the memory to avoid memory swapping for this program
+  mlockall(MCL_CURRENT | MCL_FUTURE);
+</code></pre>
+
+<p>The mlockall() function is actually a function provided by linux rather than Xenomai and is provided by the <code>&lt;sys/mman.h&gt;</code> include. In Part one, I talked about how a real-time task can miss its deadlines if the task is swapped out of memory by the operating system. This line of code makes sure that the memory that is currently mapped to the address space of the process as well as any memory that gets mapped into the address space of the process in the future is &ldquo;locked&rdquo; into RAM and cannot get swapped out.</p>
+
+<p>In the next few lines of code, a new real-time task is created.</p>
+
+<pre><code class="language-C">  //Create the real time task
+  sprintf(str, &quot;cyclic_task&quot;);
+  rt_task_create(&amp;loop_task, str, 0, 50, 0);
+</code></pre>
+
+<p>The rt_task_create() function creates a new real-time task using Xenoma&rsquo;s Alchemy API. The first argument is the RT_TASK variable that holds the address of the task descriptor. The second is a string that holds a name for the task. You can give it a descriptive name. The third argument is the size of the stack for the new task. Passing a zero makes the function use a system dependent default. The next argument is the <em>priority</em> of the task. This tells the real-time scheduler how important the task is. Higher priority tasks can interrupt lower priority tasks. The last argument is the task creation mode into which you can pass bitwise OR&rsquo;ed flags. For example, passing the T_JOINABLE flag allows you to call the rt_task_join() function to wait on the task to finish. In this code sample, I&rsquo;m just passing in zero, which is the default mode. The function returns a 0 if the task is successfully created. Ideally, you should check for this and print an error if the return value is not zero. However, for this simple example, I&rsquo;m omitting this.</p>
+
+<p>A real-time task created using rt_task_create() starts off dormant. To begin the execution of the task, you need to call the rt_task_start() function.</p>
+
+<pre><code class="language-C">  //Since task starts in suspended mode, start task
+  rt_task_start(&amp;loop_task, &amp;loop_task_proc, 0);
+</code></pre>
+
+<p>The first two arguments are the task descriptor and a pointer to the function that implements the real-time task. The last argument is a pointer to a user defined struct that will be passed on as arguments to the real-time task function.</p>
+
+<p>Finally we call the pause() function and wait for a Ctrl-C signal from the terminal.</p>
+
+<p>Once rt_task_start() is called, the real-time task starts executing. To make a Xenomai task periodic, you need to call the rt_task_set_periodic() function.</p>
+
+<pre><code class="language-C"> //Make the task periodic with a specified loop period
+  rt_task_set_periodic(NULL, TM_NOW, LOOP_PERIOD);
+</code></pre>
+
+<p>If you&rsquo;re calling this function from outside a real-time task, you need to pass in an RT_TASK as the first argument. However, you can also call this function from inside a real-time task with a <code>NULL</code> first argument. <code>TM_NOW</code> tells Xenomai to start timing the task right away and LOOP period is the period of the task in ticks of the clock. Since the default resolution of the clock is 1 nanosecond, this argument is the same as the period you want for the task expressed in nanoseconds.</p>
+
+<p>Now we can start the infinite loop of the task.</p>
+
+<pre><code class="language-C">//Start the task loop
+  while(1){
+    printf(&quot;Loop count: %d, Loop time: %.5f ms\n&quot;, ctr, (rt_timer_read() - tstart)/1000000.0);
+    ctr++;
+    rt_task_wait_period(NULL);
+  }
+</code></pre>
+
+<p>In the loop I increment a simple counter and also use the rt_timer_read() function to get the current system time so I can print to the terminal and check if the task is running in real-time. The rt_task_wait_period() blocks the loop till the start of the next period.</p>
+
+<p>When I started out trying to compile and run Xenomai with no prior experience, it seemed like quite a daunting task. The Xenomai documentation although excellent is written for programmers and as a result, it can be difficult to write your very first program. However, once you do write your very first program and you get a good idea for how it works, things go very smoothly. This post, like the one before is a bit long but hopefully, someone trying to get started with Xenomai for the first time will find it useful!</p>
+
+    </div>
+  </div>
+
+</article>
+
+<div class="container">
+  <nav>
+  <ul class="pager">
+    
+    <li class="previous"><a href="http://www.ashwinnarayan.com/post/xenomai-realtime-programming/"><span
+      aria-hidden="true">&larr;</span> Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</a></li>
+    
+
+    
+  </ul>
+</nav>
+
+</div>
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'rationalash';
+    var disqus_identifier = 'http:\/\/www.ashwinnarayan.com\/post\/xenomai-realtime-programming-part-2\/';
+    var disqus_title = 'Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.';
+    var disqus_url = 'http:\/\/www.ashwinnarayan.com\/post\/xenomai-realtime-programming-part-2\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Ashwin Narayan &middot; 
+
+      Powered by the <a href="https://github.com/gcushen/hugo-academic" target="_blank">Academic
+      theme</a> for <a href="http://gohugo.io" target="_blank">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-99092575-1', 'auto');
+        ga('send', 'pageview');
+
+         
+        var links = document.querySelectorAll('a');
+        Array.prototype.map.call(links, function(item) {
+            if (item.host != document.location.host) {
+                item.addEventListener('click', function() {
+                    var action = item.getAttribute('data-action') || 'follow';
+                    ga('send', 'event', 'outbound', action, item.href);
+                });
+            }
+        });
+    </script>
+    
+
+    
+    
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    
+
+  </body>
+</html>
+

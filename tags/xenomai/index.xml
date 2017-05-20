@@ -7,8 +7,171 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Ashwin Narayan</copyright>
-    <lastBuildDate>Wed, 17 May 2017 00:07:36 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 May 2017 23:10:16 +0800</lastBuildDate>
     <atom:link href="/tags/xenomai/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</title>
+      <link>http://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</link>
+      <pubDate>Sat, 20 May 2017 23:10:16 +0800</pubDate>
+      
+      <guid>http://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</guid>
+      <description>&lt;p&gt;Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with. This patch adds an &lt;em&gt;interrupt pipeline&lt;/em&gt; that sits between the hardware of the computer and any kernels running on the hardware. The interrupt pipeline has domains which can be assigned a priority. When any interrupt, system call or processor fault comes in, the domain with the higher priority is allowed to process them first. The Xenomai co-kernel has the higher priority in an ipipe patched kernel. The Xenomai website has a &lt;a href=&#34;https://xenomai.org/documentation/branches/v2.3.x/Life-with-Adeos-rev_B.pdf&#34; target=&#34;_blank&#34;&gt;more detailed explanation of how it works&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before I start with the explanation, here&amp;rsquo;s the full code and Makefile for those who just want to compile some code and get started. The documentation for all the functions used in the code and more can be found &lt;a href=&#34;https://xenomai.org/documentation/xenomai-3/pdf/xeno3prm.pdf&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;signal.h&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;sys/mman.h&amp;gt;
+#include &amp;lt;alchemy/task.h&amp;gt;
+#include &amp;lt;alchemy/timer.h&amp;gt;
+#include &amp;lt;math.h&amp;gt;
+
+
+#define CLOCK_RES 1e-9 //Clock resolution is 1 ns by default
+#define LOOP_PERIOD 1e7 //Expressed in ticks
+//RTIME period = 1000000000;
+RT_TASK loop_task;
+
+void loop_task_proc(void *arg)
+{
+  RT_TASK *curtask;
+  RT_TASK_INFO curtaskinfo;
+  int iret = 0;
+
+  RTIME tstart, now;
+
+  curtask = rt_task_self();
+  rt_task_inquire(curtask, &amp;amp;curtaskinfo);
+  int ctr = 0;
+
+  //Print the info
+  printf(&amp;quot;Starting task %s with period of 10 ms ....\n&amp;quot;, curtaskinfo.name);
+
+  //Make the task periodic with a specified loop period
+  rt_task_set_periodic(NULL, TM_NOW, LOOP_PERIOD);
+
+  tstart = rt_timer_read();
+
+  //Start the task loop
+  while(1){
+    printf(&amp;quot;Loop count: %d, Loop time: %.5f ms\n&amp;quot;, ctr, (rt_timer_read() - tstart)/1000000.0);
+    ctr++;
+    rt_task_wait_period(NULL);
+  }
+}
+
+int main(int argc, char **argv)
+{
+  char str[20];
+
+  //Lock the memory to avoid memory swapping for this program
+  mlockall(MCL_CURRENT | MCL_FUTURE);
+    
+  printf(&amp;quot;Starting cyclic task...\n&amp;quot;);
+
+  //Create the real time task
+  sprintf(str, &amp;quot;cyclic_task&amp;quot;);
+  rt_task_create(&amp;amp;loop_task, str, 0, 50, 0);
+
+  //Since task starts in suspended mode, start task
+  rt_task_start(&amp;amp;loop_task, &amp;amp;loop_task_proc, 0);
+
+  //Wait for Ctrl-C
+  pause();
+
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Makefile&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Makefile&#34;&gt;SKIN=alchemy
+MAIN_SRC=cyclic_test
+TARGET=cyclic_test
+
+LM=-lm
+
+CFLAGS := $(shell xeno-config --skin=alchemy --cflags)
+LDFLAGS := $(LM) $(shell xeno-config --skin=alchemy --ldflags)
+CC := $(shell xeno-config --cc)
+
+$(TARGET): $(MAIN_SRC).c
+	$(CC) -o $@ $&amp;lt; $(CFLAGS) $(LDFLAGS)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;First, the headers, defines and global variables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;signal.h&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;sys/mman.h&amp;gt;
+#include &amp;lt;alchemy/task.h&amp;gt;
+#include &amp;lt;alchemy/timer.h&amp;gt;
+#include &amp;lt;math.h&amp;gt;
+
+
+#define CLOCK_RES 1e-9 //Clock resolution is 1 ns by default
+#define LOOP_PERIOD 1e7 //Expressed in ticks
+//RTIME period = 1000000000;
+RT_TASK loop_task;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The includes are fairly standard. The Xenomai libraries are included by the &lt;code&gt;alchemy/task.h&lt;/code&gt; and the &lt;code&gt;alchemy/timer.h&lt;/code&gt; statements. I&amp;rsquo;ve deifined CLOCK_RES (The resolution of the clock) and LOOP_PERIOD (The period with which I want the periodic task to run) for convenience. The variable &lt;code&gt;RT_TASK loop_task&lt;/code&gt; will hold an address to a task descriptor for a Real-Time task/thread that Xenomai will create.&lt;/p&gt;
+
+&lt;p&gt;Jumping ahead to &lt;code&gt;main()&lt;/code&gt;, the first line that you come across that might be unfamiliar is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;  //Lock the memory to avoid memory swapping for this program
+  mlockall(MCL_CURRENT | MCL_FUTURE);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The mlockall() function is actually a function provided by linux rather than Xenomai and is provided by the &lt;code&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/code&gt; include. In Part one, I talked about how a real-time task can miss its deadlines if the task is swapped out of memory by the operating system. This line of code makes sure that the memory that is currently mapped to the address space of the process as well as any memory that gets mapped into the address space of the process in the future is &amp;ldquo;locked&amp;rdquo; into RAM and cannot get swapped out.&lt;/p&gt;
+
+&lt;p&gt;In the next few lines of code, a new real-time task is created.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;  //Create the real time task
+  sprintf(str, &amp;quot;cyclic_task&amp;quot;);
+  rt_task_create(&amp;amp;loop_task, str, 0, 50, 0);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The rt_task_create() function creates a new real-time task using Xenoma&amp;rsquo;s Alchemy API. The first argument is the RT_TASK variable that holds the address of the task descriptor. The second is a string that holds a name for the task. You can give it a descriptive name. The third argument is the size of the stack for the new task. Passing a zero makes the function use a system dependent default. The next argument is the &lt;em&gt;priority&lt;/em&gt; of the task. This tells the real-time scheduler how important the task is. Higher priority tasks can interrupt lower priority tasks. The last argument is the task creation mode into which you can pass bitwise OR&amp;rsquo;ed flags. For example, passing the T_JOINABLE flag allows you to call the rt_task_join() function to wait on the task to finish. In this code sample, I&amp;rsquo;m just passing in zero, which is the default mode. The function returns a 0 if the task is successfully created. Ideally, you should check for this and print an error if the return value is not zero. However, for this simple example, I&amp;rsquo;m omitting this.&lt;/p&gt;
+
+&lt;p&gt;A real-time task created using rt_task_create() starts off dormant. To begin the execution of the task, you need to call the rt_task_start() function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;  //Since task starts in suspended mode, start task
+  rt_task_start(&amp;amp;loop_task, &amp;amp;loop_task_proc, 0);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The first two arguments are the task descriptor and a pointer to the function that implements the real-time task. The last argument is a pointer to a user defined struct that will be passed on as arguments to the real-time task function.&lt;/p&gt;
+
+&lt;p&gt;Finally we call the pause() function and wait for a Ctrl-C signal from the terminal.&lt;/p&gt;
+
+&lt;p&gt;Once rt_task_start() is called, the real-time task starts executing. To make a Xenomai task periodic, you need to call the rt_task_set_periodic() function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt; //Make the task periodic with a specified loop period
+  rt_task_set_periodic(NULL, TM_NOW, LOOP_PERIOD);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you&amp;rsquo;re calling this function from outside a real-time task, you need to pass in an RT_TASK as the first argument. However, you can also call this function from inside a real-time task with a &lt;code&gt;NULL&lt;/code&gt; first argument. &lt;code&gt;TM_NOW&lt;/code&gt; tells Xenomai to start timing the task right away and LOOP period is the period of the task in ticks of the clock. Since the default resolution of the clock is 1 nanosecond, this argument is the same as the period you want for the task expressed in nanoseconds.&lt;/p&gt;
+
+&lt;p&gt;Now we can start the infinite loop of the task.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C&#34;&gt;//Start the task loop
+  while(1){
+    printf(&amp;quot;Loop count: %d, Loop time: %.5f ms\n&amp;quot;, ctr, (rt_timer_read() - tstart)/1000000.0);
+    ctr++;
+    rt_task_wait_period(NULL);
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the loop I increment a simple counter and also use the rt_timer_read() function to get the current system time so I can print to the terminal and check if the task is running in real-time. The rt_task_wait_period() blocks the loop till the start of the next period.&lt;/p&gt;
+
+&lt;p&gt;When I started out trying to compile and run Xenomai with no prior experience, it seemed like quite a daunting task. The Xenomai documentation although excellent is written for programmers and as a result, it can be difficult to write your very first program. However, once you do write your very first program and you get a good idea for how it works, things go very smoothly. This post, like the one before is a bit long but hopefully, someone trying to get started with Xenomai for the first time will find it useful!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</title>

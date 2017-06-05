@@ -465,6 +465,12 @@ article {
   margin-right: 10px;
 }
 
+.article-style
+{
+	text-align: justify;
+	text-justify: inter-word;
+}
+
 .article-style img,
 .article-style video {
   box-shadow: 1px 1px 0px #edefed, -1px -1px 0px #edefed, 1px -1px 0px #edefed, -1px 1px 0px #edefed;

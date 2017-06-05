@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/post/icra-2017/</loc>
+      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</loc>
       <lastmod>2017-05-20T23:10:16+08:00</lastmod>
     </url>
@@ -122,6 +131,16 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/tags/academia/</loc>
+      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/</loc>
       <lastmod>2016-04-20T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -141,8 +160,28 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/tags/conference/</loc>
+      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/tags/electronics/</loc>
       <lastmod>2017-05-14T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/tags/icra/</loc>
+      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
       <priority>0</priority>
     </url>
     

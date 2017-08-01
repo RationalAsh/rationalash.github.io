@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.20.7" />
+  <meta name="author" content="Ashwin Narayan">
+  <meta name="description" content="PhD Student">
+
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/highlight.min.css">
+    
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/academicons.min.css">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono">
+  <link rel="stylesheet" href="/css/hugo-academic.css">
+  
+
+  <link rel="alternate" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  <link rel="feed" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+
+  <link rel="canonical" href="http://www.ashwinnarayan.com/post/dataflow-programming-in-c/">
+
+  
+
+  <title>Programming Complex Dataflows in C | Ashwin Narayan</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71">
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Personal Projects</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+          </a>
+        </li>
+
+        
+        
+
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+  <div class="article-container">
+    <h1 itemprop="name">Programming Complex Dataflows in C</h1>
+    
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    <time datetime="2017-08-01 00:15:14 &#43;0800 SGT" itemprop="datePublished">
+      Tue, Aug 1, 2017
+    </time>
+  </span>
+
+  
+
+  
+  
+  
+  <span class="article-tags">
+    <i class="fa fa-tags"></i>
+    
+    <a href="/tags/programming">programming</a
+    >, 
+    
+    <a href="/tags/c">C</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
+         target="_blank">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Programming%20Complex%20Dataflows%20in%20C&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
+         target="_blank">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f&amp;title=Programming%20Complex%20Dataflows%20in%20C"
+         target="_blank">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f&amp;title=Programming%20Complex%20Dataflows%20in%20C"
+         target="_blank">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Programming%20Complex%20Dataflows%20in%20C&amp;body=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>Over the past few months I&rsquo;ve been spending a lot of time on implementing various signal processing algorithms in C/C++. Things like Kalman Filters, various types of FIR filters and finite state machines. The number of steps needed to implement each these algorithms were fairly small and in the beginning I tried to put all the functionality of these implementations into simple to use C++ classes. This made things look neater and also fit in quite well with the Arduino programming framework (I was implementing a lot of these algorithms on Arduino compatible microcontrollers like the Teensy). However, once I started combining different algorithms together to make something bigger, the code started becoming very messy. Making changes and debugging was starting to take longer and longer. In many instances, I had to go back and change the deisgn and interface of my C++ classes when I realized that the way I initially implemented it made it impossible or very difficult to do some step in the algorithm. I decided to take some time to figure out how I can do better. I wanted to find out a systematic method - a &ldquo;meta-programming&rdquo; algorithm if you will - that would tell me the way I should implement the algorithm so that the code is easy to write and more importantly, easy to read and debug.</p>
+
+<h2 id="representing-the-algorithm">Representing the Algorithm</h2>
+
+<p>Before I could start solving the problem I needed to decide how to represent a general data processing algorithm. What is a representation that can capture most if not all of the types of algorithms that I wanted to implement? I remembered that in a lot of papers that I&rsquo;ve read, the authors used Simulink to implement their algorithm. So I decided to start out by assuming that I can represent what I want to do in the form of a block diagram - much like the block diagrams that you can draw in Simulink. It turns out that as long as they don&rsquo;t have any cycles or loops, block diagrams with arrows representing the flow of data between the blocks can be represented by a mathematical structure called a Directed Acyclic Graph.</p>
+
+<h2 id="directed-acyclic-graphs">Directed Acyclic Graphs</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">Graphs</a> as a mathematical structure (different from the graphs that you use to plot data) are useful for representing relationships between things. Intuitively I think of them as circles connected by lines. The circles represent things and the lines represent some type of relationship between the things. If this seems very abstract, that&rsquo;s because graphs can be applied to a <em>lot</em> of different things and when an concept is that general, it tends to be very abstract. As an example, a graph can be used to represent an electrical circuit. Each discrete component like a resistor or an LED can be considered a node or vertex in the graph (circles). The wires that connect these components together can be considered the edges of the graph.</p>
+
+
+<figure >
+    
+        <img src="https://imgs.xkcd.com/comics/collatz_conjecture.png" alt="A graph representing the collatz sequence and some unrelated drawings." />
+    
+    
+    <figcaption>
+        <p>
+        A graph representing the collatz sequence and some unrelated drawings.
+        <a href="https://xkcd.com/710/"> 
+            Source: xkcd
+        </a> 
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<p>A <a href="https://en.wikipedia.org/wiki/Directed_graph" target="_blank">directed graph</a> is a graph in which the edges connecting the nodes have a direction. The graph in the image from xkcd is a directed graph since it has arrows connecting the nodes of the graph.</p>
+
+<p>A <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph" target="_blank">directed acyclic graph</a> (DAG) is a directed graph that does not have <em>cycles</em> in it. This means that there is no way to start at a node in the graph and follow the arrows from node to node and reach the node you started at. A directed acyclic graph is useful for modeling dependencies. If you&rsquo;re planning to understand some big concept in science - General Relativitiy for example - there are prerequisite ideas that you need to understand first. A subject and it&rsquo;s prerequisites can be arranged in the form of a directed acyclic graph.</p>
+
+
+<figure >
+    
+        <img src="/img/markov_chains.png" alt="A directed acyclic graph showing the dependencies for learning about Markov Chains." />
+    
+    
+    <figcaption>
+        <p>
+        A directed acyclic graph showing the dependencies for learning about Markov Chains.
+        <a href="https://metacademy.org"> 
+            Source: Metacademy
+        </a> 
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<h2 id="topological-sorting">Topological Sorting</h2>
+
+<p>Given a DAG showing the dependencies for learning about Markov chains like in the image above, one might ask the question: Is there a way to list the nodes of the graph in correct learning order <em>i.e</em> the order in which any dependencies for a node appear before the node itself is listed. It turns out that <a href="https://en.wikipedia.org/wiki/Topological_sorting" target="_blank">you can</a>! Every DAG has at least one way in which we can make this sorted list and there are a few algorithms for doing so.</p>
+
+<p>So if you want to learn something new, topologically sorting a dependency graph of the topic is a nice approach! In fact, this is exactly what the website <a href="https://metacademy.org" target="_blank">Metacademy</a> does! It gives you the order in which to learn things using topological sorting.</p>
+
+<h2 id="dataflows">Dataflows</h2>
+
+<p>So how does this relate to programming algorithms represented by block diagrams in C? I thought of the block diagram as a directed acyclic graph. The blocks which represent steps in the data processing algorithm are represented by nodes in the graph and the arrows that connect the blocks represent the flow of data. In programming, the nodes in the block diagram can be naturally represented by functions whose arguments are the incoming edges and the return values are the outgoing edges. This also means that the edges themselves can be naturally represented by variables in the C program. Once I&rsquo;ve defined all the edge variables and block functions, I need to figure out what is the correct order in which to call each of these block functions. The &ldquo;correct&rdquo; order can be defined as the order in which each function is only called once all the variables that represent the input edges to the block have been updated (if necessary) in the current iteration of the main loop of the program. It turns out that this correct order is the same as the topologically sorted order of the function blocks.</p>
+
+<p>So to summarize the systematic meta algorithm to implement a data processing algorithm in C:</p>
+
+<p>Start out with a fresh <code>.h</code> file which will contain your implementation</p>
+
+<ol>
+<li>Construct a block diagram of the algorithm showing the data flow.</li>
+<li>Make sure that the block diagram is a directed acyclic graph.</li>
+<li>Give names to each node and edge.</li>
+<li>For each edge in the graph, declare a C variable in the global scope. I use the <code>static</code> keyword if I want to make sure that the variable is only visible inside the header file. The data type of the C variable depends on the node that the edge originates from.</li>
+<li>For each node in the graph, declare a function that takes as arguments pointers to both the input and and output edge variables from the node. It is useful to declare the input pointers as <code>const</code> to ensure that the function does not modify the data in the edge variables. The function uses the input to carry out the processing step and modifies the output edge variables. I use <code>static</code> variables inside the function if I need to keep track of any state (like for finite state machines).</li>
+<li>Any parameters needed by the processing step inside the function can either be declared globally or as a const argument of the function. Personally, I like to have the simple parameters as <code>#define</code>s at the top of the header file so I can tweak/change them easily.</li>
+<li>If there are parameters that need to be modified/tuned during execution, they can be declared as variables global to the file. This is useful if you&rsquo;re running a code that implements something like a PID controller and you want to tune the gains of the controller online. I use an <a href="https://github.com/RationalAsh/CmdArduino" target="_blank">Arduino library</a> that listens to incoming commands on one of the Serial ports.</li>
+<li>Define an initialization function that initializes all the edge variables to an initial state (if necessary).</li>
+<li>Define a main function graph execution function that calls the block functions in the topologically sorted order.</li>
+</ol>
+
+<p>Here&rsquo;s a rough outline of what the <code>.h</code> file will look like.</p>
+
+<pre><code class="language-C">#ifndef DATA_PROC_H
+#define DATA_PROC_H
+
+//#defines and parameters
+#define PARAM1 0
+
+//Define the edge variables with the appropriate type
+float e1, e2, e3, e4
+int e5;
+//Define the node function prototypes
+void F1(const float in1, const float in2, float *out);
+void F2(const float in1, const float in2, float *out);
+void F3(const float in1, int *out);
+
+//Define the initialization function
+void data_proc_init()
+{
+    e1 = 0;
+    e2 = 0;
+    e3 = 0;
+    e4 = 0;
+}
+
+//Define the main execution pipeline function
+void data_proc_exec()
+{
+    //Node functions called in the topologically sorted order
+    F1(e1, e2, &amp;e3);
+    F2(e2, e3, &amp;e4);
+    F3(e4, &amp;e5);
+}
+
+//Function implementations
+//Implement the node functions here
+
+#endif
+</code></pre>
+
+<p>And in the main C file:</p>
+
+<pre><code class="language-C">#include &quot;data_proc.h&quot;
+
+int main(int argc, char** argv)
+{
+    //Run the initialization function
+    data_proc_init();
+
+    while(loop_condition)
+    {
+        //Execute pipeline function in loop
+        data_proc_exec();
+    }
+}
+</code></pre>
+
+<p>I&rsquo;ve noticed that if I stick to these rules consistently, my code is generally much easier to read. As long as I give descriptive names to the block functions, I only need to look at the main execution function to figure out the flow of the program. Debugging becomes easier too! It becomes a matter of adding one function from the topologically sorted list at a time and checking the output for correctess.</p>
+
+<p>While the meta algorithm that I wrote down is specifically for C, this method can easily be extended to other programming languages. Python would make doing this even easier as it is much more flexible with functions returning data. Instead of taking in pointers to the output variables as arguments, the function can actually return tuples of data that can be assigned to the output edge variables.</p>
+
+<p>I&rsquo;m sure that this method will have some limitations. One I can see right away is that it uses a lot of variables. One for each edge and even more for the static variables inside the function. On memory constrained systems like small microcontrollers, the RAM can run out pretty fast (Declaring non-tweakable parameters as being stored in the code ROM should help with this a bit). Another problem is the question of what to do with algorithms that can&rsquo;t be represented as a DAG. I don&rsquo;t know if it&rsquo;s possible to represent all possible algorithms using DAGs (A quick google search did not turn up any conclusive answers). I am also unsure how this model can be used for programming things like GUIs which sit around and wait for events to happen most of the time. However, when implementing control and signal processing algorithms, I find this method is singularly better than the others I&rsquo;ve tried.</p>
+
+    </div>
+  </div>
+
+</article>
+
+<div class="container">
+  <nav>
+  <ul class="pager">
+    
+    <li class="previous"><a href="http://www.ashwinnarayan.com/post/icra-2017/"><span
+      aria-hidden="true">&larr;</span> ICRA 2017</a></li>
+    
+
+    
+  </ul>
+</nav>
+
+</div>
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'rationalash';
+    var disqus_identifier = 'http:\/\/www.ashwinnarayan.com\/post\/dataflow-programming-in-c\/';
+    var disqus_title = 'Programming Complex Dataflows in C';
+    var disqus_url = 'http:\/\/www.ashwinnarayan.com\/post\/dataflow-programming-in-c\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  </div>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Ashwin Narayan &middot; 
+
+      Powered by the <a href="https://github.com/gcushen/hugo-academic" target="_blank">Academic
+      theme</a> for <a href="http://gohugo.io" target="_blank">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
+    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/isotope.pkgd.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-99092575-1', 'auto');
+        ga('send', 'pageview');
+
+         
+        var links = document.querySelectorAll('a');
+        Array.prototype.map.call(links, function(item) {
+            if (item.host != document.location.host) {
+                item.addEventListener('click', function() {
+                    var action = item.getAttribute('data-action') || 'follow';
+                    ga('send', 'event', 'outbound', action, item.href);
+                });
+            }
+        });
+    </script>
+    
+
+    
+    
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    
+
+  </body>
+</html>
+

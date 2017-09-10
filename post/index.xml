@@ -11,6 +11,258 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>How to Integrate Quaternions</title>
+      <link>http://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</link>
+      <pubDate>Sun, 10 Sep 2017 17:58:08 +0800</pubDate>
+      
+      <guid>http://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space. The story begins with me trying to integrate an angular velocity vector (in 3D) to get the orientation of an object. Angular velocity is a vector but common representations of orientation (like Euler Angles) are not. So getting the orientation is &lt;em&gt;not&lt;/em&gt; as simple as doing $\int_0^t \vec{\omega} \mathscr{d}t$.&lt;/p&gt;
+
+&lt;p&gt;Rotations in two dimensions are really easy because there is only one plane in which you can do the rotation. The only thing you can change is the center of rotation. The orientation of an object in 2 dimensions can be given by a single angle $\phi$ measured relative to the origin of the coordinate system. The angular velocity of an object in 2 dimensions can also be represented by a single number $\omega$ which is defined as the rate of change of the angle $\phi$. This gives us the basic formula we learn in high school physics.
+$$\omega = \frac{d\phi}{dt} = \frac{v_{\bot}}{r}$$
+&lt;img src=&#34;http://www.ashwinnarayan.com/img/angular_velocity.svg&#34; alt=&#34;angular_velocity_image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Rotations in 3D are much more complicated. In 3 dimensions, the plane of rotation can be any among an infinite number of possibilities. The origin or &amp;ldquo;center&amp;rdquo; of rotation now becomes an &lt;em&gt;axis&lt;/em&gt; of rotation which is represented by a vector. The plane of rotation is perpendicular to the axis of rotation. This is a result of the &lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem&#34; target=&#34;_blank&#34;&gt;Euler Rotation Theorem&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Before I can start integrating angular velocity I need to choose a representation for the orientation. There are several different conventions when it comes to representing the orientation of an object in 3D. The most popular approach is to use a set of three angles called &lt;a href=&#34;https://en.wikipedia.org/wiki/Euler_angles&#34; target=&#34;_blank&#34;&gt;Euler Angles&lt;/a&gt;. This approach was developed by the mathematician Leonhard Euler (pronounced oy-ler not you-ler). These set of three angles specify three successive rotations around three different axes in a very specific order. The order is important because rotations in 3D have an important property: they do not &lt;em&gt;commute&lt;/em&gt;. This means that if I do rotation 1 before 2 I end up with a different orientation than if I do 2 before 1. Euler angles usually specify rotations in the ZXZ order. This means that the first axis of rotation is the current Z-axis. The second axis of rotation is the new X-axis &lt;em&gt;after&lt;/em&gt; the first rotation. The final axis of rotation is the new Z-axis after the first and second rotations. A closely related approach is to use what&amp;rsquo;s called &lt;a href=&#34;https://en.wikipedia.org/wiki/Euler_angles#Tait-Bryan_angles&#34; target=&#34;_blank&#34;&gt;Tait-Bryan angles&lt;/a&gt;. Tait-Bryan angles are called yaw, pitch and roll and are commonly used when talking about the orientation of aircraft. The angles represent successive rotations around the body fixed X, Y and Z axes. Both Euler angles and Tait-Bryan angles however, suffer from something called &lt;a href=&#34;https://en.wikipedia.org/wiki/Gimbal_lock&#34; target=&#34;_blank&#34;&gt;Gimbal Lock&lt;/a&gt;. This is when for a certain value of one of the rotation angles, a degree of freedom is lost and two rotations &amp;ldquo;collapse&amp;rdquo; into a single rotation. The Wikipedia page linked has some nice visualizations and a short mathematical explanation (using rotation matrices) for why this happens.&lt;/p&gt;
+
+&lt;p&gt;Using Quaternions to represent rotations is a way to avoid the Gimbal Lock problem. Quaternions are so useful for representing orientations that most Kalman Filters that need to track 3D orientations use them instead of Euler Angles. So I settled on using quaternions. When I first started working with quaternions I found them a little difficult to understand. So I thought of writing an article about the path I took to understand and use quaternions for &amp;ldquo;integrating&amp;rdquo; angular velocity.&lt;/p&gt;
+
+&lt;p&gt;From all my time working with mathematics, I&amp;rsquo;ve come to realize that mathematical ideas exist on a spectrum. At one end is math that is focused on the practical application. Math that is very close to the real world (as experienced by humans) and can be understood easily by making analogies to things that humans encounter in everyday life. This is the type of math that is often applied to solve everyday problems like settling bills or building bridges. At the other end of the spectrum is the type of math that is pure abstraction. This type of abstract math is often used to generalize specific results in practical math to other problems or to come up with new insights that can pave the way for new solutions to a problem. Quaternions are a little more towards the abstract end of the spectrum and can be difficult to get an intuition for. Sometimes though there are ideas that you &lt;em&gt;can&amp;rsquo;t&lt;/em&gt; get an intuition for. Working with such math is mostly a matter of getting used to it. With abstract math, the best way I&amp;rsquo;ve found to get used to it is to learn the basic definition and keep applying it to problems until you get the hang of it. The understanding forms in the brain automatically as you get the hang of it.&lt;/p&gt;
+
+&lt;h2 id=&#34;quaternion-math&#34;&gt;Quaternion Math&lt;/h2&gt;
+
+&lt;p&gt;So without further ado, I&amp;rsquo;ll talk about what quaternions are and how they behave.&lt;/p&gt;
+
+&lt;h3 id=&#34;representation&#34;&gt;Representation&lt;/h3&gt;
+
+&lt;p&gt;A quaternion $q$ can be represented as a tuple of 4 numbers:
+$$q = \begin{bmatrix} w &amp;amp; \ x &amp;amp;\ y &amp;amp; \ z \end{bmatrix} = \begin{bmatrix} w &amp;amp; \ \vec{v}\end{bmatrix} = w + x\mathrm{i} + y\mathrm{j} + z\mathrm{k} $$&lt;/p&gt;
+
+&lt;p&gt;where the $w$ is the &lt;em&gt;scalar&lt;/em&gt; part and the $\vec{v}$ is the &lt;em&gt;vector&lt;/em&gt; part.&lt;/p&gt;
+
+&lt;p&gt;Two binary operations are defined for quaternions: addition $+$ and quaternion multiplication $\otimes$.&lt;/p&gt;
+
+&lt;h3 id=&#34;addition&#34;&gt;Addition&lt;/h3&gt;
+
+&lt;p&gt;Addition is defined as the component-wise sum just like for a 4D vector. The sum is commutative (order is not important) and associative (grouping is not important).&lt;/p&gt;
+
+&lt;p&gt;$$ q_1 + q_2 = \begin{bmatrix} w_1 + w_2 &amp;amp; \ x_1 + x_2 &amp;amp; \ y_1 + y_2 &amp;amp; \ z_1 + z_2 \end{bmatrix} = q_2 + q_1$$&lt;/p&gt;
+
+&lt;h3 id=&#34;multiplication&#34;&gt;Multiplication&lt;/h3&gt;
+
+&lt;p&gt;Quaternion multiplication is defined in multiple ways but the formula that I find the easiest to remember is:
+$$ q_1 \otimes q_2 = \begin{bmatrix} w_1 w_2 - \vec{v}_1\cdot\vec{v}_2 &amp;amp; \ w_1\vec{v}_2 + w_2\vec{v}_1 + \vec{v}_1\times\vec{v}_2 \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;The multiplication is &lt;em&gt;non-commutative&lt;/em&gt; ($q_1 \otimes q_2 \neq q_2 \otimes q_1$ ) and distributive over the sum $(q_1 \otimes (q_2 + q_3) = q_1 \otimes q_2 + q_1 \otimes q_3 )$.&lt;/p&gt;
+
+&lt;h3 id=&#34;norm-conjugate-and-inverse&#34;&gt;Norm, Conjugate and Inverse&lt;/h3&gt;
+
+&lt;p&gt;It&amp;rsquo;s also useful to define the norm of a quaternion as:
+$$ ||q|| = \sqrt{w^2 + x^2 + y^2 + z^2} $$&lt;/p&gt;
+
+&lt;p&gt;a conjugate quaternion $ q^* $ that satisfies the property $ q \otimes q^* = ||q||^2 $ as
+$$ q^* = \begin{bmatrix} w &amp;amp; \ -x &amp;amp; \ -y &amp;amp; \ -z \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;and a quaternion inverse $q^{-1}$ with the property $q \otimes q^{-1} = \begin{bmatrix} 1 \ 0 \ 0 \ 0 \end{bmatrix}$ as
+$$ q^{-1} = \frac{q^*}{||q||^2} $$&lt;/p&gt;
+
+&lt;h2 id=&#34;using-quaternions-for-rotation&#34;&gt;Using Quaternions for Rotation&lt;/h2&gt;
+
+&lt;p&gt;Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&amp;rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are &lt;em&gt;unit&lt;/em&gt; quaternions: $||q|| = 1$. Unit quaternions are also called &lt;em&gt;versors&lt;/em&gt;. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&amp;rsquo;ve mentioned and &lt;em&gt;not&lt;/em&gt; trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.&lt;/p&gt;
+
+&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used.
+$$ \vec{r}&amp;rsquo; = q \otimes \begin{bmatrix} 0 &amp;amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$&lt;/p&gt;
+
+&lt;p&gt;If I find the formula quite mysterious (as I did when I first saw it), it&amp;rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.&lt;/p&gt;
+
+&lt;h3 id=&#34;quaternions-rotation-matrices-and-the-rotation-group-so-3&#34;&gt;Quaternions, Rotation Matrices and the Rotation Group $SO(3)$&lt;/h3&gt;
+
+&lt;p&gt;Earlier, I mentioned that rotations in 3D have certain properties (like non-commutativity) that implies that they don&amp;rsquo;t belong to a vector space (and therefore can&amp;rsquo;t be represented by one). If I want to be exact when talking about rotations, I have to consider them as a &lt;em&gt;group&lt;/em&gt;. A group is yet another mathematical abstraction. Abstractly, think of them as a set of objects that follow certain rules. Remember that groups are another concept that leans towards the abstract end of the mathematical spectrum. They &lt;em&gt;can&lt;/em&gt; be applied to rotations but they were invented by mathematicians to study more general ideas. So what rules does a group follow?&lt;/p&gt;
+
+&lt;p&gt;A group is a set $G$ along with some &lt;em&gt;binary&lt;/em&gt; operation $\cdot$ (takes two elements of the set and gives a third). The elements of the set follow these rules:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Closure: If $a,b \in G$ then $a\cdot b \in G$.&lt;/li&gt;
+&lt;li&gt;Associativity: If $a,b,c \in G$ then $a\cdot ( b \cdot c) = (a \cdot b) \cdot c $.&lt;/li&gt;
+&lt;li&gt;Identity: There&amp;rsquo;s some element of the set $e$ which has the property $a \cdot e = e\cdot a = a$.&lt;/li&gt;
+&lt;li&gt;Inverse: If $a \in G$ there&amp;rsquo;s some element $a^* $ such that $a \cdot a^* = a^* \cdot a = e$.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you compare this to 3D rotations, you can see that the set of 3D rotations are an example of a group under the binary operation of composition (doing one rotation after another)!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Closure: If I compose two rotations it forms another rotation. It doesn&amp;rsquo;t suddenly become a translation or scaling or shear. There&amp;rsquo;s no way to combine rotations to do any of these other operations.&lt;/li&gt;
+&lt;li&gt;Associativity: If I do three rotations, it doesn&amp;rsquo;t matter which two I compose first.&lt;/li&gt;
+&lt;li&gt;Identity: There&amp;rsquo;s an identity rotation ($0^\circ$ of rotation around any axis).&lt;/li&gt;
+&lt;li&gt;And there&amp;rsquo;s an inverse rotation (rotating by negative of the angle around the same axis.)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Quaternions under multiplications &lt;em&gt;also&lt;/em&gt; satisfy all these properties.&lt;/p&gt;
+
+&lt;p&gt;If I convert Euler angle rotations to rotation matrices and compare them with quaternions, the parallels between them are very clear.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Group Property&lt;/th&gt;
+&lt;th&gt;Rotation Matrix $R_i \in G$&lt;/th&gt;
+&lt;th&gt;Quaternion $q_i \in \mathbb{H}_R$&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Closure&lt;/td&gt;
+&lt;td&gt;$R_1 \cdot R_2 \in G$&lt;/td&gt;
+&lt;td&gt;$q_1 \otimes q_2 \in \mathbb{H}_R$&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Associativity&lt;/td&gt;
+&lt;td&gt;$R_1 \cdot (R_2 \cdot R_3) = (R_1 \cdot R_2) \cdot R_3$&lt;/td&gt;
+&lt;td&gt;$q_1 \otimes (q_2 \otimes q_3) = (q_1 \otimes q_2) \otimes q_3$&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Identity&lt;/td&gt;
+&lt;td&gt;$I$&lt;/td&gt;
+&lt;td&gt;$1$&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Inverse&lt;/td&gt;
+&lt;td&gt;$R_i^{-1} = R_i^{T} $&lt;/td&gt;
+&lt;td&gt;$q_i^{-1}$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The closure and associativity properties rotation matrices can be easily seen as a consequence of the fact that rotation matrices are &lt;a href=&#34;https://en.wikipedia.org/wiki/Orthogonal_matrix&#34; target=&#34;_blank&#34;&gt;orthogonal matrices&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;With this knowledge of the rules that rotations follow, it&amp;rsquo;s clear why it&amp;rsquo;s silly to think of the Euler angles as a vector. They&amp;rsquo;re a set of related numbers but vectors they are not! It&amp;rsquo;s also clear why integrating the angular velocity vector over time does not directly give the orientation in an easily usable form.&lt;/p&gt;
+
+&lt;h3 id=&#34;representing-quaternion-rotation-as-a-matrix&#34;&gt;Representing quaternion rotation as a matrix&lt;/h3&gt;
+
+&lt;p&gt;Linearity of operations are an important property that both engineers and mathematicians like to take advantage of. It can result in useful simplifications of results. So it&amp;rsquo;s useful (later in this article) to ask the question: Is quaternion multiplication a linear operation? The simplest way to find out is to write out the result of a general quaternion multiplication operation and check if it&amp;rsquo;s possible to represent it as a matrix multiplication.&lt;/p&gt;
+
+&lt;p&gt;The symbolic result of multiplying two quaternions $q_1$ and $q_2$ is:
+$$ q_1 \otimes q_2 = \left[\begin{matrix}w_1 w_2 - x_1 x_2 - y_1 y_2 - z_1 z_2\\ w_1 x_2 + w_2 x_1 + y_1 z_2 - y_2 z_1\\ w_1 y_2 + w_2 y_1 - x_1 z_2 + x_2 z_1\\ w_1 z_2 + w_2 z_1 + x_1 y_2 - x_2 y_1\end{matrix}\right] $$&lt;/p&gt;
+
+&lt;p&gt;From inspection, this can be written as a matrix product:
+$$ q_1 \otimes q_2 = \left[\begin{matrix}w_2 &amp;amp; -x_2 &amp;amp; -y_2 &amp;amp; -z_2\\ x_2 &amp;amp; w_2 &amp;amp; z_2 &amp;amp; - y_2\\ y_2 &amp;amp; - z_2 &amp;amp; w_2 &amp;amp; x_2\\ z_2 &amp;amp; y_2 &amp;amp; - x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;And if I change the order of multiplication:
+$$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp;amp; - x_2 &amp;amp; - y_2 &amp;amp; - z_2 \\ x_2 &amp;amp; w_2 &amp;amp; - z_2 &amp;amp; y_2 \\ y_2 &amp;amp; z_2 &amp;amp; w_2 &amp;amp; - x_2 \\ z_2 &amp;amp; - y_2 &amp;amp; x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p&gt;
+
+&lt;h2 id=&#34;integrating-angular-velocity&#34;&gt;Integrating Angular Velocity&lt;/h2&gt;
+
+&lt;p&gt;To properly integrate angular velocity to get a quaternion, I need to find a relationship a quaternion and the angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p&gt;
+
+&lt;p&gt;A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.
+$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p&gt;
+
+&lt;p&gt;Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
+$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
+
+&lt;p&gt;Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
+$$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
+\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
+\end{align}$$&lt;/p&gt;
+
+&lt;p&gt;So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&amp;rsquo;t be changed when applying the product rule.&lt;/p&gt;
+
+&lt;p&gt;$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a term in this equation - the derivative of the conjugate - that&amp;rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&amp;rsquo;s conjugate which we know to be 1:&lt;/p&gt;
+
+&lt;p&gt;$$\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
+\dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;amp;= 0 \end{align} $$&lt;/p&gt;
+
+&lt;p&gt;That gives the relationship&lt;/p&gt;
+
+&lt;p&gt;$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$&lt;/p&gt;
+
+&lt;p&gt;Expressing $s_0$ in terms of $s$, substituting $\dot{q^* } $ and doing a little algebra:
+$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
+
+&lt;h3 id=&#34;the-quaternion-commutator&#34;&gt;The Quaternion Commutator&lt;/h3&gt;
+
+&lt;p&gt;The expression $ \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* $ is in the form $p \otimes q - q \otimes p$ which is defined as a &lt;em&gt;commutator&lt;/em&gt; operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p&gt;
+
+&lt;p&gt;$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;Interestingly, if both $q_1$ and $q_2$ are &lt;em&gt;pure quaternions&lt;/em&gt; (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p&gt;
+
+&lt;p&gt;$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p&gt;
+
+&lt;h3 id=&#34;the-product-dot-q-q-is-a-pure-quaternion&#34;&gt;The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3&gt;
+
+&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
+  \dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^*
+ \end{align} $$&lt;/p&gt;
+
+&lt;p&gt;Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-differential-equation&#34;&gt;The Differential Equation&lt;/h3&gt;
+
+&lt;p&gt;So finally, I can extract the quaternion differential equation:&lt;/p&gt;
+
+&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+\dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p&gt;
+
+&lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyrscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
+
+&lt;p&gt;$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$&lt;/p&gt;
+
+&lt;h3 id=&#34;integration&#34;&gt;Integration&lt;/h3&gt;
+
+&lt;p&gt;To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a &lt;em&gt;quaternion multiplication&lt;/em&gt; in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:&lt;/p&gt;
+
+&lt;p&gt;$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \left[\begin{matrix}0 &amp;amp; - \omega_x &amp;amp; - \omega_y &amp;amp; - \omega_z \\ \omega_x &amp;amp; 0 &amp;amp; \omega_z &amp;amp; - \omega_y \\ \omega_y &amp;amp; - \omega_z &amp;amp; 0 &amp;amp; \omega_x \\ \omega_z &amp;amp; \omega_y &amp;amp; - \omega_x &amp;amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:&lt;/p&gt;
+
+&lt;p&gt;$$ q(t) = e^{A(t - t_0 )} q_0 $$&lt;/p&gt;
+
+&lt;h3 id=&#34;quaternion-exponential&#34;&gt;Quaternion Exponential&lt;/h3&gt;
+
+&lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula.&lt;/p&gt;
+
+&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\
+   &amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
+   &amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p&gt;
+
+&lt;p&gt;Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:&lt;/p&gt;
+
+&lt;p&gt;$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$&lt;/p&gt;
+
+&lt;h2 id=&#34;summing-up&#34;&gt;Summing Up&lt;/h2&gt;
+
+&lt;p&gt;I started out with the simple sounding task of integrating angular velocity and in trying to solve it, traversed through a several different areas of mathematics and learned a lot along the way before coming to the final solution. However, my description here is far from complete. The equation above only holds if the angular velocity is constant over a time period. This means its a &amp;ldquo;first order&amp;rdquo; model. Dropping this assumption gives $n^{th}$ order models for integration. There are also intricate details that I&amp;rsquo;m only beginning to understand. For instance, I&amp;rsquo;m reading about how rotations are a special type of group called &lt;a href=&#34;https://en.wikipedia.org/wiki/Lie_group&#34; target=&#34;_blank&#34;&gt;Lie Groups &lt;/a&gt; where the group is also a &lt;a href=&#34;https://en.wikipedia.org/wiki/Differentiable_manifold&#34; target=&#34;_blank&#34;&gt;differentiable manifold&lt;/a&gt; (yet another interesting abstract mathematical object). The space of angular velocity forms what is called a &lt;a href=&#34;https://en.wikipedia.org/wiki/Lie_algebra&#34; target=&#34;_blank&#34;&gt;Lie Algebra &lt;/a&gt; on the group. And the quaternion exponential function which most texts I refer to seem to pull out of thin air is actually related to a more general idea called an exponential map which maps general Lie Algebras to Lie Groups.&lt;/p&gt;
+
+&lt;p&gt;Despite it&amp;rsquo;s incompleteness however, it is the minimum that I needed to understand to be able to actually implement in code the integration of a quaternion - i.e use quaternions practically for integrating data coming in from an inertial measurement unit. I hope that others trying to understand quaternions and their role in representing 3D rotations will find this article useful. Some of the references below go deeper into the nature of quaternions and how to use them for useful things like tracking orientations.&lt;/p&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/pdf/1604.08139.pdf&#34; target=&#34;_blank&#34;&gt;Boyle, Michael. &amp;ldquo;The integration of angular velocity.&amp;rdquo; Advances in Applied Clifford Algebras (2016): 1-30.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Rotation_group_SO(3)&#34; target=&#34;_blank&#34;&gt;https://en.wikipedia.org/wiki/Rotation_group_SO(3)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Quaternion&#34; target=&#34;_blank&#34;&gt;https://en.wikipedia.org/wiki/Quaternion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hal.archives-ouvertes.fr/hal-01122406/document&#34; target=&#34;_blank&#34;&gt;Sola, Joan. &amp;ldquo;Quaternion kinematics for the error-state KF.&amp;rdquo; (2015).&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34;&gt;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Bash Recipes for Doing Science!</title>
       <link>http://www.ashwinnarayan.com/post/bash-recipes-for-science/</link>
       <pubDate>Sun, 13 Aug 2017 19:30:14 +0800</pubDate>

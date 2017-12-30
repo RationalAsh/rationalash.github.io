@@ -11,43 +11,96 @@
   <meta name="description" content="PhD Student">
 
   
+  <link rel="alternate" hreflang="en-us" href="http://www.ashwinnarayan.com/post/dataflow-programming-in-c/">
+
   
-  
-    
-  
-  
-    
-    
-    <link rel="stylesheet" href="/css/highlight.min.css">
-    
-  
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/academicons.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono">
-  <link rel="stylesheet" href="/css/hugo-academic.css">
   
 
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-99092575-1', 'auto');
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+
+  
   <link rel="alternate" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
   <link rel="feed" href="http://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  
 
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
   <link rel="canonical" href="http://www.ashwinnarayan.com/post/dataflow-programming-in-c/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rational_ash">
+  <meta property="twitter:creator" content="@rational_ash">
+  
+  <meta property="og:site_name" content="Ashwin Narayan">
+  <meta property="og:url" content="http://www.ashwinnarayan.com/post/dataflow-programming-in-c/">
+  <meta property="og:title" content="Programming Complex Dataflows in C | Ashwin Narayan">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2017-08-01T00:15:14&#43;08:00">
+  
+  <meta property="article:modified_time" content="2017-08-01T00:15:14&#43;08:00">
+  
 
   
 
   <title>Programming Complex Dataflows in C | Ashwin Narayan</title>
 
 </head>
-<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71">
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
 
 <nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
   <div class="container">
 
     
     <div class="navbar-header">
+      
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
               data-target=".navbar-collapse" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -55,6 +108,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      
       <a class="navbar-brand" href="/">Ashwin Narayan</a>
     </div>
 
@@ -62,58 +116,80 @@
     <div class="collapse navbar-collapse">
 
       
+      
       <ul class="nav navbar-nav navbar-right">
         
 
+        
+
+        
+          
         
 
         <li class="nav-item">
           <a href="/#about">
             
             <span>Home</span>
+            
           </a>
         </li>
 
         
         
 
+        
+
+        
+          
         
 
         <li class="nav-item">
           <a href="/#posts">
             
             <span>Posts</span>
+            
           </a>
         </li>
 
         
         
 
+        
+
+        
+          
         
 
         <li class="nav-item">
           <a href="/#projects">
             
-            <span>Personal Projects</span>
+            <span>Projects</span>
+            
           </a>
         </li>
 
         
         
 
+        
+
+        
+          
         
 
         <li class="nav-item">
           <a href="/#contact">
             
             <span>Contact</span>
+            
           </a>
         </li>
 
         
         
+      
 
-        
+      
       </ul>
 
     </div>
@@ -125,34 +201,35 @@
 
   
 
+
   <div class="article-container">
-    <h1 itemprop="name">Programming Complex Dataflows in C</h1>
-    
+    <div class="article-inner">
+      <h1 itemprop="name">Programming Complex Dataflows in C</h1>
+
+      
 
 <div class="article-metadata">
 
   <span class="article-date">
-    <time datetime="2017-08-01 00:15:14 &#43;0800 &#43;08" itemprop="datePublished">
-      Tue, Aug 1, 2017
+    
+    <time datetime="2017-08-01 00:15:14 &#43;0800 &#43;0800" itemprop="datePublished">
+      Aug 1, 2017
     </time>
   </span>
 
   
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
 
   
   
+  <span class="middot-divider"></span>
+  <a href="http://www.ashwinnarayan.com/post/dataflow-programming-in-c/#disqus_thread"></a>
   
-  <span class="article-tags">
-    <i class="fa fa-tags"></i>
-    
-    <a href="/tags/programming">programming</a
-    >, 
-    
-    <a href="/tags/c">C</a
-    >
-    
-  </span>
-  
+
   
 
   
@@ -160,30 +237,30 @@
 <div class="share-box" aria-hidden="true">
   <ul class="share">
     <li>
-      <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
-         target="_blank">
-        <i class="fa fa-facebook"></i>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Programming%20Complex%20Dataflows%20in%20C&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
-      <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Programming%20Complex%20Dataflows%20in%20C&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
-         target="_blank">
-        <i class="fa fa-twitter"></i>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
          href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f&amp;title=Programming%20Complex%20Dataflows%20in%20C"
-         target="_blank">
+         target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
          href="http://service.weibo.com/share/share.php?url=http%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fdataflow-programming-in-c%2f&amp;title=Programming%20Complex%20Dataflows%20in%20C"
-         target="_blank">
+         target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
@@ -201,8 +278,9 @@
 
 </div>
 
-    <div class="article-style" itemprop="articleBody">
-      
+
+      <div class="article-style" itemprop="articleBody">
+        
 
 <p>Over the past few months I&rsquo;ve been spending a lot of time on implementing various signal processing algorithms in C/C++. Things like Kalman Filters, various types of FIR filters and finite state machines. The number of steps needed to implement each these algorithms were fairly small and in the beginning I tried to put all the functionality of these implementations into simple to use C++ classes. This made things look neater and also fit in quite well with the Arduino programming framework (I was implementing a lot of these algorithms on Arduino compatible microcontrollers like the Teensy). However, once I started combining different algorithms together to make something bigger, the code started becoming very messy. Making changes and debugging was starting to take longer and longer. In many instances, I had to go back and change the deisgn and interface of my C++ classes when I realized that the way I initially implemented it made it impossible or very difficult to do some step in the algorithm. I decided to take some time to figure out how I can do better. I wanted to find out a systematic method - a &ldquo;meta-programming&rdquo; algorithm if you will - that would tell me the way I should implement the algorithm so that the code is easy to write and more importantly, easy to read and debug.</p>
 
@@ -343,33 +421,53 @@ int main(int argc, char** argv)
 
 <p>I&rsquo;m sure that this method will have some limitations. One I can see right away is that it uses a lot of variables. One for each edge and even more for the static variables inside the function. On memory constrained systems like small microcontrollers, the RAM can run out pretty fast (Declaring non-tweakable parameters as being stored in the code ROM should help with this a bit). Another problem is the question of what to do with algorithms that can&rsquo;t be represented as a DAG. I don&rsquo;t know if it&rsquo;s possible to represent all possible algorithms using DAGs (A quick google search did not turn up any conclusive answers). I am also unsure how this model can be used for programming things like GUIs which sit around and wait for events to happen most of the time. However, when implementing control and signal processing algorithms, I find this method is singularly better than the others I&rsquo;ve tried.</p>
 
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/programming">programming</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/c">C</a>
+  
+</div>
+
+
+
     </div>
   </div>
 
 </article>
 
-<div class="container">
-  <nav>
-  <ul class="pager">
-    
-    <li class="previous"><a href="http://www.ashwinnarayan.com/post/icra-2017/"><span
-      aria-hidden="true">&larr;</span> ICRA 2017</a></li>
-    
 
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
     
-    <li class="next"><a href="http://www.ashwinnarayan.com/post/bash-recipes-for-science/">Bash Recipes for Doing Science! <span
-      aria-hidden="true">&rarr;</span></a></li>
+    <li><a href="/post/xenomai-realtime-programming-part-2/">Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</a></li>
+    
+    <li><a href="/post/xenomai-realtime-programming/">Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</a></li>
+    
+    <li><a href="/project/logistic-regression/">Implementing Logistic Regression</a></li>
+    
+    <li><a href="/project/som-animation/">Visualizing Self-Organizing Maps</a></li>
+    
+    <li><a href="/project/telegram-bot-music-control/">Controlling music playback with a Telegram Bot</a></li>
     
   </ul>
-</nav>
-
 </div>
+
+
+
 
 <div class="article-container">
   
 <section id="comments">
-  <div id="disqus_thread">
-    <div id="disqus_thread"></div>
+  <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
     
@@ -389,7 +487,6 @@ int main(int argc, char** argv)
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-  </div>
 </section>
 
 
@@ -401,8 +498,9 @@ int main(int argc, char** argv)
 
       &copy; 2017 Ashwin Narayan &middot; 
 
-      Powered by the <a href="https://github.com/gcushen/hugo-academic" target="_blank">Academic
-      theme</a> for <a href="http://gohugo.io" target="_blank">Hugo</a>.
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
 
       <span class="pull-right" aria-hidden="true">
         <a href="#" id="back_to_top">
@@ -416,41 +514,55 @@ int main(int argc, char** argv)
   </div>
 </footer>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
-    <script src="/js/jquery-1.12.3.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/isotope.pkgd.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    <script id="dsq-count-scr" src="//rationalash.disqus.com/count.js" async></script>
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
     <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-99092575-1', 'auto');
-        ga('send', 'pageview');
-
-         
-        var links = document.querySelectorAll('a');
-        Array.prototype.map.call(links, function(item) {
-            if (item.host != document.location.host) {
-                item.addEventListener('click', function() {
-                    var action = item.getAttribute('data-action') || 'follow';
-                    ga('send', 'event', 'outbound', action, item.href);
-                });
-            }
-        });
-    </script>
     
 
     
     
       
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
 
       
 
@@ -464,7 +576,9 @@ int main(int argc, char** argv)
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
     </script>
-    <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
     
 
   </body>

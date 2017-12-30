@@ -140,15 +140,6 @@
     
     <url>
     
-      <loc>http://www.ashwinnarayan.com/post/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
       <loc>http://www.ashwinnarayan.com/publication/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
     </url>
@@ -167,6 +158,62 @@
     
     <url>
     
+      <loc>http://www.ashwinnarayan.com/talk/example-talk/</loc>
+      <lastmod>2017-01-01T00:00:00+05:30</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/post/</loc>
+      <lastmod>2017-01-01T00:00:00+05:30</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/publication/person-re-identification/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/publication/clothing-search/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/publication_types/1/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>http://www.ashwinnarayan.com/publication_types/2/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://www.ashwinnarayan.com/tags/academia/</loc>
       <lastmod>2017-06-05T22:50:52+08:00</lastmod>
       <priority>0</priority>
@@ -178,7 +225,7 @@
     <url>
     
       <loc>http://www.ashwinnarayan.com/</loc>
-      <lastmod>2016-04-20T00:00:00+00:00</lastmod>
+      <lastmod>2017-10-15T00:00:00+05:30</lastmod>
       <priority>0</priority>
     </url>
     
@@ -287,6 +334,7 @@
     <url>
     
       <loc>http://www.ashwinnarayan.com/publication_types/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

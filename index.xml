@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Ashwin Narayan</copyright>
-    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0530</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
@@ -970,6 +970,16 @@ export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”&lt;/code&gt;&lt;/
 &lt;/ul&gt;
 
 &lt;p&gt;Like for my old website, I decided to go with a static website which allows me to host the site for free using Github pages. I used a static site generator called &lt;a href=&#34;https://jekyllrb.com/&#34; target=&#34;_blank&#34;&gt;Jekyll&lt;/a&gt;. However, I found it a bit time consuming to use. I wanted to spend more time focusing on the content of the website and less on the setup. So I did a little research on other static site generators that I can use and came across &lt;a href=&#34;https://gohugo.io/&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt;. It seemed to have all the nice features that a static site generator should have. It works across all operatings systems, had a lot of free themes, was open source and most importantly was easy to set up. I was able to get a basic website generated in under two minutes by following their getting started tutorial. If you&amp;rsquo;re looking for a good static site generator, I highly recommend Hugo.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Example Talk</title>
+      <link>http://www.ashwinnarayan.com/talk/example-talk/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0530</pubDate>
+      
+      <guid>http://www.ashwinnarayan.com/talk/example-talk/</guid>
+      <description>&lt;p&gt;Embed your slides or video here using &lt;a href=&#34;https://sourcethemes.com/academic/post/writing-markdown-latex/&#34; target=&#34;_blank&#34;&gt;shortcodes&lt;/a&gt;. Further details can easily be added using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
 </description>
     </item>
     

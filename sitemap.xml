@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</loc>
+      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://www.ashwinnarayan.com/post/star-trek-discovery/</loc>
       <lastmod>2017-12-10T23:26:48+08:00</lastmod>
     </url>
@@ -234,6 +243,16 @@
     
     <url>
     
+      <loc>https://www.ashwinnarayan.com/tags/batch/</loc>
+      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>https://www.ashwinnarayan.com/tags/c/</loc>
       <lastmod>2017-08-01T00:15:14+08:00</lastmod>
       <priority>0</priority>
@@ -304,7 +323,17 @@
     <url>
     
       <loc>https://www.ashwinnarayan.com/tags/miscellaneous/</loc>
-      <lastmod>2017-05-14T00:38:51+08:00</lastmod>
+      <lastmod>2017-12-10T23:26:48+08:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://www.ashwinnarayan.com/tags/movie-review/</loc>
+      <lastmod>2017-12-10T23:26:48+08:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -314,7 +343,7 @@
     <url>
     
       <loc>https://www.ashwinnarayan.com/tags/programming/</loc>
-      <lastmod>2017-08-13T19:30:14+08:00</lastmod>
+      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
       <priority>0</priority>
     </url>
     
@@ -385,6 +414,16 @@
     
       <loc>https://www.ashwinnarayan.com/tags/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://www.ashwinnarayan.com/tags/windows/</loc>
+      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
       <priority>0</priority>
     </url>
     

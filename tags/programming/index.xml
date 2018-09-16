@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming on Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tags/programming/</link>
+    <description>Recent content in Programming on Ashwin Narayan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
+    <lastBuildDate>Sun, 31 Dec 2017 11:41:31 +0530</lastBuildDate>
+    
+	<atom:link href="https://www.ashwinnarayan.com/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo Web Development Workflow on Windows</title>
+      <link>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</link>
+      <pubDate>Sun, 31 Dec 2017 11:41:31 +0530</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</guid>
+      <description>As I mentioned in my first article on this blog, I&amp;rsquo;m now using Hugo, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&amp;rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools.</description>
+    </item>
+    
+    <item>
+      <title>Bash Recipes for Doing Science!</title>
+      <link>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</link>
+      <pubDate>Sun, 13 Aug 2017 19:30:14 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</guid>
+      <description>When prototyping programs that deal with lots of data on an Arduino and other embedded systems or even on full blown computers, it&amp;rsquo;s really useful to have a quick tool for plotting the output of the program. Initially, I used python for doing this. Python is a beautifully simple language and between Numpy, Scipy and Matplotlib, you can do pretty much anything you want with data; from doing simple plotting to running machine learning algorithms on the data.</description>
+    </item>
+    
+    <item>
+      <title>Programming Complex Dataflows in C</title>
+      <link>https://www.ashwinnarayan.com/post/dataflow-programming-in-c/</link>
+      <pubDate>Tue, 01 Aug 2017 00:15:14 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/dataflow-programming-in-c/</guid>
+      <description>Over the past few months I&amp;rsquo;ve been spending a lot of time on implementing various signal processing algorithms in C/C++. Things like Kalman Filters, various types of FIR filters and finite state machines. The number of steps needed to implement each these algorithms were fairly small and in the beginning I tried to put all the functionality of these implementations into simple to use C++ classes. This made things look neater and also fit in quite well with the Arduino programming framework (I was implementing a lot of these algorithms on Arduino compatible microcontrollers like the Teensy).</description>
+    </item>
+    
+    <item>
+      <title>Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</title>
+      <link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</link>
+      <pubDate>Sat, 20 May 2017 23:10:16 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</guid>
+      <description>Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with. This patch adds an interrupt pipeline that sits between the hardware of the computer and any kernels running on the hardware. The interrupt pipeline has domains which can be assigned a priority.</description>
+    </item>
+    
+    <item>
+      <title>Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</title>
+      <link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</link>
+      <pubDate>Wed, 17 May 2017 00:07:36 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</guid>
+      <description>In my lab, we recently started moving away from Simulink&amp;rsquo;s Real-Time packages and towards Real-Time Linux for implementing the low level control of our robots. I thought I would document what I went through to get Xenomai (A Real-Time framework for linux) working stably as a resource for others trying to get started on the same thing.
+What is Real-Time? The word &amp;ldquo;real-time&amp;rdquo; is used in a lot of different fields to mean different things.</description>
+    </item>
+    
+    <item>
+      <title>Controlling music playback with a Telegram Bot</title>
+      <link>https://www.ashwinnarayan.com/project/telegram-bot-music-control/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/telegram-bot-music-control/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Implementing Logistic Regression</title>
+      <link>https://www.ashwinnarayan.com/project/logistic-regression/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/logistic-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Simulating the chaos of a double pendulum</title>
+      <link>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visualizing Self-Organizing Maps</title>
+      <link>https://www.ashwinnarayan.com/project/som-animation/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/som-animation/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

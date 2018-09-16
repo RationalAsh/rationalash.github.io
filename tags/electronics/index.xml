@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Electronics on Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tags/electronics/</link>
+    <description>Recent content in Electronics on Ashwin Narayan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
+    <lastBuildDate>Sun, 14 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.ashwinnarayan.com/tags/electronics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Generating VGA Signals using an FPGA</title>
+      <link>https://www.ashwinnarayan.com/project/fpga-vga/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/fpga-vga/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Modelling and Controlling a BB8 Droid</title>
+      <link>https://www.ashwinnarayan.com/project/bb8-control/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/project/bb8-control/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

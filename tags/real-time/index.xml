@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Real-time on Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tags/real-time/</link>
+    <description>Recent content in Real-time on Ashwin Narayan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
+    <lastBuildDate>Sat, 20 May 2017 23:10:16 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ashwinnarayan.com/tags/real-time/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</title>
+      <link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</link>
+      <pubDate>Sat, 20 May 2017 23:10:16 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</guid>
+      <description>Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with. This patch adds an interrupt pipeline that sits between the hardware of the computer and any kernels running on the hardware. The interrupt pipeline has domains which can be assigned a priority.</description>
+    </item>
+    
+    <item>
+      <title>Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</title>
+      <link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</link>
+      <pubDate>Wed, 17 May 2017 00:07:36 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</guid>
+      <description>In my lab, we recently started moving away from Simulink&amp;rsquo;s Real-Time packages and towards Real-Time Linux for implementing the low level control of our robots. I thought I would document what I went through to get Xenomai (A Real-Time framework for linux) working stably as a resource for others trying to get started on the same thing.
+What is Real-Time? The word &amp;ldquo;real-time&amp;rdquo; is used in a lot of different fields to mean different things.</description>
+    </item>
+    
+  </channel>
+</rss>

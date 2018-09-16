@@ -577,7 +577,7 @@ The command below will interpret data coming in as packets of 8 bytes as 2 byte 
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Graph_theory&#34; target=&#34;_blank&#34;&gt;Graphs&lt;/a&gt; as a mathematical structure (different from the graphs that you use to plot data) are useful for representing relationships between things. Intuitively I think of them as circles connected by lines. The circles represent things and the lines represent some type of relationship between the things. If this seems very abstract, that&amp;rsquo;s because graphs can be applied to a &lt;em&gt;lot&lt;/em&gt; of different things and when an concept is that general, it tends to be very abstract. As an example, a graph can be used to represent an electrical circuit. Each discrete component like a resistor or an LED can be considered a node or vertex in the graph (circles). The wires that connect these components together can be considered the edges of the graph.&lt;/p&gt;
 
 
-&lt;figure &gt;
+&lt;figure&gt;
     
         &lt;img src=&#34;https://imgs.xkcd.com/comics/collatz_conjecture.png&#34; alt=&#34;A graph representing the collatz sequence and some unrelated drawings.&#34; /&gt;
     
@@ -599,7 +599,7 @@ The command below will interpret data coming in as packets of 8 bytes as 2 byte 
 &lt;p&gt;A &lt;a href=&#34;https://en.wikipedia.org/wiki/Directed_acyclic_graph&#34; target=&#34;_blank&#34;&gt;directed acyclic graph&lt;/a&gt; (DAG) is a directed graph that does not have &lt;em&gt;cycles&lt;/em&gt; in it. This means that there is no way to start at a node in the graph and follow the arrows from node to node and reach the node you started at. A directed acyclic graph is useful for modeling dependencies. If you&amp;rsquo;re planning to understand some big concept in science - General Relativitiy for example - there are prerequisite ideas that you need to understand first. A subject and it&amp;rsquo;s prerequisites can be arranged in the form of a directed acyclic graph.&lt;/p&gt;
 
 
-&lt;figure &gt;
+&lt;figure&gt;
     
         &lt;img src=&#34;https://www.ashwinnarayan.com/img/markov_chains.png&#34; alt=&#34;A directed acyclic graph showing the dependencies for learning about Markov Chains.&#34; /&gt;
     

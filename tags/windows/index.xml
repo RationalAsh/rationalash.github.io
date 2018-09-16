@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tags/windows/</link>
+    <description>Recent content in Windows on Ashwin Narayan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
+    <lastBuildDate>Sun, 31 Dec 2017 11:41:31 +0530</lastBuildDate>
+    
+	<atom:link href="https://www.ashwinnarayan.com/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo Web Development Workflow on Windows</title>
+      <link>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</link>
+      <pubDate>Sun, 31 Dec 2017 11:41:31 +0530</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</guid>
+      <description>As I mentioned in my first article on this blog, I&amp;rsquo;m now using Hugo, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&amp;rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools.</description>
+    </item>
+    
+  </channel>
+</rss>

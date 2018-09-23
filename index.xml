@@ -323,7 +323,7 @@ $$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp;amp; - x_2 &amp;amp; - y_2 &am
 
 &lt;h2 id=&#34;integrating-angular-velocity&#34;&gt;Integrating Angular Velocity&lt;/h2&gt;
 
-&lt;p&gt;To properly integrate angular velocity to get a quaternion, I need to find a relationship a quaternion and the angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p&gt;
+&lt;p&gt;To properly integrate angular velocity to get a quaternion, I need to find a relationship between quaternions and angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p&gt;
 
 &lt;p&gt;A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p&gt;

@@ -380,7 +380,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
 \dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p&gt;
 
-&lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyrscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
+&lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
 
 &lt;p&gt;$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$&lt;/p&gt;
 

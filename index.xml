@@ -11,6 +11,187 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Learning Haskell Through Google Code Jam</title>
+      <link>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</link>
+      <pubDate>Sat, 13 Apr 2019 15:26:34 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</guid>
+      <description>
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Over the last year or so, I&amp;rsquo;ve been playing around with &lt;a href=&#34;https://en.wikipedia.org/wiki/Functional_programming&#34; target=&#34;_blank&#34;&gt;functional programming&lt;/a&gt;. As the first few lines of the Wikipedia page suggest, functional programming is all about expressing a computation or algorithm as the composition of functions rather than using a state that changes over time. From what I&amp;rsquo;ve understood so far, functional programming is based on &lt;a href=&#34;https://en.wikipedia.org/wiki/Lambda_calculus&#34; target=&#34;_blank&#34;&gt;lambda calculus&lt;/a&gt; which is an alternative but equivalent formulation of the famous Turing Machine that most modern computers are based on.&lt;/p&gt;
+
+&lt;p&gt;Of course, once you start reading up on functional programming, the language that is recommended the most is &lt;a href=&#34;https://www.haskell.org/&#34; target=&#34;_blank&#34;&gt;Haskell&lt;/a&gt;. I got interested in functional programming and Haskell in the first place because I was attracted by its more mathematical appearance and a lot of the code that I looked at seemed to express ideas much more clearly and (in my opinion) more beautifully. Learning Haskell was not easy at all. As someone who&amp;rsquo;s programmed using imperative programming languages all my life, I found it extremely difficult to think about solving problems using the style that Haskell (and functional programming) imposed. Near the beginning of my journey to learn it, there were quite a lot of stops and restarts and there were many instances where I questioned that it was even useful to learn the language as I found it so difficult to express ideas that were in my head simple to express in a language like Python. I also found writing programs that required I/O quite difficult. However, the aforementioned clarity and beauty that I found in the way functional programming expressed ideas stuck with me and I kept coming back to it. After nearly a year, things fell into place and I started being able to write code that was actually useful (i.e. interacted with the world through I/O). I feel like I&amp;rsquo;m finally at a point where I can program well enough in the language that I&amp;rsquo;m able to practice solving problems without struggling too much with I/O. So, when I got the email notifying me about this year&amp;rsquo;s Google Code Jam I thought I&amp;rsquo;d participate and try to use Haskell as much as possible!&lt;/p&gt;
+
+&lt;h2 id=&#34;google-code-jam&#34;&gt;Google Code Jam&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve known about Google Code Jam for quite a while. I&amp;rsquo;ve even tried participating once before. The last time I participated, I was a very optimistic, but novice programmer and I did not even make it past the qualifying round. This was close to the beginning of my undergraduate degree. Since that time I&amp;rsquo;ve been programming on a regular basis for about six years. So, this time I did make it past the qualifying round quite comfortably. The main challenge I faced this time was that I was using a programming language that I didn&amp;rsquo;t quite know fully yet. But the added challenge did make solving the problems a lot more fun. Of the 4 problems in the qualifying round I solved 3. While solving these problems I was able to take advantage of quite a few functional programming patterns and I thought that it might be a good idea to write an article to show how Haskell&amp;rsquo;s higher order functions can be really useful in expressing common programming patterns in a concise and simple way.&lt;/p&gt;
+
+&lt;h2 id=&#34;problem-1-foregone-solution&#34;&gt;Problem 1 - Foregone Solution&lt;/h2&gt;
+
+&lt;p&gt;To read the full problem description &lt;a href=&#34;https://codingcompetitions.withgoogle.com/codejam/round/0000000000051705/0000000000088231&#34; target=&#34;_blank&#34;&gt;go here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;summary-of-problem-statement&#34;&gt;Summary of Problem Statement&lt;/h3&gt;
+
+&lt;p&gt;The input for each testcase is a number N which when expressed in base 10 may or may not contain the digit 4. The goal is to split up the number N into 2 numbers A and B so that A + B = N and neither A nor B contain the digit 4.&lt;/p&gt;
+
+&lt;h3 id=&#34;analysis&#34;&gt;Analysis&lt;/h3&gt;
+
+&lt;p&gt;A brute force approach to the solution would search through all possible sums of two integers between 0 and N/2. Of course, this solution would scale as $O(N^2)$ and would not work with the larger test cases. Another thing to think about is that the hidden test cases can contain numbers between 1 and $10^{100}$. That number is beyond the range of usual integer data types. The problem can be solved quite easily by making the simple observation that you can split up all the digits that are 4 into 2 and 2 (or 3 and 1) and easily generate two numbers without even adding the two numbers to check if they sum up to N. For instance, if N is 9454 you can split it up into 9252 and 202. To do this you do not even need to convert the number into an integer data type. You can work with the string representation directly.&lt;/p&gt;
+
+&lt;h3 id=&#34;solution&#34;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;I will read each test case number as a string and create two new numbers A and B. A will have all the digits 4 replaced with 2 and the remaining digits the same. B Will have all the digits 4 replaced with 2 and all the remaining digits replaced with 0. This pattern of replacing each member of an array with another one using information from only a single array element can be implemented using the higher order function &lt;code&gt;map&lt;/code&gt;. So, I defined two functions to calculate A and B.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;getA :: [Char] -&amp;gt; [Char]
+getA n = map (\x -&amp;gt; if x == &#39;4&#39; then &#39;2&#39; else &#39;0&#39;) n
+
+getB :: [Char] -&amp;gt; [Char]
+getB n = map (\x -&amp;gt; if x == &#39;4&#39; then &#39;2&#39; else x) n
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;problem-2-you-can-go-your-own-way&#34;&gt;Problem 2: You Can Go Your Own Way&lt;/h2&gt;
+
+&lt;p&gt;To read the full problem description &lt;a href=&#34;https://codingcompetitions.withgoogle.com/codejam/round/0000000000051705/00000000000881da&#34; target=&#34;_blank&#34;&gt;go here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;summary-of-the-problem-statement&#34;&gt;Summary of the Problem Statement&lt;/h3&gt;
+
+&lt;p&gt;The goal is to get from the top right corner of an NxN grid to the bottom right corner using only South (Down) and East (Right) moves with the additional constraint that any segment of the path taken must not coincide (but can intersect at a single point) with another path that someone called Lydia took. The input is this path which is represented as a string containing uppercase &amp;ldquo;S&amp;rdquo; and &amp;ldquo;E&amp;rdquo; characters only.&lt;/p&gt;
+
+&lt;h3 id=&#34;analysis-1&#34;&gt;Analysis&lt;/h3&gt;
+
+&lt;p&gt;This problem looks more difficult to solve than it actually is. Once you know the trick, the code is quite simple. Before trying to solve the problem, I tried to write down some observations about the problem which helped a little.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Observation 1: Number of &lt;code&gt;S&lt;/code&gt; moves and &lt;code&gt;E&lt;/code&gt; moves must be exactly equal to &lt;code&gt;N-1&lt;/code&gt; if you want to reach the bottom right corner. You can see this by thinking of each move as a vector. This implies that it might be possible to find the solution by just transforming the input string as it is read.&lt;/li&gt;
+&lt;li&gt;Observation 2: If I have a function that only stays the same or decreases along the X-axis and intersects the point (0, 0), I can mirror the function along the line y=-x and the only places where the path intersects will be crossings. That means I can solve this by just doing the opposite of whatever Lydia does at each step.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This means that I can take Lydia&amp;rsquo;s path and reverse the action she took at each step like some dark mirror and I have my solution. Interestingly, this problem can also be solved using the &amp;ldquo;map&amp;rdquo; higher order function pattern in Haskell. The meat of my solution was implemented in two functions. One is the character (move) mapping function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;flipMove :: Char -&amp;gt; Char
+flipMove c
+    | c == &#39;S&#39; = &#39;E&#39;
+    | c == &#39;E&#39; = &#39;S&#39;
+    | otherwise = c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And another is the function that transforms the input string into the output string.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;solveCase :: String -&amp;gt; String
+solveCase lydiasMoves = map flipMove lydiasMoves
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As before, the rest of the code is just IO. My full solution is &lt;a href=&#34;https://gist.github.com/RationalAsh/ba917a855dc63400245478ad4a03b1e5&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;problem-3-cryptopangrams&#34;&gt;Problem 3: Cryptopangrams&lt;/h2&gt;
+
+&lt;p&gt;This problem was a bit harder than the others. I spent a lot of time thinking about this one and solved it quite close to the end of the round. Some of my initial attempts failed because I didn&amp;rsquo;t consider all the edge cases. Read the full problem statement &lt;a href=&#34;https://codingcompetitions.withgoogle.com/codejam/round/0000000000051705/000000000008830b&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;summary-of-problem-statement-1&#34;&gt;Summary of Problem Statement&lt;/h3&gt;
+
+&lt;p&gt;A string is &amp;ldquo;encoded&amp;rdquo; using the following procedure:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;26 prime numbers less than a number N are chosen.&lt;/li&gt;
+&lt;li&gt;The numbers are sorted in increasing order and a character map is made from the numbers to the corresponding letter between A and Z.&lt;/li&gt;
+&lt;li&gt;Each character in the sentence is replaced with the corresponding prime number (spaces are removed and ignored).&lt;/li&gt;
+&lt;li&gt;The prime number at each position is replaced with the product of the number and the number corresponding to the next character in the sentence.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As an additional condition, the string is guaranteed to have all 26 characters occur at least once.&lt;/p&gt;
+
+&lt;p&gt;For each case, as input, the maximum number N and the encoded sentence is given. The output should be the decoded sentence (without spaces).&lt;/p&gt;
+
+&lt;h3 id=&#34;analysis-2&#34;&gt;Analysis&lt;/h3&gt;
+
+&lt;p&gt;Let each sentence that is encoded be made of L characters. The set of primes that represent each of these characters can be represented by the sequence of numbers: $\{P_1, P_2, &amp;hellip; , P_L\}$. After the &amp;ldquo;encoding&amp;rdquo; procedure is carried out, the sequence will look like: $\{P_1\times P_2, P_2\times P_3, &amp;hellip; , P_{L-1}\times P_{L}\}$. The brute-force approach to solve this problem would involve trying to find the prime factors of each number in the sequence. However, if you look at the sequence above you can see that each number in the sequence except for the first one shares a common factor with the number before it! This means that if I find the common factors of the first two numbers in the sequence then I can factorize the entire sequence quite easily using the following procedure:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Find the common factor between the first two numbers in the sequence.&lt;/li&gt;
+&lt;li&gt;Divide the first number by this common factor to get the first factor.&lt;/li&gt;
+&lt;li&gt;Second factor is the common factor.&lt;/li&gt;
+&lt;li&gt;For all subsequent numbers, the first factor is the common factor with the previous number and the second factor is the number divided by the common factor.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;solution-1&#34;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;So first, I wrote a function to find the greatest common divisor between two numbers. This function implements &lt;a href=&#34;https://en.wikipedia.org/wiki/Euclidean_algorithm&#34; target=&#34;_blank&#34;&gt;Euclid&amp;rsquo;s Algorithm&lt;/a&gt; for find the greatest common divisor of two numbers:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;commonFactor :: Integer -&amp;gt; Integer -&amp;gt; Integer
+commonFactor a b
+    | remainder == 1 = 1
+    | remainder == 0 = if a &amp;gt; b then b else a
+    | otherwise = if a &amp;gt; b then commonFactor b remainder else commonFactor a remainder 
+    where remainder = if a &amp;gt; b then snd (quotRem a b) else snd (quotRem b a)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In an imperative programming language we would loop through each character in the sequence to find the factors after setting up the loop by finding the common factor between the first two numbers. In Haskell the loop pattern for solving this particular problem is captured quite beautifully using the higher order function &lt;code&gt;scanl&lt;/code&gt;. The type signature for &lt;code&gt;scanl&lt;/code&gt; is &lt;code&gt;(b -&amp;gt; a -&amp;gt; b) -&amp;gt; b -&amp;gt; [a] -&amp;gt; [b]&lt;/code&gt;. This means that scanl takes a function that takes a type &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; and returns a &lt;code&gt;b&lt;/code&gt;, a member of type &lt;code&gt;b&lt;/code&gt; and a list of type &lt;code&gt;a&lt;/code&gt; and returns a list of type &lt;code&gt;b&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A &lt;code&gt;scanl&lt;/code&gt; is a higher order function that is a variant of a general pattern in computing called a &lt;code&gt;fold&lt;/code&gt;. To put it very simply, a fold takes a starting value (sometimes called a &lt;em&gt;seed&lt;/em&gt;), a function and a list and applies the function repeatedly in a specific way. If I write down the fold imperatively in a language like Python, it would look like this (f is the function that is applied recursively):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;seed = 0
+for idx, elem in enumerate(lst):
+    if idx == 0:
+        result = f(seed, elem)
+    else:
+        result = f(result, elem)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A &lt;code&gt;fold&lt;/code&gt; will run this loop and return the final value of the &lt;code&gt;result&lt;/code&gt; in the computation. A &lt;code&gt;scan&lt;/code&gt; is just a fold that returns a list of the intermediate values at each iteration in the loop. Haskell has two &lt;code&gt;scan&lt;/code&gt; functions that work on lists: &lt;code&gt;scanl&lt;/code&gt; and &lt;code&gt;scanr&lt;/code&gt;. &lt;code&gt;scanl&lt;/code&gt; starts the iteration from the left side of the list and &lt;code&gt;scanr&lt;/code&gt; starts the iteration from the right side of the list.&lt;/p&gt;
+
+&lt;p&gt;With this in mind, I wrote a scanl based function to factorize the list of input numbers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;factorizeCiphertext :: [Integer] -&amp;gt; [Integer]
+factorizeCiphertext lst@(x1:x2:nums) = scanl (\n1 n2 -&amp;gt; n2 `div` n1) firstFactor lst
+    where firstFactor = x1 `div` (commonFactor x1 x2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my first attempt at solving the problem, I thought that this was the full solution. But I kept getting runtime errors once I uploaded the answer to the website. After thinking about the problem for a little bit I realized that I&amp;rsquo;d missed out on some edge cases. There are two ways in which this solution can fail.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;If there are consecutive numbers that are identical at the &lt;em&gt;start&lt;/em&gt; of the sequence. The common factor algorithm will return the number itself. Consecutive identical numbers can be caused by either repeated characters (&amp;ldquo;AAAAAA&amp;rdquo;) or by repeated alternating characters (&amp;ldquo;ABABABA&amp;rdquo;) in the plain text.&lt;/li&gt;
+&lt;li&gt;If there are multiple but different consecutive numbers at the start of the sequence. For instance, if the cipher text starts like &lt;code&gt;[9, 9, 9, 15, 15, 15, 35, 217]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Note that if repeated characters appear in the middle of the sequence, it does not matter since the procedure we use will divide this number by the previous factor anyway. To handle this edge case, we&amp;rsquo;ll need to extract any successive repeated numbers from the start of the sequence. So I wrote two functions to split the input list into two lists. One contains any repeated characters at the start of the list and the other is the rest of the list.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;groupHead :: [Integer] -&amp;gt; [Integer]
+groupHead (x:xs)
+    | x == (head xs) = [x] ++ (takeWhile (==x) xs) ++ groupHead (dropWhile (==x) xs)
+    | otherwise = []
+
+groupTail :: [Integer] -&amp;gt; [Integer]
+groupTail (x:xs)
+    | x == (head xs) = groupTail (dropWhile (==x) xs)
+    | otherwise = [x] ++ xs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the rest of the list that does not have any initial repeating characters, the original &lt;code&gt;factorizeCiphertext&lt;/code&gt; function can be used to factorize the list. But how do we factorize the first part of the list? After a bit of thought I realized that if we factorize the first number in the second part of the list, it must have a common factor with the last number in the first part of the list. So now I can use this as the first factor to &lt;code&gt;scan&lt;/code&gt; the list from the right!&lt;/p&gt;
+
+&lt;p&gt;So the final function that accounts for the edge cases is:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;factorizeCiphertext4 :: [Integer] -&amp;gt; [Integer]
+factorizeCiphertext4 (n:nums)
+    | isEdge = (scanr (\n1 n2 -&amp;gt; n1 `div` n2) (head factorTail) groupHeads) ++ (tail factorTail)
+    | otherwise = factorTail
+    where groupHeads = groupHead ([n] ++ nums)
+          isEdge = if (length groupHeads) &amp;gt; 0 then True else False
+          listToScan = groupTail ([n] ++ nums)
+          firstFactor = (head listToScan) `div` (commonFactor (head listToScan) (head $ tail listToScan))
+          factorTail = scanl (\f n -&amp;gt; n `div` f) firstFactor listToScan
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Haskell is a difficult language to learn, especially if you&amp;rsquo;ve only been exposed to imperative languages all your life. Rather than thinking in terms of discrete steps, you have to force yourself to think in terms of recursion and higher order patterns in the problem. However, if you stick with it for that initial amount of time that it takes to develop some basic proficiency, the results can be very rewarding. You can write some beautiful code in this language. After learning Haskell, I&amp;rsquo;ve also found myself using a functional approach to solve programming problems in other languages too! For instance, I&amp;rsquo;ve started using Python&amp;rsquo;s &lt;a href=&#34;https://docs.python.org/3/library/itertools.html&#34; target=&#34;_blank&#34;&gt;iterools&lt;/a&gt; package much more often.&lt;/p&gt;
+
+&lt;p&gt;However, usefulness wasn&amp;rsquo;t the main factor that motivated me to learn Haskell. For me it was more about the fun of solving puzzles in clever and aesthetically pleasing ways. Haskell is one of the few languages that puts some fun back into solving programming problems. I think it brings in some of the beauty and rigor traditionally associated with pure mathematics into a programming language. If you&amp;rsquo;re someone who enjoys programming puzzles for their own sake and finds beauty in clever solutions to puzzles, I highly recommend giving Haskell a go.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>The Witcher 3: Wild Hunt - A Review</title>
       <link>https://www.ashwinnarayan.com/post/witcher-3-review/</link>
       <pubDate>Sun, 16 Sep 2018 01:10:46 +0800</pubDate>
@@ -1064,15 +1245,6 @@ export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”&lt;/code&gt;&lt;/
       <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Visualizing Self-Organizing Maps</title>
-      <link>https://www.ashwinnarayan.com/project/som-animation/</link>
-      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.ashwinnarayan.com/project/som-animation/</guid>
       <description></description>
     </item>
     

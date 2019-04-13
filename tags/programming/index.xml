@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
-    <lastBuildDate>Sun, 31 Dec 2017 11:41:31 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 13 Apr 2019 15:26:34 +0800</lastBuildDate>
     
 	<atom:link href="https://www.ashwinnarayan.com/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Learning Haskell Through Google Code Jam</title>
+      <link>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</link>
+      <pubDate>Sat, 13 Apr 2019 15:26:34 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</guid>
+      <description>Introduction Over the last year or so, I&amp;rsquo;ve been playing around with functional programming. As the first few lines of the Wikipedia page suggest, functional programming is all about expressing a computation or algorithm as the composition of functions rather than using a state that changes over time. From what I&amp;rsquo;ve understood so far, functional programming is based on lambda calculus which is an alternative but equivalent formulation of the famous Turing Machine that most modern computers are based on.</description>
+    </item>
     
     <item>
       <title>Hugo Web Development Workflow on Windows</title>

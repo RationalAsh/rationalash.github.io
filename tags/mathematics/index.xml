@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Ashwin Narayan</copyright>
-    <lastBuildDate>Fri, 19 Apr 2019 15:56:44 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2019 08:56:44 +0800</lastBuildDate>
     
 	<atom:link href="https://www.ashwinnarayan.com/tags/mathematics/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Cartpole Dynamics and Control</title>
       <link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link>
-      <pubDate>Fri, 19 Apr 2019 15:56:44 +0800</pubDate>
+      <pubDate>Sun, 21 Apr 2019 08:56:44 +0800</pubDate>
       
       <guid>https://www.ashwinnarayan.com/post/cartpole-dynamics/</guid>
       <description>Introduction As is the case for a lot of PhDs, my main work focuses on a small part of robotics. There are many areas of robotics that I would love to work on but do not. As part of my ongoing effort to learn more about these areas, I work on accessible problems that interest me. One area of robotics that fascinates me is that of rigid body dynamics and control.</description>

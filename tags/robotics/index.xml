@@ -6,11 +6,20 @@
     <description>Recent content in Robotics on Ashwin Narayan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
-    <lastBuildDate>Sun, 10 Sep 2017 17:58:08 +0800</lastBuildDate>
+    <copyright>&amp;copy; 2019 Ashwin Narayan</copyright>
+    <lastBuildDate>Fri, 19 Apr 2019 15:56:44 +0800</lastBuildDate>
     
 	<atom:link href="https://www.ashwinnarayan.com/tags/robotics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cartpole Dynamics and Control</title>
+      <link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link>
+      <pubDate>Fri, 19 Apr 2019 15:56:44 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/cartpole-dynamics/</guid>
+      <description>Introduction As is the case for a lot of PhDs, my main work focuses on a small part of robotics. There are many areas of robotics that I would love to work on but do not. As part of my ongoing effort to learn more about these areas, I work on accessible problems that interest me. One area of robotics that fascinates me is that of rigid body dynamics and control.</description>
+    </item>
     
     <item>
       <title>How to Integrate Quaternions</title>

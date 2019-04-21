@@ -289,11 +289,11 @@
 
 <p>Over the last year or so, I&rsquo;ve been playing around with <a href="https://en.wikipedia.org/wiki/Functional_programming" target="_blank">functional programming</a>. As the first few lines of the Wikipedia page suggest, functional programming is all about expressing a computation or algorithm as the composition of functions rather than using a state that changes over time. From what I&rsquo;ve understood so far, functional programming is based on <a href="https://en.wikipedia.org/wiki/Lambda_calculus" target="_blank">lambda calculus</a> which is an alternative but equivalent formulation of the famous Turing Machine that most modern computers are based on.</p>
 
-<p>Of course, once you start reading up on functional programming, the language that is recommended the most is <a href="https://www.haskell.org/" target="_blank">Haskell</a>. I got interested in functional programming and Haskell in the first place because I was attracted by its more mathematical appearance and a lot of the code that I looked at seemed to express ideas much more clearly and (in my opinion) more beautifully. Learning Haskell was not easy at all. As someone who&rsquo;s programmed using imperative programming languages all my life, I found it extremely difficult to think about solving problems using the style that Haskell (and functional programming) imposed. Near the beginning of my journey to learn it, there were quite a lot of stops and restarts and there were many instances where I questioned that it was even useful to learn the language as I found it so difficult to express ideas that were in my head simple to express in a language like Python. I also found writing programs that required I/O quite difficult. However, the aforementioned clarity and beauty that I found in the way functional programming expressed ideas stuck with me and I kept coming back to it. After nearly a year, things fell into place and I started being able to write code that was actually useful (i.e. interacted with the world through I/O). I feel like I&rsquo;m finally at a point where I can program well enough in the language that I&rsquo;m able to practice solving problems without struggling too much with I/O. So, when I got the email notifying me about this year&rsquo;s Google Code Jam I thought I&rsquo;d participate and try to use Haskell as much as possible!</p>
+<p>Once you start reading up on functional programming, the language that is most often recommended is <a href="https://www.haskell.org/" target="_blank">Haskell</a>. I got interested in functional programming and Haskell in the first place because I was attracted by its more mathematical appearance. A lot of the code that I looked at seemed to express ideas much more clearly and (in my opinion) more beautifully. However, Learning Haskell was not easy at all. As someone who&rsquo;s been programming using imperative languages all my life, I found it unusually difficult to think about solving problems using the style that Haskell (and functional programming) imposed. Near the beginning of my journey to learn the language, there were quite a lot of stops and restarts and many instances where I questioned whether it was even useful to learn the language. I found it so difficult to express ideas that were, in my head simple to express in a language like Python. I also found writing programs that required I/O quite difficult. However, the aforementioned clarity and beauty that I found in the way functional programming expressed ideas stuck with me and I kept coming back to it. after nearly a year, things fell into place and I started writing code that was actually useful (i.e. interacted with the world through I/O). I feel like I&rsquo;m finally at a point where I can program well enough in the language that I can solve problems without struggling too much with I/O. So, when I got the email notifying me about this year&rsquo;s Google Code Jam I thought I&rsquo;d participate and try to use Haskell as much as possible!</p>
 
 <h2 id="google-code-jam">Google Code Jam</h2>
 
-<p>I&rsquo;ve known about Google Code Jam for quite a while. I&rsquo;ve even tried participating once before. The last time I participated, I was a very optimistic, but novice programmer and I did not even make it past the qualifying round. This was close to the beginning of my undergraduate degree. Since that time I&rsquo;ve been programming on a regular basis for about six years. So, this time I did make it past the qualifying round quite comfortably. The main challenge I faced this time was that I was using a programming language that I didn&rsquo;t quite know fully yet. But the added challenge did make solving the problems a lot more fun. Of the 4 problems in the qualifying round I solved 3. While solving these problems I was able to take advantage of quite a few functional programming patterns and I thought that it might be a good idea to write an article to show how Haskell&rsquo;s higher order functions can be really useful in expressing common programming patterns in a concise and simple way.</p>
+<p>I&rsquo;ve known about Google Code Jam for quite a while. I&rsquo;ve even tried participating once before near the beginning of my undergraduate degree. Being a novice at the time, I did not even make it past the qualifying round. Since then I&rsquo;ve been programming on a regular basis for nearly six years and it&rsquo;s paid off. This time, I made it past the qualifying round quite comfortably. The main challenge before me was my use of a programming language that I hadn&rsquo;t fully mastered yet. The added challlenge did make solving the problems a lot more fun however. Along the way, I was able to take advantage of some functional programming patterns and I thought that it might be valuable to write an article about how these patterns can be useful.</p>
 
 <h2 id="problem-1-foregone-solution">Problem 1 - Foregone Solution</h2>
 
@@ -318,6 +318,8 @@ getB :: [Char] -&gt; [Char]
 getB n = map (\x -&gt; if x == '4' then '2' else x) n
 </code></pre>
 
+<p>The rest of the solution is just I/O. You can see my full solution <a href="https://gist.github.com/RationalAsh/b92dfab3970e5d9ba2b4855afedf0d5c" target="_blank">here</a>.</p>
+
 <h2 id="problem-2-you-can-go-your-own-way">Problem 2: You Can Go Your Own Way</h2>
 
 <p>To read the full problem description <a href="https://codingcompetitions.withgoogle.com/codejam/round/0000000000051705/00000000000881da" target="_blank">go here</a>.</p>
@@ -328,7 +330,7 @@ getB n = map (\x -&gt; if x == '4' then '2' else x) n
 
 <h3 id="analysis-1">Analysis</h3>
 
-<p>This problem looks more difficult to solve than it actually is. Once you know the trick, the code is quite simple. Before trying to solve the problem, I tried to write down some observations about the problem which helped a little.</p>
+<p>This problem looks more difficult to solve than it actually is. Once you know the trick, the code is quite simple. Here are some observations about the problem which helped me arrive at the solution.</p>
 
 <ul>
 <li>Observation 1: Number of <code>S</code> moves and <code>E</code> moves must be exactly equal to <code>N-1</code> if you want to reach the bottom right corner. You can see this by thinking of each move as a vector. This implies that it might be possible to find the solution by just transforming the input string as it is read.</li>
@@ -531,7 +533,7 @@ factorizeCiphertext4 (n:nums)
   <div class="container">
     <p class="powered-by">
 
-      &copy; 2018 Ashwin Narayan &middot; 
+      &copy; 2019 Ashwin Narayan &middot; 
 
       Powered by the
       <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
@@ -599,6 +601,12 @@ factorizeCiphertext4 (n:nums)
 
       
       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
       
 
       

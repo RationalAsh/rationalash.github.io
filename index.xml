@@ -6,9 +6,144 @@
     <description>Recent content in Ashwin Narayan on Ashwin Narayan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2018 Ashwin Narayan</copyright>
+    <copyright>&amp;copy; 2019 Ashwin Narayan</copyright>
     <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0800</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cartpole Dynamics and Control</title>
+      <link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link>
+      <pubDate>Fri, 19 Apr 2019 15:56:44 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/cartpole-dynamics/</guid>
+      <description>
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;As is the case for a lot of PhDs, my main work focuses on a small part of robotics. There are many areas of robotics that I would love to work on but do not. As part of my ongoing effort to learn more about these areas, I work on accessible problems that interest me. One area of robotics that fascinates me is that of rigid body dynamics and control. Regardless of how many times I see it, there is something magical about using mathematics to make correct predictions about the world. Newtonian mechanics - the science that powers most modern robots - is many hundreds of years old, but I can still feel the magic when the equations come to life.&lt;/p&gt;
+
+&lt;p&gt;One toy system that is commonly used to learn about dynamics and control theory is the &lt;a href=&#34;https://en.wikipedia.org/wiki/Inverted_pendulum&#34; target=&#34;_blank&#34;&gt;cart-pole or inverted pendulum&lt;/a&gt;. Over the past few weeks, I&amp;rsquo;ve been working through simulating the dynamics of the system. I alse tried out some common control strategies to perform the task of balancing the pendulum with its center of mass above the joint. In this article I&amp;rsquo;ll go through the process from beginning to end. I think the cart pole system is very convenient as it is simple enough that its dynamics can be worked out by hand. Concomitantly, it is complex enough to warrant applying some advanced control strategies.&lt;/p&gt;
+
+&lt;h2 id=&#34;modeling-and-simulating-the-cart-pole-system&#34;&gt;Modeling and Simulating the Cart-Pole System&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cart-pole.png&#34; alt=&#34;cart_pole_image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The diagram above (lifted from the Wikipedia article) shows what the system looks like. It is assumed that the cart is on a fixed linear rail (frictionless of course). This can be considered a prismatic joint in robotics terminology. The pendulum is mounted on the cart with a revolute joint that has a single rotational degree of freedom. There are a few ways to model the pendulum. Some model it as a uniform bar/cylinder and some as a concentrated mass at the end of a massless link. For the purposes of this article, I&amp;rsquo;ll be modeling it as a thin cylindrical rod.&lt;/p&gt;
+
+&lt;h3 id=&#34;lagrangian-mechanics&#34;&gt;Lagrangian Mechanics&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Lagrangian_mechanics&#34; target=&#34;_blank&#34;&gt;Lagrangian mechanics&lt;/a&gt; is a fascinating and beautiful formulation of classical mechanics. Rather than the three laws of motion, Lagrangian mechanics is interested in a scalar quantity called the &lt;em&gt;action&lt;/em&gt; which is a function of the state of the mechanical system. By applying a simple constraint known as the &lt;a href=&#34;https://en.wikipedia.org/wiki/Principle_of_least_action&#34; target=&#34;_blank&#34;&gt;Principle of Least Action&lt;/a&gt;, you can get the equations of motion for any system in any coordinate system.&lt;/p&gt;
+
+&lt;p&gt;To apply Lagrangian Mechanics to the cart-pole system, I need to first write down the Lagrangian of the system which is defined as the difference between the potential and kinetic energies of the system as functions of the state.&lt;/p&gt;
+
+&lt;p&gt;Since the cart moves perpedicular to gravity, the potential energy $V$ only depends on the vertical position of the pendulum.&lt;/p&gt;
+
+&lt;p&gt;$$ V = -m_{p}gl\cos{\theta} $$&lt;/p&gt;
+
+&lt;p&gt;The Kinetic Energy of the system is a bit more involved. It&amp;rsquo;s the sum of the kinetic energies of the cart and the pole.&lt;/p&gt;
+
+&lt;p&gt;$$ \begin{align} T &amp;amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\
+   &amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\
+   &amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 + m_p l \dot{x}\dot{\theta}\cos{\theta}\end{align} $$&lt;/p&gt;
+
+&lt;p&gt;The Lagrangian is then:&lt;/p&gt;
+
+&lt;p&gt;$$ \mathcal{L} = T - V $$&lt;/p&gt;
+
+&lt;p&gt;In Lagrangian mechanics, as the system evolves over time, a quantity called &lt;em&gt;action&lt;/em&gt; is defined as the integral of the Lagrangian.&lt;/p&gt;
+
+&lt;p&gt;$$ S = \int_{t_1}^{t_2} \mathcal{L} dt$$&lt;/p&gt;
+
+&lt;p&gt;According to the Principle of Least Action, the dynamics of the system evolves so that this quantity - the action - is minimized. Once I have the action I can use the &lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation&#34; target=&#34;_blank&#34;&gt;Euler-Lagrange equations&lt;/a&gt; to find the equations of motion of the system.&lt;/p&gt;
+
+&lt;p&gt;$$ \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot{q}_i} - \frac{\partial \mathcal{L}}{\partial q_i} = F_i$$&lt;/p&gt;
+
+&lt;p&gt;The $q_i$ represent the state variables of the system and $F_i$ generalized forces. By applying these equations once for each state variable I get the full equations of motion of the system. In the case of the cart pole system, the state variables are the position of the cart and the angle between the cart and the pendulum. The resulting two equations are:&lt;/p&gt;
+
+&lt;p&gt;$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\
+   m_p g l \sin{\theta} + m_p l \ddot{x} \cos{\theta} + m_p l^2 \ddot{\theta} = F_2 \end{align} $$&lt;/p&gt;
+
+&lt;p&gt;The central equation of study in robot dynamics are the manipulator equations. These equations are a general way to express the dynamics of a multi-link rigid body. By inspecting the equations of motion derived above, they can be expressed in the manipulator equation form:&lt;/p&gt;
+
+&lt;p&gt;$$ H(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = F $$&lt;/p&gt;
+
+&lt;p&gt;Where&lt;/p&gt;
+
+&lt;p&gt;$$ H = \begin{bmatrix} m_c + m_p &amp;amp; m_p l \cos{\theta} \\
+                  m_p l \cos{\theta} &amp;amp; m_p l^2 \end{bmatrix}$$
+$$ C = \begin{bmatrix} 0 &amp;amp; -m_p l \dot{\theta} \sin{\theta} \\
+                       0 &amp;amp; 0 \end{bmatrix} $$
+$$ G = \begin{bmatrix} 0 \\
+                       m_p g l \sin{\theta} \end{bmatrix} $$
+$$ q = \begin{bmatrix} x \\
+                       \theta \end{bmatrix} $$&lt;/p&gt;
+
+&lt;h3 id=&#34;simulating-the-cart-pole-system&#34;&gt;Simulating the Cart Pole System&lt;/h3&gt;
+
+&lt;p&gt;There are a few ways to simulate a mechanical system once you have the equations of motion. Python is an excellent option. The &lt;a href=&#34;https://www.scipy.org/&#34; target=&#34;_blank&#34;&gt;scipy&lt;/a&gt; package has a good set of numerical integrators. You just have to feed in the initial conditions of the system and it&amp;rsquo;ll simulate the system for as long as you want (at least, until your RAM runs out). However, for this project, I chose to use MATLAB. Mathworks decided to make the student (and personal) version of MATLAB available for ridiculously cheap prices (compared to their organizational licenses). So about a year ago I bought their student license so I could learn to use it. Everything I do in this article can be done just as well using Python and scipy. However, I do admit that using MATLAB makes the work a little smoother.&lt;/p&gt;
+
+&lt;p&gt;For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink.
+&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_simscape.png&#34; alt=&#34;cart_pole_simscape&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Without any kind of control system active, we can see the dynamics of the free system quite nicely.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_uncontrolled.gif&#34; alt=&#34;cart_pole_uncontrolled&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;balancing-control&#34;&gt;Balancing Control&lt;/h2&gt;
+
+&lt;p&gt;The balancing control task is that of having the pendulum balance with its center of mass above the cart by only moving the cart (there is no actuator on the revolute joint). The control input in this task is a force that is applied to the cart (through electric motors or rocket engines or some other means of actuation).&lt;/p&gt;
+
+&lt;p&gt;The cart pole system is a highly non-linear system. However, just like how the motion of the simple pendulum can be approximated by a linear system for small angles, the cart pole system can be linearized too. Sometimes in engineering, the approach of &amp;ldquo;fiddling with it till it works&amp;rdquo; really works! So the first thing I tried to do is to implement a simple PD controller. If the system is linear around the balancing point (which it is in this case) and long as the states aren&amp;rsquo;t too far off, this approach will work.&lt;/p&gt;
+
+&lt;h3 id=&#34;hand-tuned-control-gains&#34;&gt;Hand-Tuned Control Gains&lt;/h3&gt;
+
+&lt;p&gt;So the very first thing I tried are hand tuned control gains. I just assumed that I could achieve what I wanted by using the control signal $u = K\cdot s$ where $s$ is the state vector with the positions and velocities: $s = \begin{bmatrix} x &amp;amp; \dot{x} &amp;amp; \theta &amp;amp; \dot{\theta}\end{bmatrix}^T$. After a bit (a lot) of fiddling, I did manage to find a set of control gains that worked. Here&amp;rsquo;s what the controller looks like when it tries to balance the pendulum.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/handtuned_pd.gif&#34; alt=&#34;handtuned_pd&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;lqr&#34;&gt;LQR&lt;/h3&gt;
+
+&lt;p&gt;To avoid wasting all that time fiddling, control engineers invented a type of controller called a Linear Quadratic Regulator. LQR controllers formalize the process of fiddling by defining a cost function on the states and control inputs. The optimal control gain vector $K$ is the vector that minimizes this cost function. LQR is fundamental enough in control theory that standard functions exist to calculate the control gains if you have the linearized system. Such functions exist in both &lt;a href=&#34;https://www.mathworks.com/help/control/ref/lqr.html&#34; target=&#34;_blank&#34;&gt;MATLAB&lt;/a&gt; and &lt;a href=&#34;https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.solve_continuous_are.html&#34; target=&#34;_blank&#34;&gt;scipy&lt;/a&gt; or &lt;a href=&#34;https://python-control.readthedocs.io/en/0.8.2/generated/control.lqr.html&#34; target=&#34;_blank&#34;&gt;specialized control libraries&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To do LQR, we first need to linearize the system around an &amp;ldquo;operating point&amp;rdquo;. This process can be little (but not too much) involved if you try to do it by hand so I applied liberal amounts Mathematica to help me out (you can do the same using &lt;a href=&#34;https://www.sympy.org/en/index.html&#34; target=&#34;_blank&#34;&gt;SymPy&lt;/a&gt; in Python). I first expressed the equations of motion in the form $\dot{s} = f(s, u)$. This can be done by rearranging the manipulator equations. Once you have the dynamics in this form, the linearized equations of motion can be expressed as:&lt;/p&gt;
+
+&lt;p&gt;$$ \dot{x} = A(s - s^*) + B(u - u^{ *}) $$&lt;/p&gt;
+
+&lt;p&gt;Where&lt;/p&gt;
+
+&lt;p&gt;$$ A = \frac{\partial f}{\partial s}\Bigr\rvert _{s=s^{*}} $$
+$$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$&lt;/p&gt;
+
+&lt;p&gt;For the cart pole system, the matrices come out as:&lt;/p&gt;
+
+&lt;p&gt;$$ A = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\
+                       0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \\
+                       0 &amp;amp; \frac{m_p g}{m_c} &amp;amp; 0 &amp;amp; 0 \\
+                       0 &amp;amp; \frac{(m_c + m_p)g}{m_c l} &amp;amp; 0 &amp;amp; 0 \end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;$$ B = \begin{bmatrix} 0 \\  0 \\  \frac{1}{m_c} \\  \frac{1}{m_c l}\end{bmatrix} $$&lt;/p&gt;
+
+&lt;p&gt;To compute the optimal LQR control gains, I need to define a few more matrices. As I said before, LQR finds the gain matrix $K$ that optimizes the cost function&lt;/p&gt;
+
+&lt;p&gt;$$ J = \int_0^{\infty} (s^TQs + u^TRu + 2x^TNu) dt$$&lt;/p&gt;
+
+&lt;p&gt;I need to define the matrix $Q$, $R$ and $N$. You can think of $Q$ as a matrix of weights that tell you how much to &amp;ldquo;penalize&amp;rdquo; certain combinations of the state. For instance the first term in the diagonal of the $Q$ matrix tells you how much to penalize the value of the state variable $x$. The same goes for other matrices. Having the $Q$ matrix as a scalar multiple of the identity matrix is a good default. $R$ is just a single scalar value. $N$ can be skipped in most cases. With these I got a control gain matrix that also successfully drove the states to my target. It looked quite similar to my hand tuned control gains actually. On close inspection you can see that the system does reach it&amp;rsquo;s target slightly faster.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_LQR_control.gif&#34; alt=&#34;cartpole_lqr_control&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Dynamics is an important part of a roboticist&amp;rsquo;s toolkit. Learning dynamics from a textbook can be a bit daunting. For me, implementing the ideas in code and generating nice animations helps me to get a better intuition of the mathematics. Now that I have the environment set up, I&amp;rsquo;m considering trying my hand at some swing-up control using energy shaping methods or reinforcement learning.&lt;/p&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-832-underactuated-robotics-spring-2009/readings/MIT6_832s09_read_ch03.pdf&#34; target=&#34;_blank&#34;&gt;Acrobot and Cartpole, Russ Tedrake 2009&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.mathworks.com/help/control/ref/lqr.html&#34; target=&#34;_blank&#34;&gt;MATLAB&amp;rsquo;s LQR Design Function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation&#34; target=&#34;_blank&#34;&gt;Euler-Lagrange Equation&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Learning Haskell Through Google Code Jam</title>
@@ -22,11 +157,11 @@
 
 &lt;p&gt;Over the last year or so, I&amp;rsquo;ve been playing around with &lt;a href=&#34;https://en.wikipedia.org/wiki/Functional_programming&#34; target=&#34;_blank&#34;&gt;functional programming&lt;/a&gt;. As the first few lines of the Wikipedia page suggest, functional programming is all about expressing a computation or algorithm as the composition of functions rather than using a state that changes over time. From what I&amp;rsquo;ve understood so far, functional programming is based on &lt;a href=&#34;https://en.wikipedia.org/wiki/Lambda_calculus&#34; target=&#34;_blank&#34;&gt;lambda calculus&lt;/a&gt; which is an alternative but equivalent formulation of the famous Turing Machine that most modern computers are based on.&lt;/p&gt;
 
-&lt;p&gt;Of course, once you start reading up on functional programming, the language that is recommended the most is &lt;a href=&#34;https://www.haskell.org/&#34; target=&#34;_blank&#34;&gt;Haskell&lt;/a&gt;. I got interested in functional programming and Haskell in the first place because I was attracted by its more mathematical appearance and a lot of the code that I looked at seemed to express ideas much more clearly and (in my opinion) more beautifully. Learning Haskell was not easy at all. As someone who&amp;rsquo;s programmed using imperative programming languages all my life, I found it extremely difficult to think about solving problems using the style that Haskell (and functional programming) imposed. Near the beginning of my journey to learn it, there were quite a lot of stops and restarts and there were many instances where I questioned that it was even useful to learn the language as I found it so difficult to express ideas that were in my head simple to express in a language like Python. I also found writing programs that required I/O quite difficult. However, the aforementioned clarity and beauty that I found in the way functional programming expressed ideas stuck with me and I kept coming back to it. After nearly a year, things fell into place and I started being able to write code that was actually useful (i.e. interacted with the world through I/O). I feel like I&amp;rsquo;m finally at a point where I can program well enough in the language that I&amp;rsquo;m able to practice solving problems without struggling too much with I/O. So, when I got the email notifying me about this year&amp;rsquo;s Google Code Jam I thought I&amp;rsquo;d participate and try to use Haskell as much as possible!&lt;/p&gt;
+&lt;p&gt;Once you start reading up on functional programming, the language that is most often recommended is &lt;a href=&#34;https://www.haskell.org/&#34; target=&#34;_blank&#34;&gt;Haskell&lt;/a&gt;. I got interested in functional programming and Haskell in the first place because I was attracted by its more mathematical appearance. A lot of the code that I looked at seemed to express ideas much more clearly and (in my opinion) more beautifully. However, Learning Haskell was not easy at all. As someone who&amp;rsquo;s been programming using imperative languages all my life, I found it unusually difficult to think about solving problems using the style that Haskell (and functional programming) imposed. Near the beginning of my journey to learn the language, there were quite a lot of stops and restarts and many instances where I questioned whether it was even useful to learn the language. I found it so difficult to express ideas that were, in my head simple to express in a language like Python. I also found writing programs that required I/O quite difficult. However, the aforementioned clarity and beauty that I found in the way functional programming expressed ideas stuck with me and I kept coming back to it. after nearly a year, things fell into place and I started writing code that was actually useful (i.e. interacted with the world through I/O). I feel like I&amp;rsquo;m finally at a point where I can program well enough in the language that I can solve problems without struggling too much with I/O. So, when I got the email notifying me about this year&amp;rsquo;s Google Code Jam I thought I&amp;rsquo;d participate and try to use Haskell as much as possible!&lt;/p&gt;
 
 &lt;h2 id=&#34;google-code-jam&#34;&gt;Google Code Jam&lt;/h2&gt;
 
-&lt;p&gt;I&amp;rsquo;ve known about Google Code Jam for quite a while. I&amp;rsquo;ve even tried participating once before. The last time I participated, I was a very optimistic, but novice programmer and I did not even make it past the qualifying round. This was close to the beginning of my undergraduate degree. Since that time I&amp;rsquo;ve been programming on a regular basis for about six years. So, this time I did make it past the qualifying round quite comfortably. The main challenge I faced this time was that I was using a programming language that I didn&amp;rsquo;t quite know fully yet. But the added challenge did make solving the problems a lot more fun. Of the 4 problems in the qualifying round I solved 3. While solving these problems I was able to take advantage of quite a few functional programming patterns and I thought that it might be a good idea to write an article to show how Haskell&amp;rsquo;s higher order functions can be really useful in expressing common programming patterns in a concise and simple way.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve known about Google Code Jam for quite a while. I&amp;rsquo;ve even tried participating once before near the beginning of my undergraduate degree. Being a novice at the time, I did not even make it past the qualifying round. Since then I&amp;rsquo;ve been programming on a regular basis for nearly six years and it&amp;rsquo;s paid off. This time, I made it past the qualifying round quite comfortably. The main challenge before me was my use of a programming language that I hadn&amp;rsquo;t fully mastered yet. The added challlenge did make solving the problems a lot more fun however. Along the way, I was able to take advantage of some functional programming patterns and I thought that it might be valuable to write an article about how these patterns can be useful.&lt;/p&gt;
 
 &lt;h2 id=&#34;problem-1-foregone-solution&#34;&gt;Problem 1 - Foregone Solution&lt;/h2&gt;
 
@@ -51,6 +186,8 @@ getB :: [Char] -&amp;gt; [Char]
 getB n = map (\x -&amp;gt; if x == &#39;4&#39; then &#39;2&#39; else x) n
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;The rest of the solution is just I/O. You can see my full solution &lt;a href=&#34;https://gist.github.com/RationalAsh/b92dfab3970e5d9ba2b4855afedf0d5c&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
 &lt;h2 id=&#34;problem-2-you-can-go-your-own-way&#34;&gt;Problem 2: You Can Go Your Own Way&lt;/h2&gt;
 
 &lt;p&gt;To read the full problem description &lt;a href=&#34;https://codingcompetitions.withgoogle.com/codejam/round/0000000000051705/00000000000881da&#34; target=&#34;_blank&#34;&gt;go here&lt;/a&gt;.&lt;/p&gt;
@@ -61,7 +198,7 @@ getB n = map (\x -&amp;gt; if x == &#39;4&#39; then &#39;2&#39; else x) n
 
 &lt;h3 id=&#34;analysis-1&#34;&gt;Analysis&lt;/h3&gt;
 
-&lt;p&gt;This problem looks more difficult to solve than it actually is. Once you know the trick, the code is quite simple. Before trying to solve the problem, I tried to write down some observations about the problem which helped a little.&lt;/p&gt;
+&lt;p&gt;This problem looks more difficult to solve than it actually is. Once you know the trick, the code is quite simple. Here are some observations about the problem which helped me arrive at the solution.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Observation 1: Number of &lt;code&gt;S&lt;/code&gt; moves and &lt;code&gt;E&lt;/code&gt; moves must be exactly equal to &lt;code&gt;N-1&lt;/code&gt; if you want to reach the bottom right corner. You can see this by thinking of each move as a vector. This implies that it might be possible to find the solution by just transforming the input string as it is read.&lt;/li&gt;
@@ -1238,15 +1375,6 @@ export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”&lt;/code&gt;&lt;/
       <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://www.ashwinnarayan.com/project/bb8-control/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Simulating the chaos of a double pendulum</title>
-      <link>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</link>
-      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</guid>
       <description></description>
     </item>
     

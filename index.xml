@@ -11,6 +11,182 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Building a Simple Telegram Bot Using Google Cloud Functions</title>
+      <link>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</link>
+      <pubDate>Thu, 06 Jun 2019 13:59:15 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</guid>
+      <description>
+
+&lt;p&gt;Many websites use bots to automate tasks and add useful (and sometimes harmful) functionality. For instance, there are reddit bots that can help you &lt;a href=&#34;https://www.reddit.com/r/stabbot/comments/72irce/how_to_use_stabbot/&#34; target=&#34;_blank&#34;&gt;stabilize shaky videos&lt;/a&gt;, &lt;a href=&#34;https://www.reddit.com/r/RemindMeBot/comments/24duzp/remindmebot_info/&#34; target=&#34;_blank&#34;&gt;remind you of events&lt;/a&gt; or even &lt;a href=&#34;https://www.reddit.com/user/goodbot_badbot&#34; target=&#34;_blank&#34;&gt;vote on the usefulness of other bots&lt;/a&gt;. &lt;a href=&#34;https://telegram.org/&#34; target=&#34;_blank&#34;&gt;Telegram&lt;/a&gt; - an instant messaging service similar to WhatsApp - lets you create and manage bots on their platform using their &lt;a href=&#34;https://core.telegram.org/bots/api&#34; target=&#34;_blank&#34;&gt;Bot API&lt;/a&gt;. Bots on Telegram are officially identified and provide fun and useful services. Last month, while exploring Google Cloud Platform after getting some free student credits, I came across &lt;a href=&#34;https://cloud.google.com/functions/&#34; target=&#34;_blank&#34;&gt;Google Cloud Functions&lt;/a&gt;. I realized that this hammer was perfect for the nail of setting up a simple Telegram bot.&lt;/p&gt;
+
+&lt;p&gt;Many years ago, when Telegram&amp;rsquo;s bot API was still young, I tried to create a bot that would send you random pictures of aurorae if you asked. That bot and the server that it lived on crashed a long time ago. But the bot&amp;rsquo;s name and API key lived on, still registered with Telegram&amp;rsquo;s servers. I decided to necromance this bot from the dead and inject it with some fun new functionality. Being a lover space exploration and what it represents for humanity, I had the idea of giving the bot the ability to send you random images from NASA with informative descriptions as seen on the &lt;a href=&#34;https://images.nasa.gov/&#34; target=&#34;_blank&#34;&gt;NASA Image and Video Library&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-the-nasa-images-api&#34;&gt;Using the NASA Images API&lt;/h2&gt;
+
+&lt;p&gt;The first problem to solve is getting a random image from the NASA Image and Video Library. At first, I thought that I&amp;rsquo;d have to use a web-scraping python library to extract the images. But things turned out to be much easier. NASA has quite a few APIs that they&amp;rsquo;ve listed on &lt;a href=&#34;https://api.nasa.gov/api.html#MarsPhotos&#34; target=&#34;_blank&#34;&gt;this page&lt;/a&gt;. Using their API, I can search through the images for any query I like and retrieve results in the form of JSON formatted data. The API uses &lt;code&gt;HTTP GET&lt;/code&gt; requests (&lt;a href=&#34;https://www.w3schools.com/tags/ref_httpmethods.asp&#34; target=&#34;_blank&#34;&gt;more info here&lt;/a&gt;). So for example, if I need to search for images related to planets using the API, I would open the URL: &lt;a href=&#34;https://images-api.nasa.gov/search?q=planet&#34; target=&#34;_blank&#34;&gt;https://images-api.nasa.gov/search?q=planet&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s one extra step here. If you click on the api link above and examine the results, you&amp;rsquo;ll notice that it does not return all the results of a search at once. Instead, it gives you the first 100 results and gives you the option of getting more using the &amp;lsquo;page&amp;rsquo; parameter in the web request. So if I want to access the results from the 5th page of a search, I&amp;rsquo;d use the URL: &lt;a href=&#34;https://images-api.nasa.gov/search?q=planet&amp;amp;page=5&#34; target=&#34;_blank&#34;&gt;https://images-api.nasa.gov/search?q=planet&amp;amp;page=5&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;So, to select a random result, I need to select a number between 1 and the total number of results and use modular arithmetic to figure out which page to get the result from. I encapsulated this logic in a single function that returns the URL and caption of a random result given a search query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-py&#34;&gt;import urllib.parse
+import urllib.request
+import json
+import random
+import math
+import traceback
+
+def get_random_nasa_image(search_term=&#39;planet&#39;):
+    &amp;quot;&amp;quot;&amp;quot;
+    Fetch a random image from the NASA media library.
+    &amp;quot;&amp;quot;&amp;quot;
+    try:
+        # The API URL
+        nasa_img_url = &amp;quot;https://images-api.nasa.gov/search&amp;quot;
+        # Setup the search data
+        send_data = {}
+        send_data[&#39;q&#39;] = search_term
+        send_data[&#39;media_type&#39;] = &#39;image&#39;
+        # Encode the url
+        url_values = urllib.parse.urlencode(send_data)
+        url = nasa_img_url + &#39;?&#39; + url_values
+        data = urllib.request.urlopen(url)
+        json_data = json.loads(data.read().decode(&#39;utf-8&#39;))
+        
+        num_results = json_data[&#39;collection&#39;][&#39;metadata&#39;][&#39;total_hits&#39;]
+        result_to_use = random.choice([i for i in range(num_results)])
+        page_num = math.ceil(result_to_use/100.0)
+        result_num_in_page = result_to_use%100
+        
+        if page_num != 1:
+            # Do another request
+            send_data[&#39;page&#39;] = page_num
+            url_values = urllib.parse.urlencode(send_data)
+            url = nasa_img_url + &#39;?&#39; + url_values
+            data = urllib.request.urlopen(url)
+            json_data = json.loads(data.read().decode(&#39;utf-8&#39;))
+            image_url = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;links&#39;][0][&#39;href&#39;]
+            image_caption = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;data&#39;][0][&#39;description&#39;]
+            image_title = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;data&#39;][0][&#39;title&#39;]
+        else:
+            image_url = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;links&#39;][0][&#39;href&#39;]
+            image_caption = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;data&#39;][0][&#39;title&#39;]
+            image_title = json_data[&#39;collection&#39;][&#39;items&#39;][result_num_in_page][&#39;data&#39;][0][&#39;description&#39;]
+
+        return (image_url, image_title, image_caption)
+    except Exception as e:
+        traceback.print_exc()
+        err_url = &#39;https://upload.wikimedia.org/wikipedia/commons/3/3b/Gato_enervado_pola_presencia_dun_can.jpg&#39;
+        err_caption = &#39;Uh-Oh. Something went wrong. Here\&#39;s a picture of a cat instead.&#39;
+        return (err_url, err_caption, json_data)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;sending-the-image-to-telegram&#34;&gt;Sending the Image to Telegram&lt;/h2&gt;
+
+&lt;p&gt;To make a Telegram Bot send an image to a user we need three pieces of information.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;The Chat ID&lt;/em&gt; : The chat ID is like a serial number that uniquely identifies the chat between a bot and a user.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The Photo&lt;/em&gt; : There are a few different formats that telegram accepts the photo in. I chose the simplest option, a string with the URL to the photo.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The Bot API Key&lt;/em&gt; : This is a long random looking string that you get when you create a bot. See instructions &lt;a href=&#34;https://core.telegram.org/bots#botfather&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt; to learn how to get your own.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The actual sending of the message is achieved by using more HTTP GET or POST requests. In this case I used the &lt;a href=&#34;https://core.telegram.org/bots/api#sendphoto&#34; target=&#34;_blank&#34;&gt;sendPhoto&lt;/a&gt; function defined in the API. Again, I encapsulated the functionality to send the photo into a single function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-py&#34;&gt;def sendPhoto(chat_id, url, caption):
+    sendPhotoUrl = &#39;https://api.telegram.org/bot{your-api-key}/sendPhoto&#39;
+    data = {}
+    data[&#39;chat_id&#39;] = chat_id
+    data[&#39;photo&#39;] = url
+    data[&#39;caption&#39;] = caption
+    data = urllib.parse.urlencode(data)
+    data = data.encode(&#39;ascii&#39;) # data should be bytes
+    
+    req = urllib.request.Request(sendPhotoUrl, data)
+    
+    with urllib.request.urlopen(req, timeout=10) as response:
+        the_page = response.read()
+        
+    return the_page
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;setting-up-a-google-cloud-function&#34;&gt;Setting Up a Google Cloud Function&lt;/h2&gt;
+
+&lt;p&gt;Google Cloud Functions allow you to execute a custom block of code when triggered by some kind of event - like it being a certain time of the day. Apart from Google, companies like Amazon and Microsoft also have their own versions of cloud functions.&lt;/p&gt;
+
+&lt;p&gt;Since my application logic was fairly simple, I opted to setup my cloud function from their web interface by following the instructions on this &lt;a href=&#34;https://cloud.google.com/functions/docs/quickstart-console&#34; target=&#34;_blank&#34;&gt;page&lt;/a&gt;. I kept all the default settings and opted to use Python 3.7 since that&amp;rsquo;s the programming language that I&amp;rsquo;m the most familiar with. The &amp;lsquo;hello_world&amp;rsquo; function that they have setup is the function that will be called when the service is triggered.&lt;/p&gt;
+
+&lt;p&gt;Inside the function, I need to implement some very simple logic:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Extract the Chat ID from the incoming message.&lt;/li&gt;
+&lt;li&gt;Get a random NASA photo.&lt;/li&gt;
+&lt;li&gt;Send the photo (along with its caption) to the incoming message&amp;rsquo;s Chat ID&lt;/li&gt;
+&lt;li&gt;Return an HTTP OK response.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here&amp;rsquo;s my code for the main function that&amp;rsquo;s called when an event is triggered. I&amp;rsquo;ve added some exception handling to the main logic as well.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-py&#34;&gt;def hello_world(request):
+    &amp;quot;&amp;quot;&amp;quot;Responds to any HTTP request.
+    Args:
+        request (flask.Request): HTTP request object.
+    Returns:
+        The response text or any set of values that can be turned into a
+        Response object using
+        `make_response &amp;lt;http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response&amp;gt;`.
+    &amp;quot;&amp;quot;&amp;quot;
+    request_json = request.get_json()
+    
+    doneFlag = False
+    try_counter = 0
+    try_max = 5
+    
+    while not doneFlag:
+        try:
+            # Send back a random nasa photo
+            photo, title, caption = get_random_nasa_image()
+            print(photo)
+            sendPhoto(request_json[&#39;message&#39;][&#39;chat&#39;][&#39;id&#39;],
+                      photo, caption)
+            doneFlag = True
+        except:
+            print(&amp;quot;Something Went Wrong. Trying again!&amp;quot;)
+            try_counter = try_counter + 1
+            if try_counter &amp;gt; 5:
+                doneFlag = True
+                traceback.print_exc()
+                sendPhoto(request_json[&#39;message&#39;][&#39;chat&#39;][&#39;id&#39;],
+                          &#39;https://upload.wikimedia.org/wikipedia/commons/3/3b/Gato_enervado_pola_presencia_dun_can.jpg&#39;,
+                          &#39;I\&#39;m Sorry, something went wrong. Here\&#39;s a cat picture instead. :P&#39;)
+            else:
+                pass
+
+    
+    print(request_json)
+    return f&#39;HTTP/1.0 200 OK&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;connecting-the-telegram-bot-to-the-cloud-function&#34;&gt;Connecting the Telegram Bot to the Cloud Function.&lt;/h2&gt;
+
+&lt;p&gt;The final step is to connect the Telegram Bot to the Cloud Function so that the function is triggered every time the bot receives a message from someone. The Telegram API has a function for just that. &lt;a href=&#34;https://core.telegram.org/bots/api#setwebhook&#34; target=&#34;_blank&#34;&gt;setWebhook&lt;/a&gt; allows you to set a URL that gets called every time the bot gets a new message. All the message data is passed on in JSON format. To connect your bot to the cloud function that you just created, you need to set the webhook to the URL specified in the &amp;lsquo;Trigger&amp;rsquo; tab of the function details page.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/gcf_trigger.JPG&#34; alt=&#34;gcf_image&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+
+&lt;p&gt;And we&amp;rsquo;re done! If there are no errors in the code, your bot should be triggered every time it receives a message. Here&amp;rsquo;s a demo of my bot working:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/telegram_bot_demo.png&#34; alt=&#34;demo_image&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Successes like these are the reason that I sometimes revive old projects. In the years that passed between my two attempts, some technologies had become cheap enough that I could use it nearly for free. In my last attempt to build the bot, I used a custom VPS server (basically a linux server) to try and run the bot. This meant that in addition to the logic for the bot, I needed to figure out how to get the bot to run on the server reliably. I often had to go back and restart the server or the script because it had got itself into an unexpected state. For cloud functions, there is no state. Each event invokes a new call of the function and if there is an error, the next function call isn&amp;rsquo;t affected by it. I also don&amp;rsquo;t need to worry about reliability and uptime because Google manages the service. Building systems like these are a great way of learning more about the inner workings of the internet and I hope that others who want to build their own Telegram bots (or other web based things) can use this article as a starting point.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Cartpole Dynamics and Control</title>
       <link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link>
       <pubDate>Sun, 21 Apr 2019 08:56:44 +0800</pubDate>
@@ -1366,15 +1542,6 @@ export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”&lt;/code&gt;&lt;/
       <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://www.ashwinnarayan.com/project/logistic-regression/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Modelling and Controlling a BB8 Droid</title>
-      <link>https://www.ashwinnarayan.com/project/bb8-control/</link>
-      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.ashwinnarayan.com/project/bb8-control/</guid>
       <description></description>
     </item>
     

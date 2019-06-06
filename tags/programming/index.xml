@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Ashwin Narayan</copyright>
-    <lastBuildDate>Sat, 13 Apr 2019 08:26:34 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2019 13:59:15 +0800</lastBuildDate>
     
 	<atom:link href="https://www.ashwinnarayan.com/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building a Simple Telegram Bot Using Google Cloud Functions</title>
+      <link>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</link>
+      <pubDate>Thu, 06 Jun 2019 13:59:15 +0800</pubDate>
+      
+      <guid>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</guid>
+      <description>Many websites use bots to automate tasks and add useful (and sometimes harmful) functionality. For instance, there are reddit bots that can help you stabilize shaky videos, remind you of events or even vote on the usefulness of other bots. Telegram - an instant messaging service similar to WhatsApp - lets you create and manage bots on their platform using their Bot API. Bots on Telegram are officially identified and provide fun and useful services.</description>
+    </item>
     
     <item>
       <title>Learning Haskell Through Google Code Jam</title>

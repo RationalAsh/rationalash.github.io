@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.40.3" />
+  <meta name="author" content="Ashwin Narayan">
+  <meta name="description" content="PhD Student">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://www.ashwinnarayan.com/post/gcp-telegram-bot/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-99092575-1', 'auto');
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
+
+  
+  <link rel="alternate" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  <link rel="feed" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://www.ashwinnarayan.com/post/gcp-telegram-bot/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rational_ash">
+  <meta property="twitter:creator" content="@rational_ash">
+  
+  <meta property="og:site_name" content="Ashwin Narayan">
+  <meta property="og:url" content="https://www.ashwinnarayan.com/post/gcp-telegram-bot/">
+  <meta property="og:title" content="Building a Simple Telegram Bot Using Google Cloud Functions | Ashwin Narayan">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2019-06-06T13:59:15&#43;08:00">
+  
+  <meta property="article:modified_time" content="2019-06-06T13:59:15&#43;08:00">
+  
+
+  
+
+  <title>Building a Simple Telegram Bot Using Google Cloud Functions | Ashwin Narayan</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Building a Simple Telegram Bot Using Google Cloud Functions</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-06-06 13:59:15 &#43;0800 &#43;08" itemprop="datePublished">
+      Jun 6, 2019
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Building%20a%20Simple%20Telegram%20Bot%20Using%20Google%20Cloud%20Functions&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fgcp-telegram-bot%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fgcp-telegram-bot%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fgcp-telegram-bot%2f&amp;title=Building%20a%20Simple%20Telegram%20Bot%20Using%20Google%20Cloud%20Functions"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fgcp-telegram-bot%2f&amp;title=Building%20a%20Simple%20Telegram%20Bot%20Using%20Google%20Cloud%20Functions"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Building%20a%20Simple%20Telegram%20Bot%20Using%20Google%20Cloud%20Functions&amp;body=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fgcp-telegram-bot%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        
+
+<p>Many websites use bots to automate tasks and add useful (and sometimes harmful) functionality. For instance, there are reddit bots that can help you <a href="https://www.reddit.com/r/stabbot/comments/72irce/how_to_use_stabbot/" target="_blank">stabilize shaky videos</a>, <a href="https://www.reddit.com/r/RemindMeBot/comments/24duzp/remindmebot_info/" target="_blank">remind you of events</a> or even <a href="https://www.reddit.com/user/goodbot_badbot" target="_blank">vote on the usefulness of other bots</a>. <a href="https://telegram.org/" target="_blank">Telegram</a> - an instant messaging service similar to WhatsApp - lets you create and manage bots on their platform using their <a href="https://core.telegram.org/bots/api" target="_blank">Bot API</a>. Bots on Telegram are officially identified and provide fun and useful services. Last month, while exploring Google Cloud Platform after getting some free student credits, I came across <a href="https://cloud.google.com/functions/" target="_blank">Google Cloud Functions</a>. I realized that this hammer was perfect for the nail of setting up a simple Telegram bot.</p>
+
+<p>Many years ago, when Telegram&rsquo;s bot API was still young, I tried to create a bot that would send you random pictures of aurorae if you asked. That bot and the server that it lived on crashed a long time ago. But the bot&rsquo;s name and API key lived on, still registered with Telegram&rsquo;s servers. I decided to necromance this bot from the dead and inject it with some fun new functionality. Being a lover space exploration and what it represents for humanity, I had the idea of giving the bot the ability to send you random images from NASA with informative descriptions as seen on the <a href="https://images.nasa.gov/" target="_blank">NASA Image and Video Library</a>.</p>
+
+<h2 id="using-the-nasa-images-api">Using the NASA Images API</h2>
+
+<p>The first problem to solve is getting a random image from the NASA Image and Video Library. At first, I thought that I&rsquo;d have to use a web-scraping python library to extract the images. But things turned out to be much easier. NASA has quite a few APIs that they&rsquo;ve listed on <a href="https://api.nasa.gov/api.html#MarsPhotos" target="_blank">this page</a>. Using their API, I can search through the images for any query I like and retrieve results in the form of JSON formatted data. The API uses <code>HTTP GET</code> requests (<a href="https://www.w3schools.com/tags/ref_httpmethods.asp" target="_blank">more info here</a>). So for example, if I need to search for images related to planets using the API, I would open the URL: <a href="https://images-api.nasa.gov/search?q=planet" target="_blank">https://images-api.nasa.gov/search?q=planet</a>.</p>
+
+<p>There&rsquo;s one extra step here. If you click on the api link above and examine the results, you&rsquo;ll notice that it does not return all the results of a search at once. Instead, it gives you the first 100 results and gives you the option of getting more using the &lsquo;page&rsquo; parameter in the web request. So if I want to access the results from the 5th page of a search, I&rsquo;d use the URL: <a href="https://images-api.nasa.gov/search?q=planet&amp;page=5" target="_blank">https://images-api.nasa.gov/search?q=planet&amp;page=5</a>.</p>
+
+<p>So, to select a random result, I need to select a number between 1 and the total number of results and use modular arithmetic to figure out which page to get the result from. I encapsulated this logic in a single function that returns the URL and caption of a random result given a search query.</p>
+
+<pre><code class="language-py">import urllib.parse
+import urllib.request
+import json
+import random
+import math
+import traceback
+
+def get_random_nasa_image(search_term='planet'):
+    &quot;&quot;&quot;
+    Fetch a random image from the NASA media library.
+    &quot;&quot;&quot;
+    try:
+        # The API URL
+        nasa_img_url = &quot;https://images-api.nasa.gov/search&quot;
+        # Setup the search data
+        send_data = {}
+        send_data['q'] = search_term
+        send_data['media_type'] = 'image'
+        # Encode the url
+        url_values = urllib.parse.urlencode(send_data)
+        url = nasa_img_url + '?' + url_values
+        data = urllib.request.urlopen(url)
+        json_data = json.loads(data.read().decode('utf-8'))
+        
+        num_results = json_data['collection']['metadata']['total_hits']
+        result_to_use = random.choice([i for i in range(num_results)])
+        page_num = math.ceil(result_to_use/100.0)
+        result_num_in_page = result_to_use%100
+        
+        if page_num != 1:
+            # Do another request
+            send_data['page'] = page_num
+            url_values = urllib.parse.urlencode(send_data)
+            url = nasa_img_url + '?' + url_values
+            data = urllib.request.urlopen(url)
+            json_data = json.loads(data.read().decode('utf-8'))
+            image_url = json_data['collection']['items'][result_num_in_page]['links'][0]['href']
+            image_caption = json_data['collection']['items'][result_num_in_page]['data'][0]['description']
+            image_title = json_data['collection']['items'][result_num_in_page]['data'][0]['title']
+        else:
+            image_url = json_data['collection']['items'][result_num_in_page]['links'][0]['href']
+            image_caption = json_data['collection']['items'][result_num_in_page]['data'][0]['title']
+            image_title = json_data['collection']['items'][result_num_in_page]['data'][0]['description']
+
+        return (image_url, image_title, image_caption)
+    except Exception as e:
+        traceback.print_exc()
+        err_url = 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Gato_enervado_pola_presencia_dun_can.jpg'
+        err_caption = 'Uh-Oh. Something went wrong. Here\'s a picture of a cat instead.'
+        return (err_url, err_caption, json_data)
+</code></pre>
+
+<h2 id="sending-the-image-to-telegram">Sending the Image to Telegram</h2>
+
+<p>To make a Telegram Bot send an image to a user we need three pieces of information.</p>
+
+<ol>
+<li><em>The Chat ID</em> : The chat ID is like a serial number that uniquely identifies the chat between a bot and a user.</li>
+<li><em>The Photo</em> : There are a few different formats that telegram accepts the photo in. I chose the simplest option, a string with the URL to the photo.</li>
+<li><em>The Bot API Key</em> : This is a long random looking string that you get when you create a bot. See instructions <a href="https://core.telegram.org/bots#botfather" target="_blank">here</a> to learn how to get your own.</li>
+</ol>
+
+<p>The actual sending of the message is achieved by using more HTTP GET or POST requests. In this case I used the <a href="https://core.telegram.org/bots/api#sendphoto" target="_blank">sendPhoto</a> function defined in the API. Again, I encapsulated the functionality to send the photo into a single function.</p>
+
+<pre><code class="language-py">def sendPhoto(chat_id, url, caption):
+    sendPhotoUrl = 'https://api.telegram.org/bot{your-api-key}/sendPhoto'
+    data = {}
+    data['chat_id'] = chat_id
+    data['photo'] = url
+    data['caption'] = caption
+    data = urllib.parse.urlencode(data)
+    data = data.encode('ascii') # data should be bytes
+    
+    req = urllib.request.Request(sendPhotoUrl, data)
+    
+    with urllib.request.urlopen(req, timeout=10) as response:
+        the_page = response.read()
+        
+    return the_page
+</code></pre>
+
+<h2 id="setting-up-a-google-cloud-function">Setting Up a Google Cloud Function</h2>
+
+<p>Google Cloud Functions allow you to execute a custom block of code when triggered by some kind of event - like it being a certain time of the day. Apart from Google, companies like Amazon and Microsoft also have their own versions of cloud functions.</p>
+
+<p>Since my application logic was fairly simple, I opted to setup my cloud function from their web interface by following the instructions on this <a href="https://cloud.google.com/functions/docs/quickstart-console" target="_blank">page</a>. I kept all the default settings and opted to use Python 3.7 since that&rsquo;s the programming language that I&rsquo;m the most familiar with. The &lsquo;hello_world&rsquo; function that they have setup is the function that will be called when the service is triggered.</p>
+
+<p>Inside the function, I need to implement some very simple logic:</p>
+
+<ol>
+<li>Extract the Chat ID from the incoming message.</li>
+<li>Get a random NASA photo.</li>
+<li>Send the photo (along with its caption) to the incoming message&rsquo;s Chat ID</li>
+<li>Return an HTTP OK response.</li>
+</ol>
+
+<p>Here&rsquo;s my code for the main function that&rsquo;s called when an event is triggered. I&rsquo;ve added some exception handling to the main logic as well.</p>
+
+<pre><code class="language-py">def hello_world(request):
+    &quot;&quot;&quot;Responds to any HTTP request.
+    Args:
+        request (flask.Request): HTTP request object.
+    Returns:
+        The response text or any set of values that can be turned into a
+        Response object using
+        `make_response &lt;http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response&gt;`.
+    &quot;&quot;&quot;
+    request_json = request.get_json()
+    
+    doneFlag = False
+    try_counter = 0
+    try_max = 5
+    
+    while not doneFlag:
+        try:
+            # Send back a random nasa photo
+            photo, title, caption = get_random_nasa_image()
+            print(photo)
+            sendPhoto(request_json['message']['chat']['id'],
+                      photo, caption)
+            doneFlag = True
+        except:
+            print(&quot;Something Went Wrong. Trying again!&quot;)
+            try_counter = try_counter + 1
+            if try_counter &gt; 5:
+                doneFlag = True
+                traceback.print_exc()
+                sendPhoto(request_json['message']['chat']['id'],
+                          'https://upload.wikimedia.org/wikipedia/commons/3/3b/Gato_enervado_pola_presencia_dun_can.jpg',
+                          'I\'m Sorry, something went wrong. Here\'s a cat picture instead. :P')
+            else:
+                pass
+
+    
+    print(request_json)
+    return f'HTTP/1.0 200 OK'
+</code></pre>
+
+<h2 id="connecting-the-telegram-bot-to-the-cloud-function">Connecting the Telegram Bot to the Cloud Function.</h2>
+
+<p>The final step is to connect the Telegram Bot to the Cloud Function so that the function is triggered every time the bot receives a message from someone. The Telegram API has a function for just that. <a href="https://core.telegram.org/bots/api#setwebhook" target="_blank">setWebhook</a> allows you to set a URL that gets called every time the bot gets a new message. All the message data is passed on in JSON format. To connect your bot to the cloud function that you just created, you need to set the webhook to the URL specified in the &lsquo;Trigger&rsquo; tab of the function details page.</p>
+
+<p><img src="/img/gcf_trigger.JPG" alt="gcf_image" /></p>
+
+<h2 id="demo">Demo</h2>
+
+<p>And we&rsquo;re done! If there are no errors in the code, your bot should be triggered every time it receives a message. Here&rsquo;s a demo of my bot working:</p>
+
+<p><img src="/img/telegram_bot_demo.png" alt="demo_image" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Successes like these are the reason that I sometimes revive old projects. In the years that passed between my two attempts, some technologies had become cheap enough that I could use it nearly for free. In my last attempt to build the bot, I used a custom VPS server (basically a linux server) to try and run the bot. This meant that in addition to the logic for the bot, I needed to figure out how to get the bot to run on the server reliably. I often had to go back and restart the server or the script because it had got itself into an unexpected state. For cloud functions, there is no state. Each event invokes a new call of the function and if there is an error, the next function call isn&rsquo;t affected by it. I also don&rsquo;t need to worry about reliability and uptime because Google manages the service. Building systems like these are a great way of learning more about the inner workings of the internet and I hope that others who want to build their own Telegram bots (or other web based things) can use this article as a starting point.</p>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/programming">programming</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/learning-haskell-google-code-jam/">Learning Haskell Through Google Code Jam</a></li>
+    
+    <li><a href="/post/hugo-windows-workflow/">Hugo Web Development Workflow on Windows</a></li>
+    
+    <li><a href="/post/bash-recipes-for-science/">Bash Recipes for Doing Science!</a></li>
+    
+    <li><a href="/post/dataflow-programming-in-c/">Programming Complex Dataflows in C</a></li>
+    
+    <li><a href="/post/xenomai-realtime-programming-part-2/">Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "rationalash" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2019 Ashwin Narayan &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

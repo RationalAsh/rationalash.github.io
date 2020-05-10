@@ -1,22 +1,50 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE html><html lang="en-us" >
+
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.40.3" />
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
   <meta name="author" content="Ashwin Narayan">
-  <meta name="description" content="PhD Student">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="I&rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/">
 
   
+
+
+  
+  
+  
+  <meta name="theme-color" content="#795548">
   
 
-
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
   
 
   
@@ -24,196 +52,578 @@
   
   
     
-  
-  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
     
     
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
     
-  
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
-  
-  
-  
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
-  
-  <link rel="stylesheet" href="/styles.css">
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
   
 
   
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-99092575-1', 'auto');
-      ga('require', 'eventTracker');
-      ga('require', 'outboundLinkTracker');
-      ga('require', 'urlChangeTracker');
-      ga('send', 'pageview');
-    </script>
-    <script async src="//www.google-analytics.com/analytics.js"></script>
-    
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
-    
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
   
 
   
-  <link rel="alternate" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
-  <link rel="feed" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
   
 
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-99092575-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-99092575-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
   <link rel="canonical" href="https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/">
 
-  <meta property="twitter:card" content="summary_large_image">
   
-  <meta property="twitter:site" content="@rational_ash">
-  <meta property="twitter:creator" content="@rational_ash">
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@@">
+  <meta property="twitter:creator" content="@@">
   
   <meta property="og:site_name" content="Ashwin Narayan">
   <meta property="og:url" content="https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/">
   <meta property="og:title" content="How to Integrate Quaternions | Ashwin Narayan">
-  <meta property="og:description" content="">
-  <meta property="og:locale" content="en-us">
+  <meta property="og:description" content="I&rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2017-09-10T17:58:08&#43;08:00">
-  
-  <meta property="article:modified_time" content="2017-09-10T17:58:08&#43;08:00">
+    
+      <meta property="article:published_time" content="2017-09-10T17:58:08&#43;08:00">
+    
+    <meta property="article:modified_time" content="2017-09-10T17:58:08&#43;08:00">
   
 
   
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/"
+  },
+  "headline": "How to Integrate Quaternions",
+  
+  "datePublished": "2017-09-10T17:58:08+08:00",
+  "dateModified": "2017-09-10T17:58:08+08:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Ashwin Narayan"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ashwin Narayan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "I\u0026rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
 
   <title>How to Integrate Quaternions | Ashwin Narayan</title>
 
 </head>
-<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
 
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
   <div class="container">
+    <section class="search-header">
 
-    
-    <div class="navbar-header">
-      
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target=".navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      
-      <a class="navbar-brand" href="/">Ashwin Narayan</a>
-    </div>
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
 
-    
-    <div class="collapse navbar-collapse">
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
 
-      
-      
-      <ul class="nav navbar-nav navbar-right">
-        
+    </section>
+    <section class="section-search-results">
 
+      <div id="search-hits">
         
+      </div>
 
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#about">
-            
-            <span>Home</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#posts">
-            
-            <span>Posts</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#projects">
-            
-            <span>Projects</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#contact">
-            
-            <span>Contact</span>
-            
-          </a>
-        </li>
-
-        
-        
-      
-
-      
-      </ul>
-
-    </div>
+    </section>
   </div>
-</nav>
+</aside>
 
-
-<article class="article" itemscope itemtype="http://schema.org/Article">
 
   
 
 
-  <div class="article-container">
-    <div class="article-inner">
-      <h1 itemprop="name">How to Integrate Quaternions</h1>
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
 
       
 
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>How to Integrate Quaternions</h1>
+
+  
+
+  
+    
+
+
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2017-09-10 17:58:08 &#43;0800 &#43;08" itemprop="datePublished">
-      Sep 10, 2017
-    </time>
+    
+      
+    
+    Sep 10, 2017
   </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -224,147 +634,96 @@
 
   
   
-
+  
+  <span class="middot-divider"></span>
+  <a href="/post/how-to-integrate-quaternions/#disqus_thread"></a>
   
 
   
-  
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    <li>
-      <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=How%20to%20Integrate%20Quaternions&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhow-to-integrate-quaternions%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-twitter"></i>
-      </a>
-    </li>
-    <li>
-      <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhow-to-integrate-quaternions%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-facebook"></i>
-      </a>
-    </li>
-    <li>
-      <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhow-to-integrate-quaternions%2f&amp;title=How%20to%20Integrate%20Quaternions"
-         target="_blank" rel="noopener">
-        <i class="fa fa-linkedin"></i>
-      </a>
-    </li>
-    <li>
-      <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhow-to-integrate-quaternions%2f&amp;title=How%20to%20Integrate%20Quaternions"
-         target="_blank" rel="noopener">
-        <i class="fa fa-weibo"></i>
-      </a>
-    </li>
-    <li>
-      <a class="email"
-         href="mailto:?subject=How%20to%20Integrate%20Quaternions&amp;body=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhow-to-integrate-quaternions%2f">
-        <i class="fa fa-envelope"></i>
-      </a>
-    </li>
-  </ul>
-</div>
-
-
   
 
 </div>
 
+    
 
-      <div class="article-style" itemprop="articleBody">
-        
 
-<p>I&rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space. The story begins with me trying to integrate an angular velocity vector (in 3D) to get the orientation of an object. Angular velocity is a vector but common representations of orientation (like Euler Angles) are not. So getting the orientation is <em>not</em> as simple as doing $\int_0^t \vec{\omega} \mathscr{d}t$.</p>
 
-<p>Rotations in two dimensions are really easy because there is only one plane in which you can do the rotation. The only thing you can change is the center of rotation. The orientation of an object in 2 dimensions can be given by a single angle $\phi$ measured relative to the origin of the coordinate system. The angular velocity of an object in 2 dimensions can also be represented by a single number $\omega$ which is defined as the rate of change of the angle $\phi$. This gives us the basic formula we learn in high school physics.
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>I&rsquo;ve been spending a lot of time working with inertial measurement units recently and am discovering the surprising amount of mathematics that goes into using data from accelerometers and gyroscopes to get the orientation of an object in 3D space. The story begins with me trying to integrate an angular velocity vector (in 3D) to get the orientation of an object. Angular velocity is a vector but common representations of orientation (like Euler Angles) are not. So getting the orientation is <em>not</em> as simple as doing $\int_0^t \vec{\omega} \mathscr{d}t$.</p>
+<p>Rotations in two dimensions are really easy because there is only one plane in which you can do the rotation. The only thing you can change is the center of rotation. The orientation of an object in 2 dimensions can be given by a single angle $\phi$ measured relative to the origin of the coordinate system. The angular velocity of an object in 2 dimensions can also be represented by a single number $\omega$ which is defined as the rate of change of the angle $\phi$. This gives us the basic formula we learn in high school physics. 
 $$\omega = \frac{d\phi}{dt} = \frac{v_{\bot}}{r}$$
-<img src="/img/angular_velocity.svg" alt="angular_velocity_image" /></p>
-
-<p>Rotations in 3D are much more complicated. In 3 dimensions, the plane of rotation can be any among an infinite number of possibilities. The origin or &ldquo;center&rdquo; of rotation now becomes an <em>axis</em> of rotation which is represented by a vector. The plane of rotation is perpendicular to the axis of rotation. This is a result of the <a href="https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem" target="_blank">Euler Rotation Theorem</a></p>
-
-<p>Before I can start integrating angular velocity I need to choose a representation for the orientation. There are several different conventions when it comes to representing the orientation of an object in 3D. The most popular approach is to use a set of three angles called <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">Euler Angles</a>. This approach was developed by the mathematician Leonhard Euler (pronounced oy-ler not you-ler). These set of three angles specify three successive rotations around three different axes in a very specific order. The order is important because rotations in 3D have an important property: they do not <em>commute</em>. This means that if I do rotation 1 before 2 I end up with a different orientation than if I do 2 before 1. Euler angles usually specify rotations in the ZXZ order. This means that the first axis of rotation is the current Z-axis. The second axis of rotation is the new X-axis <em>after</em> the first rotation. The final axis of rotation is the new Z-axis after the first and second rotations. A closely related approach is to use what&rsquo;s called <a href="https://en.wikipedia.org/wiki/Euler_angles#Tait-Bryan_angles" target="_blank">Tait-Bryan angles</a>. Tait-Bryan angles are called yaw, pitch and roll and are commonly used when talking about the orientation of aircraft. The angles represent successive rotations around the body fixed X, Y and Z axes. Both Euler angles and Tait-Bryan angles however, suffer from something called <a href="https://en.wikipedia.org/wiki/Gimbal_lock" target="_blank">Gimbal Lock</a>. This is when for a certain value of one of the rotation angles, a degree of freedom is lost and two rotations &ldquo;collapse&rdquo; into a single rotation. The Wikipedia page linked has some nice visualizations and a short mathematical explanation (using rotation matrices) for why this happens.</p>
-
+<img src="/img/angular_velocity.svg" alt="angular_velocity_image"></p>
+<p>Rotations in 3D are much more complicated. In 3 dimensions, the plane of rotation can be any among an infinite number of possibilities. The origin or &ldquo;center&rdquo; of rotation now becomes an <em>axis</em> of rotation which is represented by a vector. The plane of rotation is perpendicular to the axis of rotation. This is a result of the 
+<a href="https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem" target="_blank" rel="noopener">Euler Rotation Theorem</a></p>
+<p>Before I can start integrating angular velocity I need to choose a representation for the orientation. There are several different conventions when it comes to representing the orientation of an object in 3D. The most popular approach is to use a set of three angles called 
+<a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank" rel="noopener">Euler Angles</a>. This approach was developed by the mathematician Leonhard Euler (pronounced oy-ler not you-ler). These set of three angles specify three successive rotations around three different axes in a very specific order. The order is important because rotations in 3D have an important property: they do not <em>commute</em>. This means that if I do rotation 1 before 2 I end up with a different orientation than if I do 2 before 1. Euler angles usually specify rotations in the ZXZ order. This means that the first axis of rotation is the current Z-axis. The second axis of rotation is the new X-axis <em>after</em> the first rotation. The final axis of rotation is the new Z-axis after the first and second rotations. A closely related approach is to use what&rsquo;s called 
+<a href="https://en.wikipedia.org/wiki/Euler_angles#Tait-Bryan_angles" target="_blank" rel="noopener">Tait-Bryan angles</a>. Tait-Bryan angles are called yaw, pitch and roll and are commonly used when talking about the orientation of aircraft. The angles represent successive rotations around the body fixed X, Y and Z axes. Both Euler angles and Tait-Bryan angles however, suffer from something called 
+<a href="https://en.wikipedia.org/wiki/Gimbal_lock" target="_blank" rel="noopener">Gimbal Lock</a>. This is when for a certain value of one of the rotation angles, a degree of freedom is lost and two rotations &ldquo;collapse&rdquo; into a single rotation. The Wikipedia page linked has some nice visualizations and a short mathematical explanation (using rotation matrices) for why this happens.</p>
 <p>Using Quaternions to represent rotations is a way to avoid the Gimbal Lock problem. Quaternions are so useful for representing orientations that most Kalman Filters that need to track 3D orientations use them instead of Euler Angles. So I settled on using quaternions. When I first started working with quaternions I found them a little difficult to understand. So I thought of writing an article about the path I took to understand and use quaternions for &ldquo;integrating&rdquo; angular velocity.</p>
-
 <p>From all my time working with mathematics, I&rsquo;ve come to realize that mathematical ideas exist on a spectrum. At one end is math that is focused on the practical application. Math that is very close to the real world (as experienced by humans) and can be understood easily by making analogies to things that humans encounter in everyday life. This is the type of math that is often applied to solve everyday problems like settling bills or building bridges. At the other end of the spectrum is the type of math that is pure abstraction. This type of abstract math is often used to generalize specific results in practical math to other problems or to come up with new insights that can pave the way for new solutions to a problem. Quaternions are a little more towards the abstract end of the spectrum and can be difficult to get an intuition for. Sometimes though there are ideas that you <em>can&rsquo;t</em> get an intuition for. Working with such math is mostly a matter of getting used to it. With abstract math, the best way I&rsquo;ve found to get used to it is to learn the basic definition and keep applying it to problems until you get the hang of it. The understanding forms in the brain automatically as you get the hang of it.</p>
-
 <h2 id="quaternion-math">Quaternion Math</h2>
-
 <p>So without further ado, I&rsquo;ll talk about what quaternions are and how they behave.</p>
-
 <h3 id="representation">Representation</h3>
-
 <p>A quaternion $q$ can be represented as a tuple of 4 numbers:
 $$q = \begin{bmatrix} w &amp; \ x &amp;\ y &amp; \ z \end{bmatrix} = \begin{bmatrix} w &amp; \ \vec{v}\end{bmatrix} = w + x\mathrm{i} + y\mathrm{j} + z\mathrm{k} $$</p>
-
 <p>where the $w$ is the <em>scalar</em> part and the $\vec{v}$ is the <em>vector</em> part.</p>
-
 <p>Two binary operations are defined for quaternions: addition $+$ and quaternion multiplication $\otimes$.</p>
-
 <h3 id="addition">Addition</h3>
-
 <p>Addition is defined as the component-wise sum just like for a 4D vector. The sum is commutative (order is not important) and associative (grouping is not important).</p>
-
 <p>$$ q_1 + q_2 = \begin{bmatrix} w_1 + w_2 &amp; \ x_1 + x_2 &amp; \ y_1 + y_2 &amp; \ z_1 + z_2 \end{bmatrix} = q_2 + q_1$$</p>
-
 <h3 id="multiplication">Multiplication</h3>
-
 <p>Quaternion multiplication is defined in multiple ways but the formula that I find the easiest to remember is:
 $$ q_1 \otimes q_2 = \begin{bmatrix} w_1 w_2 - \vec{v}_1\cdot\vec{v}_2 &amp; \ w_1\vec{v}_2 + w_2\vec{v}_1 + \vec{v}_1\times\vec{v}_2 \end{bmatrix} $$</p>
-
 <p>The multiplication is <em>non-commutative</em> ($q_1 \otimes q_2 \neq q_2 \otimes q_1$ ) and distributive over the sum $(q_1 \otimes (q_2 + q_3) = q_1 \otimes q_2 + q_1 \otimes q_3 )$.</p>
-
 <h3 id="norm-conjugate-and-inverse">Norm, Conjugate and Inverse</h3>
-
 <p>It&rsquo;s also useful to define the norm of a quaternion as:
 $$ ||q|| = \sqrt{w^2 + x^2 + y^2 + z^2} $$</p>
-
 <p>a conjugate quaternion $ q^* $ that satisfies the property $ q \otimes q^* = ||q||^2 $ as
 $$ q^* = \begin{bmatrix} w &amp; \ -x &amp; \ -y &amp; \ -z \end{bmatrix} $$</p>
-
 <p>and a quaternion inverse $q^{-1}$ with the property $q \otimes q^{-1} = \begin{bmatrix} 1 \ 0 \ 0 \ 0 \end{bmatrix}$ as
 $$ q^{-1} = \frac{q^*}{||q||^2} $$</p>
-
 <h2 id="using-quaternions-for-rotation">Using Quaternions for Rotation</h2>
-
 <p>Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are <em>unit</em> quaternions: $||q|| = 1$. Unit quaternions are also called <em>versors</em>. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&rsquo;ve mentioned and <em>not</em> trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.</p>
-
-<p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used.
+<p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used. 
 $$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
-
 <p>If I find the formula quite mysterious (as I did when I first saw it), it&rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.</p>
-
 <p>It&rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.</p>
-
-<h3 id="quaternions-rotation-matrices-and-the-rotation-group-so-3">Quaternions, Rotation Matrices and the Rotation Group $SO(3)$</h3>
-
+<h3 id="quaternions-rotation-matrices-and-the-rotation-group-so3">Quaternions, Rotation Matrices and the Rotation Group $SO(3)$</h3>
 <p>Earlier, I mentioned that rotations in 3D have certain properties (like non-commutativity) that implies that they don&rsquo;t belong to a vector space (and therefore can&rsquo;t be represented by one). If I want to be exact when talking about rotations, I have to consider them as a <em>group</em>. A group is yet another mathematical abstraction. Abstractly, think of them as a set of objects that follow certain rules. Remember that groups are another concept that leans towards the abstract end of the mathematical spectrum. They <em>can</em> be applied to rotations but they were invented by mathematicians to study more general ideas. So what rules does a group follow?</p>
-
 <p>A group is a set $G$ along with some <em>binary</em> operation $\cdot$ (takes two elements of the set and gives a third). The elements of the set follow these rules:</p>
-
 <ol>
 <li>Closure: If $a,b \in G$ then $a\cdot b \in G$.</li>
 <li>Associativity: If $a,b,c \in G$ then $a\cdot ( b \cdot c) = (a \cdot b) \cdot c $.</li>
 <li>Identity: There&rsquo;s some element of the set $e$ which has the property $a \cdot e = e\cdot a = a$.</li>
 <li>Inverse: If $a \in G$ there&rsquo;s some element $a^* $ such that $a \cdot a^* = a^* \cdot a = e$.</li>
 </ol>
-
 <p>If you compare this to 3D rotations, you can see that the set of 3D rotations are an example of a group under the binary operation of composition (doing one rotation after another)!</p>
-
 <ol>
 <li>Closure: If I compose two rotations it forms another rotation. It doesn&rsquo;t suddenly become a translation or scaling or shear. There&rsquo;s no way to combine rotations to do any of these other operations.</li>
 <li>Associativity: If I do three rotations, it doesn&rsquo;t matter which two I compose first.</li>
 <li>Identity: There&rsquo;s an identity rotation ($0^\circ$ of rotation around any axis).</li>
 <li>And there&rsquo;s an inverse rotation (rotating by negative of the angle around the same axis.)</li>
 </ol>
-
 <p>Quaternions under multiplications <em>also</em> satisfy all these properties.</p>
-
 <p>If I convert Euler angle rotations to rotation matrices and compare them with quaternions, the parallels between them are very clear.</p>
-
 <table>
 <thead>
 <tr>
@@ -373,26 +732,22 @@ $$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \o
 <th>Quaternion $q_i \in \mathbb{H}_R$</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>Closure</td>
 <td>$R_1 \cdot R_2 \in G$</td>
 <td>$q_1 \otimes q_2 \in \mathbb{H}_R$</td>
 </tr>
-
 <tr>
 <td>Associativity</td>
 <td>$R_1 \cdot (R_2 \cdot R_3) = (R_1 \cdot R_2) \cdot R_3$</td>
 <td>$q_1 \otimes (q_2 \otimes q_3) = (q_1 \otimes q_2) \otimes q_3$</td>
 </tr>
-
 <tr>
 <td>Identity</td>
 <td>$I$</td>
 <td>$1$</td>
 </tr>
-
 <tr>
 <td>Inverse</td>
 <td>$R_i^{-1} = R_i^{T} $</td>
@@ -400,155 +755,187 @@ $$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \o
 </tr>
 </tbody>
 </table>
-
-<p>The closure and associativity properties rotation matrices can be easily seen as a consequence of the fact that rotation matrices are <a href="https://en.wikipedia.org/wiki/Orthogonal_matrix" target="_blank">orthogonal matrices</a>.</p>
-
+<p>The closure and associativity properties rotation matrices can be easily seen as a consequence of the fact that rotation matrices are 
+<a href="https://en.wikipedia.org/wiki/Orthogonal_matrix" target="_blank" rel="noopener">orthogonal matrices</a>.</p>
 <p>With this knowledge of the rules that rotations follow, it&rsquo;s clear why it&rsquo;s silly to think of the Euler angles as a vector. They&rsquo;re a set of related numbers but vectors they are not! It&rsquo;s also clear why integrating the angular velocity vector over time does not directly give the orientation in an easily usable form.</p>
-
 <h3 id="representing-quaternion-rotation-as-a-matrix">Representing quaternion rotation as a matrix</h3>
-
 <p>Linearity of operations are an important property that both engineers and mathematicians like to take advantage of. It can result in useful simplifications of results. So it&rsquo;s useful (later in this article) to ask the question: Is quaternion multiplication a linear operation? The simplest way to find out is to write out the result of a general quaternion multiplication operation and check if it&rsquo;s possible to represent it as a matrix multiplication.</p>
-
 <p>The symbolic result of multiplying two quaternions $q_1$ and $q_2$ is:
 $$ q_1 \otimes q_2 = \left[\begin{matrix}w_1 w_2 - x_1 x_2 - y_1 y_2 - z_1 z_2\\ w_1 x_2 + w_2 x_1 + y_1 z_2 - y_2 z_1\\ w_1 y_2 + w_2 y_1 - x_1 z_2 + x_2 z_1\\ w_1 z_2 + w_2 z_1 + x_1 y_2 - x_2 y_1\end{matrix}\right] $$</p>
-
 <p>From inspection, this can be written as a matrix product:
 $$ q_1 \otimes q_2 = \left[\begin{matrix}w_2 &amp; -x_2 &amp; -y_2 &amp; -z_2\\ x_2 &amp; w_2 &amp; z_2 &amp; - y_2\\ y_2 &amp; - z_2 &amp; w_2 &amp; x_2\\ z_2 &amp; y_2 &amp; - x_2 &amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$</p>
-
 <p>And if I change the order of multiplication:
 $$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp; - x_2 &amp; - y_2 &amp; - z_2 \\ x_2 &amp; w_2 &amp; - z_2 &amp; y_2 \\ y_2 &amp; z_2 &amp; w_2 &amp; - x_2 \\ z_2 &amp; - y_2 &amp; x_2 &amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$</p>
-
 <h2 id="integrating-angular-velocity">Integrating Angular Velocity</h2>
-
 <p>To properly integrate angular velocity to get a quaternion, I need to find a relationship between quaternions and angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.</p>
-
 <p>A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&rsquo;s derivative.
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$</p>
-
 <p>Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$</p>
-
 <p>Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
-$$\begin{align} \vec{s} &amp;= q \otimes \vec{s}_0 \otimes q^* \\
-\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
+$$\begin{align} \vec{s} &amp;= q \otimes \vec{s}_0 \otimes q^* \\ 
+\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] 
 \end{align}$$</p>
-
 <p>So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&rsquo;t be changed when applying the product rule.</p>
-
 <p>$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$</p>
-
 <p>There&rsquo;s a term in this equation - the derivative of the conjugate - that&rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&rsquo;s conjugate which we know to be 1:</p>
-
-<p>$$\begin{align}
-\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
+<p>$$\begin{align} 
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\ 
 \dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;= 0 \end{align} $$</p>
-
 <p>That gives the relationship</p>
-
 <p>$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$</p>
-
 <p>Expressing $s_0$ in terms of $s$, substituting $\dot{q^* } $ and doing a little algebra:
 $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* = \vec{\omega} \otimes \vec{s} $$</p>
-
 <h3 id="the-quaternion-commutator">The Quaternion Commutator</h3>
-
-<p>The expression $ \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* $ is in the form $p \otimes q - q \otimes p$ which is defined as a <em>commutator</em> operation written as $[p, q]$. Going through the algebra of this operation and simplifying:</p>
-
+<p>The expression $ \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* $ is in the form $p \otimes q - q \otimes p$ which is defined as a _commutator_ operation written as $[p, q]$. Going through the algebra of this operation and simplifying:</p>
 <p>$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$</p>
-
 <p>Interestingly, if both $q_1$ and $q_2$ are <em>pure quaternions</em> (They do not have a scalar part) then the quaternion commutator and the product are related:</p>
-
 <p>$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$</p>
-
-<h3 id="the-product-dot-q-q-is-a-pure-quaternion">The Product $\dot{q} q^* $ is a Pure Quaternion</h3>
-
-<p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;= 0 \\
-  \dot{q} \otimes q^* &amp;= -(\dot{q} \otimes q^* )^*
- \end{align} $$</p>
-
+<h3 id="the-product-dotq-q--is-a-pure-quaternion">The Product $\dot{q} q^* $ is a Pure Quaternion</h3>
+<p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;= 0 \\ 
+\dot{q} \otimes q^* &amp;= -(\dot{q} \otimes q^* )^* 
+\end{align} $$</p>
 <p>Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.</p>
-
 <h3 id="the-differential-equation">The Differential Equation</h3>
-
 <p>So finally, I can extract the quaternion differential equation:</p>
-
-<p>$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;= \vec{\omega} \otimes \vec{s} \\
-\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\
-2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\
+<p>$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;= \vec{\omega} \otimes \vec{s} \\ 
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\ 
+2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\ 
 \dot{q} &amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$</p>
-
 <p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
-
 <p>$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$</p>
-
 <h3 id="integration">Integration</h3>
-
 <p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a <em>quaternion multiplication</em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:</p>
-
 <p>$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \left[\begin{matrix}0 &amp; - \omega_x &amp; - \omega_y &amp; - \omega_z \\ \omega_x &amp; 0 &amp; \omega_z &amp; - \omega_y \\ \omega_y &amp; - \omega_z &amp; 0 &amp; \omega_x \\ \omega_z &amp; \omega_y &amp; - \omega_x &amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$</p>
-
 <p>This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:</p>
-
 <p>$$ q(t) = e^{A(t - t_0 )} q_0 $$</p>
-
 <h3 id="quaternion-exponential">Quaternion Exponential</h3>
-
 <p>Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula.</p>
-
-<p>$$ \begin{align} \exp{(q)} &amp;= e^{w}e^{\vec{v}} \\
-   &amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
-   &amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$</p>
-
+<p>$$ \begin{align} \exp{(q)} &amp;= e^{w}e^{\vec{v}} \\ 
+&amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
+&amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$</p>
 <p>Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:</p>
-
 <p>$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$</p>
-
 <h2 id="summing-up">Summing Up</h2>
-
-<p>I started out with the simple sounding task of integrating angular velocity and in trying to solve it, traversed through a several different areas of mathematics and learned a lot along the way before coming to the final solution. However, my description here is far from complete. The equation above only holds if the angular velocity is constant over a time period. This means its a &ldquo;first order&rdquo; model. Dropping this assumption gives $n^{th}$ order models for integration. There are also intricate details that I&rsquo;m only beginning to understand. For instance, I&rsquo;m reading about how rotations are a special type of group called <a href="https://en.wikipedia.org/wiki/Lie_group" target="_blank">Lie Groups </a> where the group is also a <a href="https://en.wikipedia.org/wiki/Differentiable_manifold" target="_blank">differentiable manifold</a> (yet another interesting abstract mathematical object). The space of angular velocity forms what is called a <a href="https://en.wikipedia.org/wiki/Lie_algebra" target="_blank">Lie Algebra </a> on the group. And the quaternion exponential function which most texts I refer to seem to pull out of thin air is actually related to a more general idea called an exponential map which maps general Lie Algebras to Lie Groups.</p>
-
+<p>I started out with the simple sounding task of integrating angular velocity and in trying to solve it, traversed through a several different areas of mathematics and learned a lot along the way before coming to the final solution. However, my description here is far from complete. The equation above only holds if the angular velocity is constant over a time period. This means its a &ldquo;first order&rdquo; model. Dropping this assumption gives $n^{th}$ order models for integration. There are also intricate details that I&rsquo;m only beginning to understand. For instance, I&rsquo;m reading about how rotations are a special type of group called 
+<a href="https://en.wikipedia.org/wiki/Lie_group" target="_blank" rel="noopener">Lie Groups </a> where the group is also a 
+<a href="https://en.wikipedia.org/wiki/Differentiable_manifold" target="_blank" rel="noopener">differentiable manifold</a> (yet another interesting abstract mathematical object). The space of angular velocity forms what is called a 
+<a href="https://en.wikipedia.org/wiki/Lie_algebra" target="_blank" rel="noopener">Lie Algebra </a> on the group. And the quaternion exponential function which most texts I refer to seem to pull out of thin air is actually related to a more general idea called an exponential map which maps general Lie Algebras to Lie Groups.</p>
 <p>Despite it&rsquo;s incompleteness however, it is the minimum that I needed to understand to be able to actually implement in code the integration of a quaternion - i.e use quaternions practically for integrating data coming in from an inertial measurement unit. I hope that others trying to understand quaternions and their role in representing 3D rotations will find this article useful. Some of the references below go deeper into the nature of quaternions and how to use them for useful things like tracking orientations.</p>
-
 <h2 id="references">References</h2>
-
 <ol>
-<li><a href="https://arxiv.org/pdf/1604.08139.pdf" target="_blank">Boyle, Michael. &ldquo;The integration of angular velocity.&rdquo; Advances in Applied Clifford Algebras (2016): 1-30.</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Rotation_group_SO(3)" target="_blank">https://en.wikipedia.org/wiki/Rotation_group_SO(3)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Quaternion" target="_blank">https://en.wikipedia.org/wiki/Quaternion</a></li>
-<li><a href="https://hal.archives-ouvertes.fr/hal-01122406/document" target="_blank">Sola, Joan. &ldquo;Quaternion kinematics for the error-state KF.&rdquo; (2015).</a></li>
-<li><a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank">https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation</a></li>
+<li>
+<a href="https://arxiv.org/pdf/1604.08139.pdf" target="_blank" rel="noopener">Boyle, Michael. &ldquo;The integration of angular velocity.&rdquo; Advances in Applied Clifford Algebras (2016): 1-30.</a></li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Rotation_group_SO%283%29" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Rotation_group_SO(3)</a></li>
+<li>
+<a href="https://en.wikipedia.org/wiki/Quaternion" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Quaternion</a></li>
+<li>
+<a href="https://hal.archives-ouvertes.fr/hal-01122406/document" target="_blank" rel="noopener">Sola, Joan. &ldquo;Quaternion kinematics for the error-state KF.&rdquo; (2015).</a></li>
+<li>
+<a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank" rel="noopener">https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation</a></li>
 </ol>
 
-      </div>
+    </div>
 
-      
+    
+
+
+
 
 
 <div class="article-tags">
   
-  <a class="btn btn-primary btn-outline" href="/tags/mathematics">mathematics</a>
+  <a class="badge badge-light" href="/tag/mathematics/">mathematics</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/quaternions">quaternions</a>
+  <a class="badge badge-light" href="/tag/robotics/">robotics</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/robotics">robotics</a>
+  <a class="badge badge-light" href="/tag/quaternions/">quaternions</a>
   
 </div>
 
 
 
-    </div>
-  </div>
-
-</article>
-
-
-
-<div class="article-container article-widget">
-  <div class="hr-light"></div>
-  <h3>Related</h3>
-  <ul>
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
-    <li><a href="/project/bb8-control/">Modelling and Controlling a BB8 Droid</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/&amp;text=How%20to%20Integrate%20Quaternions" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/&amp;t=How%20to%20Integrate%20Quaternions" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=How%20to%20Integrate%20Quaternions&amp;body=https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/&amp;title=How%20to%20Integrate%20Quaternions" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=How%20to%20Integrate%20Quaternions%20https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/&amp;title=How%20to%20Integrate%20Quaternions" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
     
   </ul>
 </div>
@@ -556,73 +943,322 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 
 
 
-<div class="article-container">
+
+
+
+
+
+
+
+
   
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/ashwin-narayan/avatar_hu6f8c5e331971527d37c3a1245d0719d7_860162_270x270_fill_q90_lanczos_center.jpg" alt="Ashwin Narayan">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="https://www.ashwinnarayan.com/">Ashwin Narayan</a></h5>
+        <h6 class="card-subtitle">PhD Student</h6>
+        <p class="card-text">I am a PhD student at the National University of Singapore working with the <a href="http://www.bioeng.nus.edu.sg/biorob/">Biorobotics research group</a></p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/rational_ash" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=Hkeeh8cAAAAJ" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/RationalAsh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
 <section id="comments">
-  <div id="disqus_thread"></div>
+  
+    
+<div id="disqus_thread"></div>
 <script>
-    var disqus_config = function () {
+  let disqus_config = function () {
     
     
     
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "rationalash" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "rationalash" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
 </section>
 
 
-</div>
 
-<footer class="site-footer">
-  <div class="container">
-    <p class="powered-by">
 
-      &copy; 2019 Ashwin Narayan &middot; 
 
-      Powered by the
-      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
 
-      <span class="pull-right" aria-hidden="true">
-        <a href="#" id="back_to_top">
-          <span class="button_icon">
-            <i class="fa fa-chevron-up fa-2x"></i>
-          </span>
-        </a>
-      </span>
+  
+  
 
-    </p>
+
+
   </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://rationalash.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © 2020 Ashwin Narayan &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
 </footer>
 
+  </div>
+  
 
+  
 <div id="modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cite</h4>
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div>
-        <pre><code class="modal-body tex"></code></pre>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
-          <i class="fa fa-copy"></i> Copy
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
         </a>
-        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
-          <i class="fa fa-download"></i> Download
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
         </a>
         <div id="modal-error"></div>
       </div>
@@ -630,55 +1266,5 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
   </div>
 </div>
 
-    
-
-    
-    
-
-    
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
-    
-    
-    <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    
-      
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
-      
-
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
-      
-
-      
-
-      <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    
-    
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
-    </script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
-    
-    
-
-  </body>
+</body>
 </html>
-

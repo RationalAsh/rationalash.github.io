@@ -1,22 +1,50 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE html><html lang="en-us" >
+
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.40.3" />
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
   <meta name="author" content="Ashwin Narayan">
-  <meta name="description" content="PhD Student">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="As I mentioned in my first article on this blog, I&rsquo;m now using Hugo, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&rsquo;ve been primarily using Windows as my operating system for the past year or so.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://www.ashwinnarayan.com/post/hugo-windows-workflow/">
 
   
+
+
+  
+  
+  
+  <meta name="theme-color" content="#795548">
   
 
-
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
   
 
   
@@ -24,196 +52,578 @@
   
   
     
-  
-  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
     
     
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
     
-  
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
-  
-  
-  
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
-  
-  <link rel="stylesheet" href="/styles.css">
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
   
 
   
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-      ga('create', 'UA-99092575-1', 'auto');
-      ga('require', 'eventTracker');
-      ga('require', 'outboundLinkTracker');
-      ga('require', 'urlChangeTracker');
-      ga('send', 'pageview');
-    </script>
-    <script async src="//www.google-analytics.com/analytics.js"></script>
-    
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
-    
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
   
 
   
-  <link rel="alternate" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
-  <link rel="feed" href="https://www.ashwinnarayan.com/index.xml" type="application/rss+xml" title="Ashwin Narayan">
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
   
 
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-99092575-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-99092575-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
   <link rel="canonical" href="https://www.ashwinnarayan.com/post/hugo-windows-workflow/">
 
-  <meta property="twitter:card" content="summary_large_image">
   
-  <meta property="twitter:site" content="@rational_ash">
-  <meta property="twitter:creator" content="@rational_ash">
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@@">
+  <meta property="twitter:creator" content="@@">
   
   <meta property="og:site_name" content="Ashwin Narayan">
   <meta property="og:url" content="https://www.ashwinnarayan.com/post/hugo-windows-workflow/">
   <meta property="og:title" content="Hugo Web Development Workflow on Windows | Ashwin Narayan">
-  <meta property="og:description" content="">
-  <meta property="og:locale" content="en-us">
+  <meta property="og:description" content="As I mentioned in my first article on this blog, I&rsquo;m now using Hugo, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&rsquo;ve been primarily using Windows as my operating system for the past year or so."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2017-12-31T11:41:31&#43;05:30">
-  
-  <meta property="article:modified_time" content="2017-12-31T11:41:31&#43;05:30">
+    
+      <meta property="article:published_time" content="2017-12-31T11:41:31&#43;05:30">
+    
+    <meta property="article:modified_time" content="2017-12-31T11:41:31&#43;05:30">
   
 
   
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.ashwinnarayan.com/post/hugo-windows-workflow/"
+  },
+  "headline": "Hugo Web Development Workflow on Windows",
+  
+  "datePublished": "2017-12-31T11:41:31+05:30",
+  "dateModified": "2017-12-31T11:41:31+05:30",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Ashwin Narayan"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ashwin Narayan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "As I mentioned in my first article on this blog, I\u0026rsquo;m now using Hugo, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I\u0026rsquo;ve been primarily using Windows as my operating system for the past year or so."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
 
   <title>Hugo Web Development Workflow on Windows | Ashwin Narayan</title>
 
 </head>
-<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
 
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
   <div class="container">
+    <section class="search-header">
 
-    
-    <div class="navbar-header">
-      
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target=".navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      
-      <a class="navbar-brand" href="/">Ashwin Narayan</a>
-    </div>
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
 
-    
-    <div class="collapse navbar-collapse">
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
 
-      
-      
-      <ul class="nav navbar-nav navbar-right">
-        
+    </section>
+    <section class="section-search-results">
 
+      <div id="search-hits">
         
+      </div>
 
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#about">
-            
-            <span>Home</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#posts">
-            
-            <span>Posts</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#projects">
-            
-            <span>Projects</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#contact">
-            
-            <span>Contact</span>
-            
-          </a>
-        </li>
-
-        
-        
-      
-
-      
-      </ul>
-
-    </div>
+    </section>
   </div>
-</nav>
+</aside>
 
-
-<article class="article" itemscope itemtype="http://schema.org/Article">
 
   
 
 
-  <div class="article-container">
-    <div class="article-inner">
-      <h1 itemprop="name">Hugo Web Development Workflow on Windows</h1>
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Ashwin Narayan</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
 
       
 
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Hugo Web Development Workflow on Windows</h1>
+
+  
+
+  
+    
+
+
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2017-12-31 11:41:31 &#43;0530 &#43;0530" itemprop="datePublished">
-      Dec 31, 2017
-    </time>
+    
+      
+    
+    Dec 31, 2017
   </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -224,85 +634,54 @@
 
   
   
+  
+  <span class="middot-divider"></span>
+  <a href="/post/hugo-windows-workflow/#disqus_thread"></a>
+  
 
   
-  
-  
-  
-
-  
-  
-<div class="share-box" aria-hidden="true">
-  <ul class="share">
-    <li>
-      <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Hugo%20Web%20Development%20Workflow%20on%20Windows&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhugo-windows-workflow%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-twitter"></i>
-      </a>
-    </li>
-    <li>
-      <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhugo-windows-workflow%2f"
-         target="_blank" rel="noopener">
-        <i class="fa fa-facebook"></i>
-      </a>
-    </li>
-    <li>
-      <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhugo-windows-workflow%2f&amp;title=Hugo%20Web%20Development%20Workflow%20on%20Windows"
-         target="_blank" rel="noopener">
-        <i class="fa fa-linkedin"></i>
-      </a>
-    </li>
-    <li>
-      <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhugo-windows-workflow%2f&amp;title=Hugo%20Web%20Development%20Workflow%20on%20Windows"
-         target="_blank" rel="noopener">
-        <i class="fa fa-weibo"></i>
-      </a>
-    </li>
-    <li>
-      <a class="email"
-         href="mailto:?subject=Hugo%20Web%20Development%20Workflow%20on%20Windows&amp;body=https%3a%2f%2fwww.ashwinnarayan.com%2fpost%2fhugo-windows-workflow%2f">
-        <i class="fa fa-envelope"></i>
-      </a>
-    </li>
-  </ul>
-</div>
-
-
   
 
 </div>
 
+    
 
-      <div class="article-style" itemprop="articleBody">
-        
 
-<p>As I mentioned in <a href="https://www.ashwinnarayan.com/post/welcome/" target="_blank">my first article on this blog</a>, I&rsquo;m now using <a href="https://gohugo.io/" target="_blank">Hugo</a>, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools. However, while setting up a workflow in Windows for publishing content to my website I discovered that Windows&rsquo; scripting tools are not all that bad. In fact, for anyone familiar with scripting from Linux, moving to Powershell isn&rsquo;t that hard.</p>
 
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>As I mentioned in 
+<a href="https://www.ashwinnarayan.com/post/welcome/">my first article on this blog</a>, I&rsquo;m now using 
+<a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools. However, while setting up a workflow in Windows for publishing content to my website I discovered that Windows&rsquo; scripting tools are not all that bad. In fact, for anyone familiar with scripting from Linux, moving to Powershell isn&rsquo;t that hard.</p>
 <h2 id="workflow">Workflow</h2>
-
 <p>A typical Hugo website development folder looks like this:
-<img src="/img/hugo_folders.jpg" alt="Folder Structure" /></p>
-
+<img src="/img/hugo_folders.jpg" alt="Folder Structure"></p>
 <p>I add new posts by creating new markown (.md) files in the <code>post</code> folder. When the website is compiled using the <code>hugo</code> command, the static website&rsquo;s code is generated into the <code>public</code> folder. The content inside this is what goes into the folder that is served by any webserver. Since I am hosting the website on Github Pages, I found it most convenient to set up a separate folder with a clone of the <code>username.githug.io</code> repository. After article writing/editing is done, I can generate the website and copy the contents inside the <code>public</code> folder to the repository folder to publish.</p>
-
 <p>When I am editing an article, I can preview content locally by using the <code>hugo server --watch</code> command in the top level directory. This sets up a local webserver on <code>localhost:1313</code> so that you can preview the website.</p>
-
 <p>To publish my website to Github pages after I&rsquo;m done with development, I copy everything inside the <code>public</code> folder into my local copy of the github repository and then commit all and push.</p>
-
 <h2 id="batch-script-automation">Batch Script Automation</h2>
-
 <p>Most of the the steps in the workflow can be automated away using batch scripts to save large amounts of time. I mean, who wants to spend time manually copying files and commiting after every small edit to the website? The <code>build_on_laptop.bat</code> file in the top level directory handles everything. Diving into the source, I first delete everything inside the <code>public</code> folder (Hugo does not automatically do this) and build a fresh version of the website.</p>
-
 <pre><code class="language-dos">rmdir /S /Q public
 hugo
 </code></pre>
-
 <p>My Github pages repo has a few files that are not generated by Hugo. So I can&rsquo;t just nuke the folder and delete everything. So I have a set of commands that delete all the Hugo generated files in the repository folder:</p>
-
 <pre><code class="language-dos">rmdir /S /Q &quot;C:\Users\Ashwin Narayan\rationalash.github.io\categories&quot;
 rmdir /S /Q &quot;C:\Users\Ashwin Narayan\rationalash.github.io\css&quot;
 rmdir /S /Q &quot;C:\Users\Ashwin Narayan\rationalash.github.io\fonts&quot;
@@ -322,27 +701,20 @@ del &quot;C:\Users\Ashwin Narayan\rationalash.github.io\sitemap.xml&quot;
 del &quot;C:\Users\Ashwin Narayan\rationalash.github.io\site.webmanifest&quot;
 del &quot;C:\Users\Ashwin Narayan\rationalash.github.io\styles.css&quot;
 </code></pre>
-
-<p>Then comes the task of copying your updated website source into the folder. While it&rsquo;s possible to use the <code>cp</code> command, I found that the <code>robocopy</code> <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx?f=255&amp;MSPPError=-2147217396" target="_blank">command</a> is in general much better for copying files around in Windows.</p>
-
+<p>Then comes the task of copying your updated website source into the folder. While it&rsquo;s possible to use the <code>cp</code> command, I found that the <code>robocopy</code> 
+<a href="https://technet.microsoft.com/en-us/library/cc733145.aspx?f=255&amp;MSPPError=-2147217396" target="_blank" rel="noopener">command</a> is in general much better for copying files around in Windows.</p>
 <pre><code class="language-dos">robocopy public &quot;C:\Users\Ashwin Narayan\rationalash.github.io&quot; /E
 </code></pre>
-
 <p>Finally, I need to commit the new version of the website and push to github. This is also easily done:</p>
-
 <pre><code class="language-dos">cd &quot;C:\Users\Ashwin Narayan\rationalash.github.io&quot;
 set /p commitmsg=&quot;Enter a commit message: &quot;
 git add --all .
 git commit -m &quot;%commitmsg%&quot;
 git push origin master
 </code></pre>
-
 <p>So the end result is that when I run this script, it automatically deletes everything in the public folder and the repository folder, rebuilds and copies the new website over and then commits and pushes the new version to github to deploy the website.</p>
-
 <h2 id="even-more-automation-with-visual-studio-code">Even More Automation with Visual Studio Code</h2>
-
 <p>I can shave even more time off the workflow by using Visual Studio Code. VS Code has a really well made task management system. It&rsquo;s also a natural choice since I do most of my markdown editing inside VS Code anyway. VS Code has a <code>tasks.json</code> file where you can bind custom tasks/commands to key combinations. In this case, I just bound the default build task mapped to <code>Ctrl</code>+<code>Alt</code>+<code>B</code> to the batch script. I also created a compose task which creates the local preview webserver.</p>
-
 <pre><code class="language-json">{
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
@@ -366,47 +738,108 @@ git push origin master
     ]    
 }
 </code></pre>
-
 <p>With most of the steps automated, writing and publishing new articles don&rsquo;t take that long compared to off the shelf solutions like Wordpress or Medium. It also comes with the advantage that you have full control over the website&rsquo;s source code.</p>
 
-      </div>
+    </div>
 
-      
+    
+
+
+
 
 
 <div class="article-tags">
   
-  <a class="btn btn-primary btn-outline" href="/tags/programming">programming</a>
+  <a class="badge badge-light" href="/tag/programming/">programming</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/windows">windows</a>
+  <a class="badge badge-light" href="/tag/batch/">batch</a>
   
-  <a class="btn btn-primary btn-outline" href="/tags/batch">batch</a>
+  <a class="badge badge-light" href="/tag/windows/">windows</a>
   
 </div>
 
 
 
-    </div>
-  </div>
-
-</article>
-
-
-
-<div class="article-container article-widget">
-  <div class="hr-light"></div>
-  <h3>Related</h3>
-  <ul>
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
-    <li><a href="/post/bash-recipes-for-science/">Bash Recipes for Doing Science!</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.ashwinnarayan.com/post/hugo-windows-workflow/&amp;text=Hugo%20Web%20Development%20Workflow%20on%20Windows" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
-    <li><a href="/post/dataflow-programming-in-c/">Programming Complex Dataflows in C</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.ashwinnarayan.com/post/hugo-windows-workflow/&amp;t=Hugo%20Web%20Development%20Workflow%20on%20Windows" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
-    <li><a href="/post/xenomai-realtime-programming-part-2/">Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Hugo%20Web%20Development%20Workflow%20on%20Windows&amp;body=https://www.ashwinnarayan.com/post/hugo-windows-workflow/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
-    <li><a href="/post/xenomai-realtime-programming/">Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.ashwinnarayan.com/post/hugo-windows-workflow/&amp;title=Hugo%20Web%20Development%20Workflow%20on%20Windows" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
-    <li><a href="/project/logistic-regression/">Implementing Logistic Regression</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Hugo%20Web%20Development%20Workflow%20on%20Windows%20https://www.ashwinnarayan.com/post/hugo-windows-workflow/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.ashwinnarayan.com/post/hugo-windows-workflow/&amp;title=Hugo%20Web%20Development%20Workflow%20on%20Windows" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
     
   </ul>
 </div>
@@ -414,73 +847,337 @@ git push origin master
 
 
 
-<div class="article-container">
+
+
+
+
+
+
+
+
   
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/ashwin-narayan/avatar_hu6f8c5e331971527d37c3a1245d0719d7_860162_270x270_fill_q90_lanczos_center.jpg" alt="Ashwin Narayan">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="https://www.ashwinnarayan.com/">Ashwin Narayan</a></h5>
+        <h6 class="card-subtitle">PhD Student</h6>
+        <p class="card-text">I am a PhD student at the National University of Singapore working with the <a href="http://www.bioeng.nus.edu.sg/biorob/">Biorobotics research group</a></p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/rational_ash" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=Hkeeh8cAAAAJ" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/RationalAsh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
 <section id="comments">
-  <div id="disqus_thread"></div>
+  
+    
+<div id="disqus_thread"></div>
 <script>
-    var disqus_config = function () {
+  let disqus_config = function () {
     
     
     
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "rationalash" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+  };
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+      return;
+    }
+    var d = document, s = d.createElement('script'); s.async = true;
+    s.src = 'https://' + "rationalash" + '.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  
 </section>
 
 
-</div>
 
-<footer class="site-footer">
-  <div class="container">
-    <p class="powered-by">
 
-      &copy; 2019 Ashwin Narayan &middot; 
 
-      Powered by the
-      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
 
-      <span class="pull-right" aria-hidden="true">
-        <a href="#" id="back_to_top">
-          <span class="button_icon">
-            <i class="fa fa-chevron-up fa-2x"></i>
-          </span>
-        </a>
-      </span>
-
-    </p>
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/bash-recipes-for-science/">Bash Recipes for Doing Science!</a></li>
+      
+      <li><a href="/post/dataflow-programming-in-c/">Programming Complex Dataflows in C</a></li>
+      
+      <li><a href="/post/xenomai-realtime-programming-part-2/">Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task.</a></li>
+      
+      <li><a href="/post/xenomai-realtime-programming/">Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</a></li>
+      
+    </ul>
   </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js" integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    <script id="dsq-count-scr" src="https://rationalash.disqus.com/count.js" async></script>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    © 2020 Ashwin Narayan &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
 </footer>
 
+  </div>
+  
 
+  
 <div id="modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cite</h4>
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div>
-        <pre><code class="modal-body tex"></code></pre>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
-          <i class="fa fa-copy"></i> Copy
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
         </a>
-        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
-          <i class="fa fa-download"></i> Download
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
         </a>
         <div id="modal-error"></div>
       </div>
@@ -488,48 +1185,5 @@ git push origin master
   </div>
 </div>
 
-    
-
-    
-    
-
-    
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
-    
-    
-    <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    
-      
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
-      
-
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
-      
-
-      
-
-      <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    
-    
-
-  </body>
+</body>
 </html>
-

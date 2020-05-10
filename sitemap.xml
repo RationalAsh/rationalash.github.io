@@ -1,516 +1,209 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/investing-and-personal-finance/</loc>
-      <lastmod>2019-11-23T17:50:00+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/</loc>
+    <lastmod>2019-11-23T17:50:00+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</loc>
-      <lastmod>2019-06-06T13:59:15+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/investing/</loc>
+    <lastmod>2019-11-23T17:50:00+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/cartpole-dynamics/</loc>
-      <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/investing-and-personal-finance/</loc>
+    <lastmod>2019-11-23T17:50:00+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</loc>
-      <lastmod>2019-04-13T08:26:34+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/</loc>
+    <lastmod>2019-11-23T17:50:00+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/witcher-3-review/</loc>
-      <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tags/</loc>
+    <lastmod>2019-11-23T17:50:00+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</loc>
-      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</loc>
+    <lastmod>2019-06-06T13:59:15+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/star-trek-discovery/</loc>
-      <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/programming/</loc>
+    <lastmod>2019-06-06T13:59:15+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</loc>
-      <lastmod>2017-09-10T17:58:08+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/cartpole-dynamics/</loc>
+    <lastmod>2019-04-21T08:56:44+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</loc>
-      <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/mathematics/</loc>
+    <lastmod>2019-04-21T08:56:44+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/dataflow-programming-in-c/</loc>
-      <lastmod>2017-08-01T00:15:14+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/robotics/</loc>
+    <lastmod>2019-04-21T08:56:44+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/icra-2017/</loc>
-      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</loc>
+    <lastmod>2019-04-13T08:26:34+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</loc>
-      <lastmod>2017-05-20T23:10:16+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/gaming/</loc>
+    <lastmod>2018-09-16T01:10:46+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</loc>
-      <lastmod>2017-05-17T00:07:36+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/witcher-3-review/</loc>
+    <lastmod>2018-09-16T01:10:46+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/telegram-bot-music-control/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/thoughts/</loc>
+    <lastmod>2018-09-16T01:10:46+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/fpga-vga/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/batch/</loc>
+    <lastmod>2017-12-31T11:41:31+05:30</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/logistic-regression/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</loc>
+    <lastmod>2017-12-31T11:41:31+05:30</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/bb8-control/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/windows/</loc>
+    <lastmod>2017-12-31T11:41:31+05:30</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/double-pendulum-simulation/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/miscellaneous/</loc>
+    <lastmod>2017-12-10T23:26:48+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/som-animation/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/movie-review/</loc>
+    <lastmod>2017-12-10T23:26:48+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/welcome/</loc>
-      <lastmod>2017-05-14T00:38:51+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/star-trek-discovery/</loc>
+    <lastmod>2017-12-10T23:26:48+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/academic/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</loc>
+    <lastmod>2017-09-10T17:58:08+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/quaternions/</loc>
+    <lastmod>2017-09-10T17:58:08+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/talk/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</loc>
+    <lastmod>2017-08-13T19:30:14+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/talk/example-talk/</loc>
-      <lastmod>2017-01-01T00:00:00+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/linux/</loc>
+    <lastmod>2017-08-13T19:30:14+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/post/</loc>
-      <lastmod>2017-01-01T00:00:00+08:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/science/</loc>
+    <lastmod>2017-08-13T19:30:14+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication/person-re-identification/</loc>
-      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/c/</loc>
+    <lastmod>2017-08-01T00:15:14+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication/clothing-search/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/dataflow-programming-in-c/</loc>
+    <lastmod>2017-08-01T00:15:14+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication_types/1/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/academia/</loc>
+    <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication_types/2/</loc>
-      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/conference/</loc>
+    <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/academia/</loc>
-      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/icra/</loc>
+    <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/</loc>
-      <lastmod>2017-10-15T00:00:00+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/icra-2017/</loc>
+    <lastmod>2017-06-05T22:50:52+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/batch/</loc>
-      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/real-time/</loc>
+    <lastmod>2017-05-20T23:10:16+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/c/</loc>
-      <lastmod>2017-08-01T00:15:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</loc>
+    <lastmod>2017-05-20T23:10:16+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/categories/</loc>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/xenomai/</loc>
+    <lastmod>2017-05-20T23:10:16+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/conference/</loc>
-      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</loc>
+    <lastmod>2017-05-17T00:07:36+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/electronics/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/welcome/</loc>
+    <lastmod>2017-05-14T00:38:51+08:00</lastmod>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/gaming/</loc>
-      <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/author/ashwin-narayan/</loc>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/icra/</loc>
-      <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/authors/</loc>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/investing/</loc>
-      <lastmod>2019-11-23T17:50:00+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/categories/</loc>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/linux/</loc>
-      <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/publication_types/</loc>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/mathematics/</loc>
-      <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/publication/</loc>
+  </url>
   
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/miscellaneous/</loc>
-      <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/movie-review/</loc>
-      <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/programming/</loc>
-      <lastmod>2019-06-06T13:59:15+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/project/</loc>
-      <lastmod>2017-05-14T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/publication_types/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/quaternions/</loc>
-      <lastmod>2017-09-10T17:58:08+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/real-time/</loc>
-      <lastmod>2017-05-20T23:10:16+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/robotics/</loc>
-      <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/science/</loc>
-      <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/thoughts/</loc>
-      <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/windows/</loc>
-      <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>https://www.ashwinnarayan.com/tags/xenomai/</loc>
-      <lastmod>2017-05-20T23:10:16+08:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://www.ashwinnarayan.com/talk/</loc>
+  </url>
   
 </urlset>

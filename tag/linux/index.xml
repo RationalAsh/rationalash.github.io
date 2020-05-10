@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux | Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tag/linux/</link>
+      <atom:link href="https://www.ashwinnarayan.com/tag/linux/index.xml" rel="self" type="application/rss+xml" />
+    <description>linux</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 13 Aug 2017 19:30:14 +0800</lastBuildDate>
+    <image>
+      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>linux</title>
+      <link>https://www.ashwinnarayan.com/tag/linux/</link>
+    </image>
+    
+    <item>
+      <title>Bash Recipes for Doing Science!</title>
+      <link>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</link>
+      <pubDate>Sun, 13 Aug 2017 19:30:14 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</guid>
+      <description>&lt;p&gt;When prototyping programs that deal with lots of data on an Arduino and other embedded systems or even on full blown computers, it&amp;rsquo;s really useful to have a quick tool for plotting the output of the program. Initially, I used python for doing this. Python is a beautifully simple language and between Numpy, Scipy and Matplotlib, you can do pretty much anything you want with data; from doing simple plotting to running machine learning algorithms on the data. However, when all you want is to quickly plot a text file containing some data, breaking out a text editor to write a python script can get annoying especially if you do it many times a day.&lt;/p&gt;
+&lt;p&gt;That was when I came across this interesting video from the computerphile YouTube channel.&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/vT_J6xc-Az0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It&amp;rsquo;s a fantastic interview with Brian Kernighan where he talks about his work on Unix and in particular then &lt;code&gt;awk&lt;/code&gt; command line tool. I&amp;rsquo;ve been using linux as my primary operating system for quite some time now and I do a lot of programming in it. So I am fairly comfortable with using the terminal for compiling and debugging code. But there was never a situation where I had to sit down and learn about all the terminal based utilities that were available. As I was watching Brian Kernighan describe &lt;code&gt;awk&lt;/code&gt; and how it works, I started to realize that I could really use this tool to my advantage when playing around with data. That was when I decided take a closer look at all the tools that were available on the linux terminal to see what I was missing out on.&lt;/p&gt;
+&lt;p&gt;Over time I&amp;rsquo;ve developed a few &amp;ldquo;recipes&amp;rdquo; that are really useful to me and I thought I&amp;rsquo;d share some that I&amp;rsquo;ve found particularly useful.&lt;/p&gt;
+&lt;h2 id=&#34;1-log-and-monitor-a-serial-port&#34;&gt;1. Log and monitor a serial port&lt;/h2&gt;
+&lt;p&gt;Logging and monitoring serial ports is a really common thing to have to do - especially if you&amp;rsquo;re working with embedded systems like the Arduino. It&amp;rsquo;s a standard way of getting data off the microcontroller. Checking what&amp;rsquo;s being logged to the serial port is as simple as running:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat /dev/ttyUSB0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Sometimes the command exits immediately or shows garbled output (due to the wrong baud rate). You can use &lt;code&gt;stty&lt;/code&gt; to change the serial port settings.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;stty -F /dev/ttyUSB0 115200 min 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I can also log the data from the serial port conveniently to a text file,&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat /dev/ttyUSB0 &amp;gt; logfilename.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;2-log-and-monitor-network-ports&#34;&gt;2. Log and monitor network ports&lt;/h2&gt;
+&lt;p&gt;One of the ways to get data off an Arduino is using an XBee device to wirelessly transmit it. I&amp;rsquo;m a big fan of using the XBee WiFi module to log data to a UDP port on my laptop. To view incoming data from the UDP port, I use a really useful tool called &lt;code&gt;netcat&lt;/code&gt;. Say the device is logging data to port 9750. I can listen in on the data by running,&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;netcat -ul 9751
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and log the data if I like.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;netcat -ul 9751 &amp;gt; log.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;3-plot-data-in-a-log-file-from-the-terminal&#34;&gt;3. Plot data in a log file from the terminal&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;feedgnuplot&lt;/code&gt; is a really useful Perl script that can read data from &lt;code&gt;stdin&lt;/code&gt; and pass it to &lt;code&gt;gnuplot&lt;/code&gt; for plotting. The only requirement is that the data arrive in a specific format: One sample per line, spaces between each data stream. This means your data in the file should look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1.0 1.5 2.3
+1.1 1.3 2.7
+2.6 5.9 3.3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To plot the data:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat log.txt | feedgnuplot --lines --autolegend
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;--autolegend&lt;/code&gt; option automatically numbers each line in the graph. The &lt;code&gt;--legend&lt;/code&gt; option can be used to add custom legends. I highly recommend going through the 
+&lt;a href=&#34;http://manpages.ubuntu.com/manpages/zesty/man1/feedgnuplot.1.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;feedgnuplot manpage&lt;/a&gt; to find out about all the functionality that the script offers.&lt;/p&gt;
+&lt;h2 id=&#34;4-plot-only-specific-data&#34;&gt;4. Plot only specific data&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;awk&lt;/code&gt; command is useful for filtering data that comes into the program line by line. A simple way it can be applied is to plot only specific columns in the text data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat log.txt | awk &#39;{ print $1, $2 }&#39; | feedgnuplot --lines --autolegend
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;awk&lt;/code&gt; command as shown here will filter out only columns 1 and 2 from the log file and pass it on to &lt;code&gt;feedgnuplot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;awk&lt;/code&gt; can also be used to do more complicated things like select lines with only numbers or only text. This can be useful if the log file contains other debug output lines as well and you want to filter out and plot just the lines that contain numeric data. 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/AWK&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wikipedia&lt;/a&gt; has a pretty good introduction to &lt;code&gt;awk&lt;/code&gt;. I also found that a lot of the time, I could find what I needed for specific problems by searching stackoverflow.&lt;/p&gt;
+&lt;h2 id=&#34;5-process-data-before-plotting&#34;&gt;5. Process data before plotting&lt;/h2&gt;
+&lt;p&gt;What if I have some raw data in a log file that you want to run through some processing (more complicated than an &lt;code&gt;awk&lt;/code&gt; one liner)? I write a simple python script that reads lines from &lt;code&gt;stdin&lt;/code&gt; and writes the processed sample to &lt;code&gt;stdout&lt;/code&gt;. If I do this, I can plot the result by doing&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat log.txt | ./process_script.py | feedgnuplot --lines --autolegend
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or log it to another file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat log.txt | ./process_script.py &amp;gt; processed_data.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;6-interpret-packed-binary-data&#34;&gt;6. Interpret packed binary data&lt;/h2&gt;
+&lt;p&gt;If the data in the log file, or data that&amp;rsquo;s coming in from a serial port or network interface is in some packed binary format, there&amp;rsquo;s a handy tool called &lt;code&gt;od&lt;/code&gt; that can interpret it on the fly.
+The command below will interpret data coming in as packets of 8 bytes as 2 byte integers.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;netcat -ul 9751 | od -An -td2 -w8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;od&lt;/code&gt; is a versatile tool and as is usual for linux programs, I recommend reading the 
+&lt;a href=&#34;http://manpages.ubuntu.com/manpages/trusty/man1/od.1.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;manpage&lt;/a&gt; to know more about what it can do.&lt;/p&gt;
+&lt;h2 id=&#34;7-processplot-live-data-streams&#34;&gt;7. Process/Plot live data streams&lt;/h2&gt;
+&lt;p&gt;If I have data coming in from from a serial port or from a network interface and I want to create a real-time plot, &lt;code&gt;feedgnuplot&lt;/code&gt; has an option for that.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat /dev/ttyUSB0 | feedgnuplot --lines --autolegend --xlen 100 --stream 0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;--xlen&lt;/code&gt; option plots a window of the last 100 samples and the &lt;code&gt;--stream&lt;/code&gt; option updates the plot as new data comes in. The parameter 0.1 is the refresh rate.&lt;/p&gt;
+&lt;p&gt;I can even run the live data stream through my processing algorithm before plotting.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;netcat -ul 9750 | ./process_data.py | feedgnuplot --lines --autolegend --xlen 100 --stream 0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;8-redirecting-to-multiple-programs&#34;&gt;8. Redirecting to multiple programs.&lt;/h2&gt;
+&lt;p&gt;Sometimes I&amp;rsquo;ve been in a situation where I want to monitor data coming in from a serial port &lt;em&gt;and&lt;/em&gt; log it to a file at the same time. One way of doing this is to write a python script that reads data from &lt;code&gt;stdin&lt;/code&gt;, logs it to a file and also writes the same data to &lt;code&gt;stdout&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat /dev/ttyUSB0 | ./log_and_print.py | feedgnuplot --lines --xlen 100 --stream 0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is good if you only want to do one extra thing with the output. There is a better solution however that uses the &lt;code&gt;tee&lt;/code&gt; command.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat /dev/ttyUSB0 | tee &amp;gt;(command1) &amp;gt;(command2) &amp;gt;(logfile.txt) | feedgnuplot --lines --autolegend --xlen 100 --stream 0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This technique is quite versatile and can be used in many ways. For example, I can use tee to get the raw data from the serial port, plot it, pass it through a data processing script and plot the output of that result as well for a comparison.&lt;/p&gt;
+&lt;h2 id=&#34;summing-up&#34;&gt;Summing up&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m sure that there are many more clever ways to combine and compose these commands to make prototyping easier as well as commands that I don&amp;rsquo;t know about yet. If there is one thing that I&amp;rsquo;ve learned after using linux for a few years it&amp;rsquo;s that it often has modest looking command line tools that can do much more than a lot of GUI based applications if you spend just a little time to go through the manpage. I hope that this post inspires others to take a second look at the free tools that come with most linux distros. Some of them could really simplify your workflow!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

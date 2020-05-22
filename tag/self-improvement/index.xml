@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>self-improvement | Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tag/self-improvement/</link>
+      <atom:link href="https://www.ashwinnarayan.com/tag/self-improvement/index.xml" rel="self" type="application/rss+xml" />
+    <description>self-improvement</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Fri, 22 May 2020 13:30:50 +0800</lastBuildDate>
+    <image>
+      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>self-improvement</title>
+      <link>https://www.ashwinnarayan.com/tag/self-improvement/</link>
+    </image>
+    
+    <item>
+      <title>On the Effective Use of TODO Lists</title>
+      <link>https://www.ashwinnarayan.com/post/what-i-learned-about-todo-lists/</link>
+      <pubDate>Fri, 22 May 2020 13:30:50 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/what-i-learned-about-todo-lists/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Like many countries around the world, Singapore entered a lockdown (a &amp;ldquo;circuit-breaker&amp;rdquo; to use the local terminology) on April 4 to stem the rapid spread of COVID-19. Knowing how easy it is to get distracted from work and lose productivity at home, I made a commitment to myself at the start of the lockdown to use the extra time to improve myself. Specifically I wanted to improve my workflows for many of my daily tasks.&lt;/p&gt;
+&lt;p&gt;A key part of the effort is my renewed commitment to TODO lists. I&amp;rsquo;ve made several attempts to integrate TODO lists as a habit into my life before, but the habit has never stuck. As a result, I use TODO lists quite loosely - &lt;em&gt;i.e.&lt;/em&gt; when things get super hectic and I have no choice but to use them to keep me sane. Otherwise, I simply remember the big picture of what I want to get done. While this has led to me forgetting to do the odd task, I felt that my overall productivity was not significantly impacted. If I really want to remember something, I might stick a Post-It note on my work desk. However, I decided recently that this was not good enough for me for two reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I want to improve myself as a person.&lt;/li&gt;
+&lt;li&gt;I want to take on more responsibilities and work and this is only possible if I improve this part of myself.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So about a week into the lockdown, I decided to use TODO lists to track all my tasks for the next 30 days. If I saw real improvements in these 30 days, I&amp;rsquo;d keep the system. If not, I&amp;rsquo;d try to find a better one. I put some weight into the commitment by purchasing for myself a premium account in the 
+&lt;a href=&#34;https://todoist.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;todoist app&lt;/a&gt;. While the system felt awkward and cumbersome at the start, I began to notice tangible improvements at the two week mark. With a little experimentation, I was able to optimize TODO lists to work for me. Here&amp;rsquo;s what I learned from the 30 day experiment.&lt;/p&gt;
+&lt;h2 id=&#34;1-believe-in-the-system&#34;&gt;1. Believe in the System&lt;/h2&gt;
+&lt;p&gt;In all my previous attempts, I started with a lot of skepticism about the effectiveness of using TODO lists. This time, I decided that I was going to proceed as though it was going to work. This seemed to make a big difference in how the experiment worked out. I observed straight away that I was more motivated to find ways to make the system work for me. In the past, I&amp;rsquo;d give up on the method when some small obstacle popped up (the app not having some small feature that I wanted for instance).&lt;/p&gt;
+&lt;h2 id=&#34;2-use-it-for-everything&#34;&gt;2. Use it for Everything&lt;/h2&gt;
+&lt;p&gt;I read that this is similar to David Allen&amp;rsquo;s advice in his book &amp;ldquo;Getting Things Done&amp;rdquo;. It does help to capture in the list absolutely everything that you want to get done. Doing this meant that I did not need to keep a running list of all my tasks in my brain. I didn’t realize that keeping my task list in my head was generating a low background radiation of anxiety in my brain until I stopped doing it. Capture everything in your task list - both personal and work-related.&lt;/p&gt;
+&lt;h2 id=&#34;3-use-a-cross-platform-system&#34;&gt;3. Use a Cross-Platform System&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;ve experimented with systems like the bullet journal before. While I do like the feeling of having a physical notebook to write down tasks in, I found that I became too dependent on the notebook. If I forgot to bring the notebook anywhere (which can happen), I got lost. Using a cross platform task tracking app that works on both the desktop and on the phone is more convenient and ensures that you&amp;rsquo;ll have your task list with you pretty much wherever you go.&lt;/p&gt;
+&lt;h2 id=&#34;4-check-the-list-before-starting-work&#34;&gt;4. Check the List Before Starting Work&lt;/h2&gt;
+&lt;p&gt;Previously, I&amp;rsquo;d just sit down and start working on whatever floated to the top of my head at that moment. While this works great when you don&amp;rsquo;t have that many things to do, it may result in small things being forgotten and pushed to the last minute. In addition to making me more intentional about what I was doing, checking my list before starting work also made me more likely to finish off more of the small tasks before they accumulated to annoying levels.&lt;/p&gt;
+&lt;h2 id=&#34;5-theres-a-time-and-place-for-specificity&#34;&gt;5. There&amp;rsquo;s a Time and Place for Specificity&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There&amp;rsquo;s a time and place for everything, but not now. &lt;em&gt;-Professor Oak&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The most important thing I learned is to choose the right level of specificity when entering tasks into the list. My first instinct was to overdo it. I made full use of the fact that you could nest subtasks pretty deep in todoist (4 levels) and wrote big picture items into the list and started breaking it down into smaller steps. Then I started doing the task and found out that the steps that I wrote down were either too optimistic completely unnecessary. However, when I tried only writing down the big picture tasks, they became too big and scary and I didn’t want to touch them. In the end what worked for me was to write down only big picture things when I first enter the task into the system. When I start working on the task, I click into it and start adding sub-tasks.&lt;/p&gt;
+&lt;p&gt;Another thing I learned about &amp;ldquo;sub-tasking&amp;rdquo; was not to add sub-tasks too far into the future. The further ahead I planned the more my plan deviated from reality and the more I had to delete what I wrote and replan.&lt;/p&gt;
+&lt;h2 id=&#34;6--choose-the-right-level-of-specificity&#34;&gt;6.  Choose the Right Level of Specificity&lt;/h2&gt;
+&lt;p&gt;On a related note to point 5, I recommend experimenting a bit to find the right level of task specificity for the subtasks. I experimented with breaking up large tasks into subtasks that took from 1 minute all the way up to a few hours. I found subtasks that took between 5 and 15 minutes to be the most rewarding. Anything smaller added too much overhead to the tasks. Anything longer exponentially decreased the probability that I’d start working on that task.&lt;/p&gt;
+&lt;h2 id=&#34;7-consider-gamification&#34;&gt;7. Consider Gamification&lt;/h2&gt;
+&lt;p&gt;There’s some evidence that gamification of tasks can help improve the motivation for completing them. I don’t think that gamification can work as a base motivation but it may help a little with the day to day motivation. For me, the simple points system on todoist adds a small touch of motivation without adding too much overhead.&lt;/p&gt;
+&lt;h2 id=&#34;8-attach-it-to-your-bedtime-routine&#34;&gt;8. Attach it to Your Bedtime Routine&lt;/h2&gt;
+&lt;p&gt;Checking the list one last time before turning in is really helpful. It feels good to clear the schedule for the day and have a sense of resolution. I recommend doing this even if you haven&amp;rsquo;t finished everything on the list. Simply reschedule the unfinished items to the next day but get to zero tasks remaining for the day. Integrating it into my bedtime routine has also helped with my effort to avoid browsing the phone mindlessly in bed before going to sleep. I set a simple rule for myself: Once I clear the day&amp;rsquo;s list, I can&amp;rsquo;t use the phone anymore and must go to sleep.&lt;/p&gt;
+&lt;h2 id=&#34;9-dont-let-perfect-be-the-enemy-of-good&#34;&gt;9. Don&amp;rsquo;t Let Perfect be the Enemy of Good&lt;/h2&gt;
+&lt;p&gt;This is related to me giving up on systems too early. I realized that I have tend to try to find the perfect process to do things before even trying. While this is useful in many situations, it has sometimes led to me not doing things in the first place. If you have a proclivity for perfection, don&amp;rsquo;t let it get in the way of you trying new but imperfect systems. Just remember that you can always optimize later. The more important thing is to get started.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

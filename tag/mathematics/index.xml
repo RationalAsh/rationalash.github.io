@@ -229,7 +229,7 @@ $$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
 &lt;p&gt;Expressing $s_0$ in terms of $s$, substituting $\dot{q^* } $ and doing a little algebra:
 $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
 &lt;h3 id=&#34;the-quaternion-commutator&#34;&gt;The Quaternion Commutator&lt;/h3&gt;
-&lt;p&gt;The expression $ \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* $ is in the form $p \otimes q - q \otimes p$ which is defined as a _commutator_ operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p&gt;
+&lt;p&gt;The expression $\dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^*$ is in the form $p \otimes q - q \otimes p$ which is defined as a commutator operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p&gt;
 &lt;p&gt;$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$&lt;/p&gt;
 &lt;p&gt;Interestingly, if both $q_1$ and $q_2$ are &lt;em&gt;pure quaternions&lt;/em&gt; (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p&gt;
 &lt;p&gt;$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p&gt;

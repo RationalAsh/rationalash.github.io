@@ -38,7 +38,7 @@
   
   
   
-  <meta name="theme-color" content="#795548">
+  <meta name="theme-color" content="#2962ff">
   
 
   
@@ -351,12 +351,12 @@
     window.cookieconsent.initialise({
       "palette": {
         "popup": {
-          "background": "#795548",
-          "text": "hsla(16, 24%, 85%, 1)"
+          "background": "#2962ff",
+          "text": "#fff"
         },
         "button": {
-          "background": "hsla(16, 24%, 85%, 1)",
-          "text": "#795548"
+          "background": "#fff",
+          "text": "#2962ff"
         }
       },
       "theme": "classic",
@@ -716,7 +716,7 @@ $$ q^{-1} = \frac{q^*}{||q||^2} $$</p>
 <h2 id="using-quaternions-for-rotation">Using Quaternions for Rotation</h2>
 <p>Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are <em>unit</em> quaternions: $||q|| = 1$. Unit quaternions are also called <em>versors</em>. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&rsquo;ve mentioned and <em>not</em> trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.</p>
 <p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used. 
-$$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
+$$ \vec{r}' = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
 <p>If I find the formula quite mysterious (as I did when I first saw it), it&rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.</p>
 <p>It&rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.</p>
 <h3 id="quaternions-rotation-matrices-and-the-rotation-group-so3">Quaternions, Rotation Matrices and the Rotation Group $SO(3)$</h3>
@@ -815,7 +815,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 \left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\ 
 2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\ 
 \dot{q} &amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$</p>
-<p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
+<p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}' = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
 <p>$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$</p>
 <h3 id="integration">Integration</h3>
 <p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a <em>quaternion multiplication</em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:</p>
@@ -861,9 +861,9 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
   
   <a class="badge badge-light" href="/tag/mathematics/">mathematics</a>
   
-  <a class="badge badge-light" href="/tag/robotics/">robotics</a>
-  
   <a class="badge badge-light" href="/tag/quaternions/">quaternions</a>
+  
+  <a class="badge badge-light" href="/tag/robotics/">robotics</a>
   
 </div>
 

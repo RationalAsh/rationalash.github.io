@@ -819,7 +819,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 <p>$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$</p>
 <h3 id="integration">Integration</h3>
 <p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a <em>quaternion multiplication</em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:</p>
-<p>$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \left[\begin{matrix}0 &amp; - \omega_x &amp; - \omega_y &amp; - \omega_z \\ \omega_x &amp; 0 &amp; \omega_z &amp; - \omega_y \\ \omega_y &amp; - \omega_z &amp; 0 &amp; \omega_x \\ \omega_z &amp; \omega_y &amp; - \omega_x &amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$</p>
+<p>$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \frac{1}{2} \cdot \left[\begin{matrix}0 &amp; - \omega_x &amp; - \omega_y &amp; - \omega_z \\ \omega_x &amp; 0 &amp; \omega_z &amp; - \omega_y \\ \omega_y &amp; - \omega_z &amp; 0 &amp; \omega_x \\ \omega_z &amp; \omega_y &amp; - \omega_x &amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$</p>
 <p>This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:</p>
 <p>$$ q(t) = e^{A(t - t_0 )} q_0 $$</p>
 <h3 id="quaternion-exponential">Quaternion Exponential</h3>

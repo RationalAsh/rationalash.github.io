@@ -823,7 +823,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 <p>This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:</p>
 <p>$$ q(t) = e^{A(t - t_0 )} q_0 $$</p>
 <h3 id="quaternion-exponential">Quaternion Exponential</h3>
-<p>Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula.</p>
+<p>Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
+<a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank" rel="noopener">5</a>.</p>
 <p>$$ \begin{align} \exp{(q)} &amp;= e^{w}e^{\vec{v}} \\ 
 &amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
 &amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$</p>

@@ -160,7 +160,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;p&gt;This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:&lt;/p&gt;
 &lt;p&gt;$$ q(t) = e^{A(t - t_0 )} q_0 $$&lt;/p&gt;
 &lt;h3 id=&#34;quaternion-exponential&#34;&gt;Quaternion Exponential&lt;/h3&gt;
-&lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula.&lt;/p&gt;
+&lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
+&lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;5&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\ 
 &amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
 &amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p&gt;

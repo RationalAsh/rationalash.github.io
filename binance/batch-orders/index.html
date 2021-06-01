@@ -8829,7 +8829,7 @@ var $author$project$Main$update = F2(
 								{apiSecret: secstr})
 						}),
 					$elm$core$Platform$Cmd$none);
-			default:
+			case 'AddToBatch':
 				var orderToAdd = model.currentOrder;
 				var currentBatch = model.orderBatch;
 				return _Utils_Tuple2(
@@ -8841,6 +8841,12 @@ var $author$project$Main$update = F2(
 								_List_fromArray(
 									[orderToAdd]))
 						}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{orderBatch: _List_Nil}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -11551,10 +11557,10 @@ var $author$project$Main$viewNavbar = function (model) {
 						]),
 					(model.serverTime <= 0) ? _List_fromArray(
 						[
-							$elm$html$Html$text('Connection Status: ERR 🔴')
+							$elm$html$Html$text('Server Status: ERR 🔴')
 						]) : _List_fromArray(
 						[
-							$elm$html$Html$text('Connection Status: OK 🟢')
+							$elm$html$Html$text('Server Status: OK 🟢')
 						])),
 					A2(
 					$rundis$elm_bootstrap$Bootstrap$Navbar$textItem,
@@ -11618,6 +11624,7 @@ var $author$project$Main$viewNavbar = function (model) {
 						$rundis$elm_bootstrap$Bootstrap$Navbar$withAnimation(
 							$rundis$elm_bootstrap$Bootstrap$Navbar$config($author$project$Main$NavbarMsg)))))));
 };
+var $author$project$Main$ExecuteBatch = {$: 'ExecuteBatch'};
 var $rundis$elm_bootstrap$Bootstrap$Internal$ListGroup$applyModifier = F2(
 	function (modifier, options) {
 		switch (modifier.$) {
@@ -11721,8 +11728,22 @@ var $author$project$Main$viewOrder = function (orderItem) {
 			]));
 };
 var $author$project$Main$viewOrderList = function (orderLst) {
-	return $rundis$elm_bootstrap$Bootstrap$ListGroup$ul(
-		A2($elm$core$List$map, $author$project$Main$viewOrder, orderLst));
+	return ($elm$core$List$length(orderLst) > 0) ? _List_fromArray(
+		[
+			$rundis$elm_bootstrap$Bootstrap$ListGroup$ul(
+			A2($elm$core$List$map, $author$project$Main$viewOrder, orderLst)),
+			A2(
+			$rundis$elm_bootstrap$Bootstrap$Button$button,
+			_List_fromArray(
+				[
+					$rundis$elm_bootstrap$Bootstrap$Button$onClick($author$project$Main$ExecuteBatch),
+					$rundis$elm_bootstrap$Bootstrap$Button$primary
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Execute Batch')
+				]))
+		]) : _List_Nil;
 };
 var $author$project$Main$view = function (model) {
 	return {
@@ -11743,10 +11764,7 @@ var $author$project$Main$view = function (model) {
 								$author$project$Main$viewBody(model)
 							]),
 						_Utils_ap(
-							_List_fromArray(
-								[
-									$author$project$Main$viewOrderList(model.orderBatch)
-								]),
+							$author$project$Main$viewOrderList(model.orderBatch),
 							_List_fromArray(
 								[
 									A2(

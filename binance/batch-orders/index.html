@@ -5436,8 +5436,10 @@ var $author$project$Main$Model = function (key) {
 						return function (accountState) {
 							return function (apiCredentials) {
 								return function (mainNet) {
-									return function (latestError) {
-										return {accountState: accountState, apiCredentials: apiCredentials, currentOrder: currentOrder, key: key, latestError: latestError, mainNet: mainNet, navbarState: navbarState, orderBatch: orderBatch, serverTime: serverTime, url: url};
+									return function (validAccount) {
+										return function (latestError) {
+											return {accountState: accountState, apiCredentials: apiCredentials, currentOrder: currentOrder, key: key, latestError: latestError, mainNet: mainNet, navbarState: navbarState, orderBatch: orderBatch, serverTime: serverTime, url: url, validAccount: validAccount};
+										};
 									};
 								};
 							};
@@ -5507,7 +5509,7 @@ var $author$project$Main$init = F3(
 		var navbarState = _v0.a;
 		var navbarCmd = _v0.b;
 		return _Utils_Tuple2(
-			$author$project$Main$Model(key)(url)(0)(navbarState)(initialOrder)(_List_Nil)($author$project$Main$initialAccountState)($author$project$Main$defaultTestnetConfig)(false)(''),
+			$author$project$Main$Model(key)(url)(0)(navbarState)(initialOrder)(_List_Nil)($author$project$Main$initialAccountState)($author$project$Main$defaultTestnetConfig)(false)(false)(''),
 			navbarCmd);
 	});
 var $author$project$Main$Tick = function (a) {
@@ -8811,7 +8813,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{accountState: binfo}),
+							{accountState: binfo, validAccount: true}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					var e = res.a;
@@ -8820,7 +8822,8 @@ var $author$project$Main$update = F2(
 							model,
 							{
 								accountState: $author$project$Main$initialAccountState,
-								latestError: $elm$core$Debug$toString(e)
+								latestError: $elm$core$Debug$toString(e),
+								validAccount: false
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -11857,10 +11860,13 @@ var $author$project$Main$viewNavbar = function (model) {
 							$rundis$elm_bootstrap$Bootstrap$Utilities$Spacing$ml2Sm,
 							$elm$html$Html$Attributes$class('muted')
 						]),
-					_List_fromArray(
+					model.validAccount ? _List_fromArray(
 						[
 							$elm$html$Html$text(
-							'Total Wallet Balance: ' + $elm$core$String$fromFloat(model.accountState.totalWalletBalance))
+							'🟢 Total Wallet Balance: ' + $elm$core$String$fromFloat(model.accountState.totalWalletBalance))
+						]) : _List_fromArray(
+						[
+							$elm$html$Html$text('🔴 Invalid Account Credentials')
 						])),
 					A2(
 					$rundis$elm_bootstrap$Bootstrap$Navbar$textItem,

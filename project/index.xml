@@ -5,12 +5,21 @@
     <link>https://www.ashwinnarayan.com/project/</link>
       <atom:link href="https://www.ashwinnarayan.com/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sat, 22 May 2021 10:08:54 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Wed, 26 May 2021 15:49:20 +0800</lastBuildDate>
     <image>
       <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Projects</title>
       <link>https://www.ashwinnarayan.com/project/</link>
     </image>
+    
+    <item>
+      <title>Ipoh Skyscapes</title>
+      <link>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</link>
+      <pubDate>Wed, 26 May 2021 15:49:20 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</guid>
+      <description>&lt;p&gt;For about five years, I lived in a city called Ipoh. My room at the time had access to some of the best sunsets I&amp;rsquo;ve ever seen in my life. I would capture what I could using a small digital camera that I had on hand.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>On Coffee</title>

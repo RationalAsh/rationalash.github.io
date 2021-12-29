@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with.">
+  <meta name="description" content="I walk you through writing a simple cyclic task in Xenomai.">
 
   
   <link rel="alternate" hreflang="en-us" href="https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/">
@@ -279,7 +279,7 @@
   <meta property="og:site_name" content="Ashwin Narayan">
   <meta property="og:url" content="https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/">
   <meta property="og:title" content="Real-Time Programming with Xenomai 3 - Part 2: Writing a simple periodic task. | Ashwin Narayan">
-  <meta property="og:description" content="Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:description" content="I walk you through writing a simple cyclic task in Xenomai."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -329,7 +329,7 @@
       "url": "https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Xenomai gets tasks to run in real-time by having a co-kernel running alongside the regular linux kernel handling all the time critical tasks. The Xenomai co-kernel is able to do this because of the i-pipe patch that the custom kernel is compiled with."
+  "description": "I walk you through writing a simple cyclic task in Xenomai."
 }
 </script>
 
@@ -818,7 +818,7 @@ RT_TASK loop_task;
   sprintf(str, &quot;cyclic_task&quot;);
   rt_task_create(&amp;loop_task, str, 0, 50, 0);
 </code></pre>
-<p>The rt_task_create() function creates a new real-time task using Xenoma&rsquo;s Alchemy API. The first argument is the RT_TASK variable that holds the address of the task descriptor. The second is a string that holds a name for the task. You can give it a descriptive name. The third argument is the size of the stack for the new task. Passing a zero makes the function use a system dependent default. The next argument is the <em>priority</em> of the task. This tells the real-time scheduler how important the task is. Higher priority tasks can interrupt lower priority tasks. The last argument is the task creation mode into which you can pass bitwise OR&rsquo;ed flags. For example, passing the T_JOINABLE flag allows you to call the rt_task_join() function to wait on the task to finish. In this code sample, I&rsquo;m just passing in zero, which is the default mode. The function returns a 0 if the task is successfully created. Ideally, you should check for this and print an error if the return value is not zero. However, for this simple example, I&rsquo;m omitting this.</p>
+<p>The rt_task_create() function creates a new real-time task using Xenomai&rsquo;s Alchemy API. The first argument is the RT_TASK variable that holds the address of the task descriptor. The second is a string that holds a name for the task. You can give it a descriptive name. The third argument is the size of the stack for the new task. Passing a zero makes the function use a system dependent default. The next argument is the <em>priority</em> of the task. This tells the real-time scheduler how important the task is. Higher priority tasks can interrupt lower priority tasks. The last argument is the task creation mode into which you can pass bitwise OR&rsquo;ed flags. For example, passing the T_JOINABLE flag allows you to call the rt_task_join() function to wait on the task to finish. In this code sample, I&rsquo;m just passing in zero, which is the default mode. The function returns a 0 if the task is successfully created. Ideally, you should check for this and print an error if the return value is not zero. However, for this simple example, I&rsquo;m omitting this.</p>
 <p>A real-time task created using rt_task_create() starts off dormant. To begin the execution of the task, you need to call the rt_task_start() function.</p>
 <pre><code class="language-C">  //Since task starts in suspended mode, start task
   rt_task_start(&amp;loop_task, &amp;loop_task_proc, 0);
@@ -850,10 +850,6 @@ RT_TASK loop_task;
 
 
 <div class="article-tags">
-  
-  <a class="badge badge-light" href="/tag/xenomai/">xenomai</a>
-  
-  <a class="badge badge-light" href="/tag/real-time/">real-time</a>
   
   <a class="badge badge-light" href="/tag/programming/">programming</a>
   

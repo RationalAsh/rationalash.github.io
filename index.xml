@@ -24,6 +24,7 @@
 &lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;foldl :: (a -&amp;gt; b -&amp;gt; a) -&amp;gt; a -&amp;gt; [b] -&amp;gt; a
 foldr :: (a -&amp;gt; b -&amp;gt; b) -&amp;gt; b -&amp;gt; [a] -&amp;gt; b
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Folds work like knocking down an arrangement of dominoes. It takes the seed value and the first element in the list and applies the function you have it. Then it repeatedly applies the function to the result and the next item in the list until all items in the list are consumed.&lt;/p&gt;
 &lt;h2 id=&#34;the-left-fold---illustrated&#34;&gt;The Left Fold - Illustrated&lt;/h2&gt;
 &lt;pre&gt;&lt;code class=&#34;language-mermaid&#34;&gt;graph TD
   BN[&amp;quot;B[N]&amp;quot;] --- FN

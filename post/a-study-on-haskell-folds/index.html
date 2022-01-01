@@ -734,6 +734,7 @@
 <pre><code class="language-hs">foldl :: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; a
 foldr :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b
 </code></pre>
+<p>Folds work like knocking down an arrangement of dominoes. It takes the seed value and the first element in the list and applies the function you have it. Then it repeatedly applies the function to the result and the next item in the list until all items in the list are consumed.</p>
 <h2 id="the-left-fold---illustrated">The Left Fold - Illustrated</h2>
 <pre><code class="language-mermaid">graph TD
   BN[&quot;B[N]&quot;] --- FN

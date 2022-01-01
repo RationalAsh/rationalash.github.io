@@ -681,7 +681,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    5 min read
   </span>
   
 
@@ -782,7 +782,8 @@ Y_1 \quad &amp;\text{if} , t = 0 \\<br>
 <pre><code class="language-hs">ema :: Double -&gt; [Double] -&gt; [Double]
 ema alpha vals = scanl1 (\prev curr -&gt; alpha*curr + (1-alpha)*prev) vals
 </code></pre>
-<p>Interestingly, the Complementary Filter - often used to measure tilts using IMU sensors follow a very similar format and folds can be used to implement these type of filters.</p>
+<h2 id="summing-up">Summing Up</h2>
+<p>Interestingly, the Complementary Filter - often used to measure tilts using IMU sensors follow a very similar format and folds can be used to implement these type of filters. This is the biggest strength of using higher order functions. They capture commonly used patterns of calculations in a very general way. If you use a fold, the Haskell compiler will produce highly optimized code to run your calculation. If you were to use hand-written loops - especially in programming languages like C/C++ - you might write code that is inefficient or segfaults. Higher order functions are also very general. Haskell&rsquo;s <code>foldl</code> and <code>foldr</code> works on any data type at all. This is the reason the type signatures for these functions don&rsquo;t mention any concrete types. While I&rsquo;ve only applied these functions to <code>Double</code> data types, you can use this pattern on Strings, integers and on random custom defined data types. Higher order functions are also elegant. Rather than writing an ugly loop, I could write a one liner to do integration or complementary filtering. This is actually quite similar to how MATLAB scripting lets me express complicated operations like a matrix multiplication with a single operator.</p>
 <h2 id="references">References</h2>
 <ol>
 <li>

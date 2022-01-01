@@ -5,12 +5,83 @@
     <link>https://www.ashwinnarayan.com/tag/programming/</link>
       <atom:link href="https://www.ashwinnarayan.com/tag/programming/index.xml" rel="self" type="application/rss+xml" />
     <description>programming</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 06 Jun 2019 13:59:15 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sat, 01 Jan 2022 18:54:25 +0800</lastBuildDate>
     <image>
       <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>programming</title>
       <link>https://www.ashwinnarayan.com/tag/programming/</link>
     </image>
+    
+    <item>
+      <title>Haskell Folds Illustrated</title>
+      <link>https://www.ashwinnarayan.com/post/a-study-on-haskell-folds/</link>
+      <pubDate>Sat, 01 Jan 2022 18:54:25 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/a-study-on-haskell-folds/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Learning Haskell is notoriously hard and non-intuitive. Folds were one of the first things to make parts of Haskell click for me. Folds express a common pattern of calculation on lists. Folds and related functions helped me understand the the concept of a higher order functions - functions that operate on other functions. Understanding higher order functions are the first step to understanding Haskell and functional programming.&lt;/p&gt;
+&lt;p&gt;There are two types of folds in Haskell: the left fold and the right fold with slightly different function signatures. Folds take a function that takes two arguments and returns a third &lt;code&gt;(a -&amp;gt; b -&amp;gt; a)&lt;/code&gt;, a value that can be considered a &amp;ldquo;seed&amp;rdquo; value, and a list. For the right fold, the seed has to be of the same type as the second argument of the function and the list elements have to have the same type as the first argument of the function. For the left fold, this is reversed. The seed has to be of the same type as the first argument to the function and the list elements have to be of the same type as the first argument of the function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;foldl :: (a -&amp;gt; b -&amp;gt; a) -&amp;gt; a -&amp;gt; [b] -&amp;gt; a
+foldr :: (a -&amp;gt; b -&amp;gt; b) -&amp;gt; b -&amp;gt; [a] -&amp;gt; b
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;the-left-fold---illustrated&#34;&gt;The Left Fold - Illustrated&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34;&gt;graph TD
+  BN[&amp;quot;B[N]&amp;quot;] --- FN
+  FN[fun :: b -&amp;gt; a -&amp;gt; b] -.- |&amp;quot;B[N-1]&amp;quot;|F2
+  FN --- AN[&amp;quot;A[N]&amp;quot;]
+  F2[fun :: b -&amp;gt; a -&amp;gt; b] --- |&amp;quot;B[1]&amp;quot;|F1
+  F2 --- A1[&amp;quot;A[1]&amp;quot;]
+  F1 --- S[&amp;quot;B[0]&amp;quot;]
+  F1[fun :: b -&amp;gt; a -&amp;gt; b] --- A0[&amp;quot;A[0]&amp;quot;]
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;the-right-fold---illustrated&#34;&gt;The Right Fold - Illustrated&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34;&gt;graph TD
+  BN[&amp;quot;B[N]&amp;quot;] --- FN
+  FN[fun :: b -&amp;gt; a -&amp;gt; b] -.- |&amp;quot;B[N-1]&amp;quot;|F2
+  FN --- AN[&amp;quot;A[0]&amp;quot;]
+  F2[fun :: b -&amp;gt; a -&amp;gt; b] --- |&amp;quot;B[1]&amp;quot;|F1
+  F2 --- A1[&amp;quot;A[N-1]&amp;quot;]
+  F1 --- S[&amp;quot;B[0]&amp;quot;]
+  F1[fun :: b -&amp;gt; a -&amp;gt; b] --- A0[&amp;quot;A[N]&amp;quot;]
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;applications&#34;&gt;Applications&lt;/h2&gt;
+&lt;h3 id=&#34;summing-lists&#34;&gt;Summing lists&lt;/h3&gt;
+&lt;p&gt;A standard illustrative example is how a fold can be used to sum a list.&lt;/p&gt;
+&lt;p&gt;Following the diagram, &lt;code&gt;foldl (+) 0 [1, 2, 3, 4, 5]&lt;/code&gt; would evaluate as 15. The fold function applies the &lt;code&gt;(+)&lt;/code&gt; operator to 0 and the 1 (the first element). Then apply &lt;code&gt;(+)&lt;/code&gt; to the result and the second element in the list and so on until we get the final result.&lt;/p&gt;
+&lt;h3 id=&#34;integration&#34;&gt;Integration&lt;/h3&gt;
+&lt;p&gt;A neat extension to summing lists is numerical integration. The simplest integral of an signal $x[t]$ (represnted by a list of values) with a sampling time $\Delta T$ can be expressed very simply as a fold (combined with a map).&lt;/p&gt;
+&lt;p&gt;The equation&lt;/p&gt;
+&lt;p&gt;$$ S = \sum_{i=0}^{N} x[i] \cdot \Delta T $$&lt;/p&gt;
+&lt;p&gt;Turns into&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;simpleIntegral :: Double -&amp;gt; [Double] -&amp;gt; Double
+simpleIntegral dT fvals = foldl1 (+) (map (*dT) fvals)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, &lt;code&gt;foldl1&lt;/code&gt; is a version of fold that takes the first element of the list as the seed.&lt;/p&gt;
+&lt;h3 id=&#34;scans-and-filtering&#34;&gt;Scans and Filtering&lt;/h3&gt;
+&lt;p&gt;From the illustrations of the left and right folds you can see that the folds produce a set of intermediate results that get fed back into the function. When having the intermediate results are useful, we have &lt;code&gt;scan&lt;/code&gt;. &lt;code&gt;scan&lt;/code&gt; is a fold that returns the intermediate results as a list rather than just the final result. This is useful in a lot of filtering operations; for instance to calculate the exponential moving average of stock prices.&lt;/p&gt;
+&lt;p&gt;$$\begin{equation*}
+S_t=\begin{cases}
+Y_1 \quad &amp;amp;\text{if} , t = 0 \\&lt;br&gt;
+\alpha Y_{t} + (1-\alpha) S_{t-1} &amp;amp;\text{if} , t \gt 0 \\&lt;br&gt;
+\end{cases}
+\end{equation*}$$&lt;/p&gt;
+&lt;p&gt;The EMA equation can be implemented as:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-hs&#34;&gt;ema :: Double -&amp;gt; [Double] -&amp;gt; [Double]
+ema alpha vals = scanl1 (\prev curr -&amp;gt; alpha*curr + (1-alpha)*prev) vals
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Interestingly, the Complementary Filter - often used to measure tilts using IMU sensors follow a very similar format and folds can be used to implement these type of filters.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;http://learnyouahaskell.com/higher-order-functions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Learn You a Haskell&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.cs.nott.ac.uk/~pszgmh/fold.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Hutton, Graham. &amp;ldquo;A tutorial on the universality and expressiveness of fold.&amp;rdquo; &lt;em&gt;Journal of Functional Programming&lt;/em&gt; 9.4 (1999): 355-372.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Moving_average&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Exponential Moving Average&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Building a Simple Telegram Bot Using Google Cloud Functions</title>

@@ -4,7 +4,27 @@
   
   <url>
     <loc>https://www.ashwinnarayan.com/</loc>
-    <lastmod>2021-07-02T09:30:39+08:00</lastmod>
+    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/a-study-on-haskell-folds/</loc>
+    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ashwinnarayan.com/post/</loc>
+    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ashwinnarayan.com/tag/programming/</loc>
+    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.ashwinnarayan.com/tags/</loc>
+    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
   </url>
   
   <url>
@@ -23,11 +43,6 @@
   </url>
   
   <url>
-    <loc>https://www.ashwinnarayan.com/tags/</loc>
-    <lastmod>2021-07-02T09:30:39+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</loc>
     <lastmod>2021-05-26T15:49:20+08:00</lastmod>
   </url>
@@ -39,11 +54,6 @@
   
   <url>
     <loc>https://www.ashwinnarayan.com/post/messages-from-demon-slayer/</loc>
-    <lastmod>2021-05-20T14:33:30+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ashwinnarayan.com/post/</loc>
     <lastmod>2021-05-20T14:33:30+08:00</lastmod>
   </url>
   
@@ -99,11 +109,6 @@
   
   <url>
     <loc>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</loc>
-    <lastmod>2019-06-06T13:59:15+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ashwinnarayan.com/tag/programming/</loc>
     <lastmod>2019-06-06T13:59:15+08:00</lastmod>
   </url>
   

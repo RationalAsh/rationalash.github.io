@@ -1,284 +1,173 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>https://www.ashwinnarayan.com/post/a-morning-walk-rail-corridor/</loc>
+    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/</loc>
-    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/tag/photography/</loc>
+    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/post/</loc>
+    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/tags/</loc>
+    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/a-study-on-haskell-folds/</loc>
     <lastmod>2022-01-01T18:54:25+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ashwinnarayan.com/post/</loc>
-    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/programming/</loc>
     <lastmod>2022-01-01T18:54:25+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ashwinnarayan.com/tags/</loc>
-    <lastmod>2022-01-01T18:54:25+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</loc>
     <lastmod>2021-07-02T09:30:39+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.ashwinnarayan.com/tag/photography/</loc>
-    <lastmod>2021-07-02T09:30:39+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/</loc>
     <lastmod>2021-07-02T09:30:39+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</loc>
     <lastmod>2021-05-26T15:49:20+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/coffee/</loc>
     <lastmod>2021-05-22T10:08:54+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/messages-from-demon-slayer/</loc>
     <lastmod>2021-05-20T14:33:30+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/stop-reading-the-news/</loc>
     <lastmod>2021-05-10T16:17:00+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/book-summaries/</loc>
     <lastmod>2020-12-12T16:04:29+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/digital-minimalism/</loc>
     <lastmod>2020-12-12T16:04:29+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/self-improvement/</loc>
     <lastmod>2020-12-12T16:04:29+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/music/</loc>
     <lastmod>2020-05-31T15:41:18+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/project/artwork/</loc>
     <lastmod>2020-05-25T13:41:05+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/covid-19/</loc>
     <lastmod>2020-05-24T13:09:50+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/what-i-learned-about-todo-lists/</loc>
     <lastmod>2020-05-24T13:09:50+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/investing/</loc>
     <lastmod>2019-11-23T17:50:00+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/investing-and-personal-finance/</loc>
     <lastmod>2019-11-23T17:50:00+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/gcp-telegram-bot/</loc>
     <lastmod>2019-06-06T13:59:15+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/cartpole-dynamics/</loc>
     <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/mathematics/</loc>
     <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/robotics/</loc>
     <lastmod>2019-04-21T08:56:44+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/learning-haskell-google-code-jam/</loc>
     <lastmod>2019-04-13T08:26:34+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/gaming/</loc>
     <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/witcher-3-review/</loc>
     <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/thoughts/</loc>
     <lastmod>2018-09-16T01:10:46+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/batch/</loc>
     <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</loc>
     <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/windows/</loc>
     <lastmod>2017-12-31T11:41:31+05:30</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/miscellaneous/</loc>
     <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/movie-review/</loc>
     <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/star-trek-discovery/</loc>
     <lastmod>2017-12-10T23:26:48+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</loc>
     <lastmod>2017-09-10T17:58:08+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/quaternions/</loc>
     <lastmod>2017-09-10T17:58:08+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/bash-recipes-for-science/</loc>
     <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/linux/</loc>
     <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/science/</loc>
     <lastmod>2017-08-13T19:30:14+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/c/</loc>
     <lastmod>2017-08-01T00:15:14+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/dataflow-programming-in-c/</loc>
     <lastmod>2017-08-01T00:15:14+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/academia/</loc>
     <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/conference/</loc>
     <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/icra/</loc>
     <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/icra-2017/</loc>
     <lastmod>2017-06-05T22:50:52+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming-part-2/</loc>
     <lastmod>2017-05-20T23:10:16+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/real-time/</loc>
     <lastmod>2017-05-17T00:07:36+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</loc>
     <lastmod>2017-05-17T00:07:36+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/xenomai/</loc>
     <lastmod>2017-05-17T00:07:36+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/welcome/</loc>
     <lastmod>2017-05-14T00:38:51+08:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/author/ashwin-narayan/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/authors/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/publication_types/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/publication/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/talk/</loc>
   </url>
-  
 </urlset>

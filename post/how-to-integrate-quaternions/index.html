@@ -255,8 +255,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png">
 
   <link rel="canonical" href="https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/">
 
@@ -279,8 +279,8 @@
   <meta property="og:site_name" content="Ashwin Narayan">
   <meta property="og:url" content="https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/">
   <meta property="og:title" content="How to Integrate Quaternions | Ashwin Narayan">
-  <meta property="og:description" content="I&rsquo;ve been working with inertial measurement units lately, and I&rsquo;ve come to realize that there&rsquo;s a surprising amount of mathematics involved in processing the raw data from the sensors. The story begins with me trying to integrate a three-dimensional angular velocity vector to get the orientation of an object."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="I&rsquo;ve been working with inertial measurement units lately, and I&rsquo;ve come to realize that there&rsquo;s a surprising amount of mathematics involved in processing the raw data from the sensors. The story begins with me trying to integrate a three-dimensional angular velocity vector to get the orientation of an object."><meta property="og:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png">
+  <meta property="twitter:image" content="https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2017-09-10T17:58:08&#43;08:00">
@@ -326,7 +326,7 @@
     "name": "Ashwin Narayan",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+      "url": "https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "I\u0026rsquo;ve been working with inertial measurement units lately, and I\u0026rsquo;ve come to realize that there\u0026rsquo;s a surprising amount of mathematics involved in processing the raw data from the sensors. The story begins with me trying to integrate a three-dimensional angular velocity vector to get the orientation of an object."
@@ -506,6 +506,35 @@
 
         <li class="nav-item">
           <a class="nav-link " href="/#featured"><span>Featured</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#experience"><span>Experience</span></a>
         </li>
 
         
@@ -745,7 +774,7 @@ $$ q^{-1} = \frac{q^*}{||q||^2} $$</p>
 <h2 id="using-quaternions-for-rotation">Using Quaternions for Rotation</h2>
 <p>Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are <em>unit</em> quaternions: $||q|| = 1$. Unit quaternions are also called <em>versors</em>. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&rsquo;ve mentioned and <em>not</em> trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.</p>
 <p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used. 
-$$ \vec{r}' = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
+$$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
 <p>If I find the formula quite mysterious (as I did when I first saw it), it&rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.</p>
 <p>It&rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.</p>
 <h3 id="quaternions-rotation-matrices-and-the-rotation-group-so3">Quaternions, Rotation Matrices and the Rotation Group $SO(3)$</h3>
@@ -844,7 +873,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 \left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\ 
 2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\ 
 \dot{q} &amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$</p>
-<p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}' = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
+<p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
 <p>$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$</p>
 <h3 id="integration">Integration</h3>
 <p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a <em>quaternion multiplication</em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:</p>
@@ -1018,7 +1047,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
       <div class="media-body">
         <h5 class="card-title"><a href="https://www.ashwinnarayan.com/">Ashwin Narayan</a></h5>
         <h6 class="card-subtitle">PhD Student | Guitarist | Coffee Enthusiast</h6>
-        <p class="card-text">I am a PhD student at the National University of Singapore working with the <a href="https://wiki.nus.edu.sg/display/biorobotics/Biorobotics+Lab">Biorobotics research group</a></p>
+        <p class="card-text">I am a PhD student at the National University of Singapore working with the 
+<a href="https://wiki.nus.edu.sg/display/biorobotics/Biorobotics&#43;Lab" target="_blank" rel="noopener">Biorobotics research group</a></p>
         <ul class="network-icon" aria-hidden="true">
   
     
@@ -1263,7 +1293,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
     
     
     
-    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+    <script src="/js/academic.min.0b17e4a524c99cc1cfe6e3f1441cbc30.js"></script>
 
     
 

@@ -7,7 +7,7 @@
     <description>programming</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sat, 01 Jan 2022 18:54:25 +0800</lastBuildDate>
     <image>
-      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>programming</title>
       <link>https://www.ashwinnarayan.com/tag/programming/</link>
     </image>
@@ -64,8 +64,8 @@ simpleIntegral dT fvals = foldl1 (+) (map (*dT) fvals)
 &lt;p&gt;From the illustrations of the left and right folds you can see that the folds produce a set of intermediate results that get fed back into the function. When having the intermediate results are useful, we have &lt;code&gt;scan&lt;/code&gt;. &lt;code&gt;scan&lt;/code&gt; is a fold that returns the intermediate results as a list rather than just the final result. This is useful in a lot of filtering operations; for instance to calculate the exponential moving average of stock prices.&lt;/p&gt;
 &lt;p&gt;$$\begin{equation*}
 S_t=\begin{cases}
-Y_1 \quad &amp;amp;\text{if} , t = 0 \\&lt;br&gt;
-\alpha Y_{t} + (1-\alpha) S_{t-1} &amp;amp;\text{if} , t \gt 0 \\&lt;br&gt;
+Y_1 \quad &amp;amp;\text{if} , t = 0 \\
+\alpha Y_{t} + (1-\alpha) S_{t-1} &amp;amp;\text{if} , t \gt 0 \\
 \end{cases}
 \end{equation*}$$&lt;/p&gt;
 &lt;p&gt;The EMA equation can be implemented as:&lt;/p&gt;
@@ -392,7 +392,7 @@ factorizeCiphertext4 (n:nums)
       <guid>https://www.ashwinnarayan.com/post/hugo-windows-workflow/</guid>
       <description>&lt;p&gt;As I mentioned in 
 &lt;a href=&#34;https://www.ashwinnarayan.com/post/welcome/&#34;&gt;my first article on this blog&lt;/a&gt;, I&amp;rsquo;m now using 
-&lt;a href=&#34;https://gohugo.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Hugo&lt;/a&gt;, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&amp;rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools. However, while setting up a workflow in Windows for publishing content to my website I discovered that Windows&#39; scripting tools are not all that bad. In fact, for anyone familiar with scripting from Linux, moving to Powershell isn&amp;rsquo;t that hard.&lt;/p&gt;
+&lt;a href=&#34;https://gohugo.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Hugo&lt;/a&gt;, the static site generator to build my personal website. Due to the needs of my work environment (mostly because I need to use MS Word and certain MATLAB features on a regular basis), I&amp;rsquo;ve been primarily using Windows as my operating system for the past year or so. Having used Linux for a long time, I definitely missed the conveniences offered by shell scripting and other command line tools. However, while setting up a workflow in Windows for publishing content to my website I discovered that Windows&amp;rsquo; scripting tools are not all that bad. In fact, for anyone familiar with scripting from Linux, moving to Powershell isn&amp;rsquo;t that hard.&lt;/p&gt;
 &lt;h2 id=&#34;workflow&#34;&gt;Workflow&lt;/h2&gt;
 &lt;p&gt;A typical Hugo website development folder looks like this:
 &lt;img src=&#34;https://www.ashwinnarayan.com/img/hugo_folders.jpg&#34; alt=&#34;Folder Structure&#34;&gt;&lt;/p&gt;

@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/dapps/solana-faucet/static/css/main.1d3cbeb6.css",
+    "main.js": "/dapps/solana-faucet/static/js/main.5d76cf83.js",
+    "static/js/578.75686980.chunk.js": "/dapps/solana-faucet/static/js/578.75686980.chunk.js",
+    "static/js/105.06b0b66d.chunk.js": "/dapps/solana-faucet/static/js/105.06b0b66d.chunk.js",
+    "static/js/728.fa91cb8d.chunk.js": "/dapps/solana-faucet/static/js/728.fa91cb8d.chunk.js",
+    "static/js/299.28b832dd.chunk.js": "/dapps/solana-faucet/static/js/299.28b832dd.chunk.js",
+    "static/js/882.aa4a8c3c.chunk.js": "/dapps/solana-faucet/static/js/882.aa4a8c3c.chunk.js",
+    "static/js/507.91914aaf.chunk.js": "/dapps/solana-faucet/static/js/507.91914aaf.chunk.js",
+    "static/js/726.3f95ffd6.chunk.js": "/dapps/solana-faucet/static/js/726.3f95ffd6.chunk.js",
+    "static/js/725.4011492f.chunk.js": "/dapps/solana-faucet/static/js/725.4011492f.chunk.js",
+    "static/js/445.07f2ec6d.chunk.js": "/dapps/solana-faucet/static/js/445.07f2ec6d.chunk.js",
+    "static/js/117.9f2af81d.chunk.js": "/dapps/solana-faucet/static/js/117.9f2af81d.chunk.js",
+    "static/js/114.ce9fcf75.chunk.js": "/dapps/solana-faucet/static/js/114.ce9fcf75.chunk.js",
+    "index.html": "/dapps/solana-faucet/index.html",
+    "main.1d3cbeb6.css.map": "/dapps/solana-faucet/static/css/main.1d3cbeb6.css.map",
+    "main.5d76cf83.js.map": "/dapps/solana-faucet/static/js/main.5d76cf83.js.map",
+    "578.75686980.chunk.js.map": "/dapps/solana-faucet/static/js/578.75686980.chunk.js.map",
+    "105.06b0b66d.chunk.js.map": "/dapps/solana-faucet/static/js/105.06b0b66d.chunk.js.map",
+    "728.fa91cb8d.chunk.js.map": "/dapps/solana-faucet/static/js/728.fa91cb8d.chunk.js.map",
+    "299.28b832dd.chunk.js.map": "/dapps/solana-faucet/static/js/299.28b832dd.chunk.js.map",
+    "882.aa4a8c3c.chunk.js.map": "/dapps/solana-faucet/static/js/882.aa4a8c3c.chunk.js.map",
+    "725.4011492f.chunk.js.map": "/dapps/solana-faucet/static/js/725.4011492f.chunk.js.map",
+    "445.07f2ec6d.chunk.js.map": "/dapps/solana-faucet/static/js/445.07f2ec6d.chunk.js.map",
+    "117.9f2af81d.chunk.js.map": "/dapps/solana-faucet/static/js/117.9f2af81d.chunk.js.map",
+    "114.ce9fcf75.chunk.js.map": "/dapps/solana-faucet/static/js/114.ce9fcf75.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1d3cbeb6.css",
+    "static/js/main.5d76cf83.js"
+  ]
+}

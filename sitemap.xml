@@ -2,19 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.ashwinnarayan.com/</loc>
+    <lastmod>2022-08-04T11:36:56+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/project/blockchain/</loc>
+    <lastmod>2022-08-04T11:36:56+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/project/</loc>
+    <lastmod>2022-08-04T11:36:56+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/tag/blockchain/</loc>
+    <lastmod>2022-08-02T17:15:34+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/post/blockchains-as-i-understand-it/</loc>
+    <lastmod>2022-08-02T17:15:34+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/tag/cryptography/</loc>
+    <lastmod>2022-08-02T17:15:34+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/post/</loc>
+    <lastmod>2022-08-02T17:15:34+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/tags/</loc>
+    <lastmod>2022-08-02T17:15:34+08:00</lastmod>
+  </url><url>
     <loc>https://www.ashwinnarayan.com/post/a-morning-walk-rail-corridor/</loc>
     <lastmod>2022-04-22T10:14:53+08:00</lastmod>
   </url><url>
-    <loc>https://www.ashwinnarayan.com/</loc>
-    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
-  </url><url>
     <loc>https://www.ashwinnarayan.com/tag/photography/</loc>
-    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
-  </url><url>
-    <loc>https://www.ashwinnarayan.com/post/</loc>
-    <lastmod>2022-04-22T10:14:53+08:00</lastmod>
-  </url><url>
-    <loc>https://www.ashwinnarayan.com/tags/</loc>
     <lastmod>2022-04-22T10:14:53+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/post/a-study-on-haskell-folds/</loc>
@@ -24,9 +39,6 @@
     <lastmod>2022-01-01T18:54:25+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</loc>
-    <lastmod>2021-07-02T09:30:39+08:00</lastmod>
-  </url><url>
-    <loc>https://www.ashwinnarayan.com/project/</loc>
     <lastmod>2021-07-02T09:30:39+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</loc>

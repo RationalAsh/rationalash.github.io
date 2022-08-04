@@ -5,12 +5,26 @@
     <link>https://www.ashwinnarayan.com/project/</link>
       <atom:link href="https://www.ashwinnarayan.com/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Fri, 02 Jul 2021 09:30:39 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 04 Aug 2022 11:36:56 +0800</lastBuildDate>
     <image>
       <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Projects</title>
       <link>https://www.ashwinnarayan.com/project/</link>
     </image>
+    
+    <item>
+      <title>Blockchain</title>
+      <link>https://www.ashwinnarayan.com/project/blockchain/</link>
+      <pubDate>Thu, 04 Aug 2022 11:36:56 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/project/blockchain/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.ashwinnarayan.com/dapps/solana-faucet/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Solana Airdropper&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://useless-nft-generator.space&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NFT Minter&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Buona Vista</title>

@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/dapps/i-mint-therefore-i-am/static/css/main.073c9b0a.css",
-    "main.js": "/dapps/i-mint-therefore-i-am/static/js/main.e3d28582.js",
-    "static/js/578.143483b0.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/578.143483b0.chunk.js",
-    "static/js/828.da45489d.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/828.da45489d.chunk.js",
-    "static/js/299.31d9ad52.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/299.31d9ad52.chunk.js",
-    "static/js/882.cdbd8052.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/882.cdbd8052.chunk.js",
-    "static/js/156.daab9c2c.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/156.daab9c2c.chunk.js",
-    "static/js/725.358db127.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/725.358db127.chunk.js",
-    "static/js/114.c62d0e9e.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/114.c62d0e9e.chunk.js",
+    "main.css": "/dapps/i-mint-therefore-i-am/static/css/main.f855e6bc.css",
+    "main.js": "/dapps/i-mint-therefore-i-am/static/js/main.a4750f02.js",
+    "static/js/578.94e50e7d.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/578.94e50e7d.chunk.js",
+    "static/js/828.6b5ef869.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/828.6b5ef869.chunk.js",
+    "static/js/299.d1dfbe4e.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/299.d1dfbe4e.chunk.js",
+    "static/js/882.8e706aa9.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/882.8e706aa9.chunk.js",
+    "static/js/156.7eb73549.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/156.7eb73549.chunk.js",
+    "static/js/725.4c7fc696.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/725.4c7fc696.chunk.js",
+    "static/js/190.1cf97aae.chunk.js": "/dapps/i-mint-therefore-i-am/static/js/190.1cf97aae.chunk.js",
     "static/media/imtia.jpeg": "/dapps/i-mint-therefore-i-am/static/media/imtia.bc5fadac2284b7665b87.jpeg",
     "index.html": "/dapps/i-mint-therefore-i-am/index.html",
-    "main.073c9b0a.css.map": "/dapps/i-mint-therefore-i-am/static/css/main.073c9b0a.css.map",
-    "main.e3d28582.js.map": "/dapps/i-mint-therefore-i-am/static/js/main.e3d28582.js.map",
-    "578.143483b0.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/578.143483b0.chunk.js.map",
-    "828.da45489d.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/828.da45489d.chunk.js.map",
-    "299.31d9ad52.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/299.31d9ad52.chunk.js.map",
-    "882.cdbd8052.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/882.cdbd8052.chunk.js.map",
-    "725.358db127.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/725.358db127.chunk.js.map",
-    "114.c62d0e9e.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/114.c62d0e9e.chunk.js.map"
+    "main.f855e6bc.css.map": "/dapps/i-mint-therefore-i-am/static/css/main.f855e6bc.css.map",
+    "main.a4750f02.js.map": "/dapps/i-mint-therefore-i-am/static/js/main.a4750f02.js.map",
+    "578.94e50e7d.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/578.94e50e7d.chunk.js.map",
+    "828.6b5ef869.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/828.6b5ef869.chunk.js.map",
+    "299.d1dfbe4e.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/299.d1dfbe4e.chunk.js.map",
+    "882.8e706aa9.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/882.8e706aa9.chunk.js.map",
+    "725.4c7fc696.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/725.4c7fc696.chunk.js.map",
+    "190.1cf97aae.chunk.js.map": "/dapps/i-mint-therefore-i-am/static/js/190.1cf97aae.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.e3d28582.js"
+    "static/css/main.f855e6bc.css",
+    "static/js/main.a4750f02.js"
   ]
 }

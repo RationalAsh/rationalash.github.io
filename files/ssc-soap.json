@@ -1,0 +1,41 @@
+{
+    "name": "GCIP SOAP",
+    "symbol": "",
+    "description": "GCIP x Solana Summer Camp SOAP!",
+    "seller_fee_basis_points": 0,
+    "image": "https://www.ashwinnarayan.com/img/gcip_icon.jpg",
+    "animation_url": "https://www.ashwinnarayan.com/img/gcip_icon.jpg",
+    "external_url": "https://www.ashwinnarayan.com/img/gcip_icon.jpg",
+    "attributes": [
+      {
+        "trait_type": "web",
+        "value": "yes"
+      },
+      {
+        "trait_type": "mobile",
+        "value": "yes"
+     },
+     {
+        "trait_type": "extension",
+        "value": "yes"
+      }
+    ],
+    "collection": {
+       "name": "GCIP SOAP",
+       "family": "GCIP"
+    },
+    "properties": {
+      "files": [
+        {
+          "uri": "https://www.ashwinnarayan.com/img/gcip_icon.jpg",
+          "type": "image/jpg"
+        }
+      ],
+      "creators": [
+        {
+          "address": "xEtQ9Fpv62qdc1GYfpNReMasVTe9YW5bHJwfVKqo72u",
+          "share": 100
+        }
+      ]
+    }
+  }

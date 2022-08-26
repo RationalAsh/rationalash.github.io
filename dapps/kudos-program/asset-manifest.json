@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dapps/kudos-program/static/css/main.073c9b0a.css",
-    "main.js": "/dapps/kudos-program/static/js/main.85b55b84.js",
+    "main.js": "/dapps/kudos-program/static/js/main.8976734a.js",
     "static/js/578.2beadfbb.chunk.js": "/dapps/kudos-program/static/js/578.2beadfbb.chunk.js",
     "static/js/105.3afb5691.chunk.js": "/dapps/kudos-program/static/js/105.3afb5691.chunk.js",
     "static/js/728.ef496ddd.chunk.js": "/dapps/kudos-program/static/js/728.ef496ddd.chunk.js",
@@ -15,7 +15,7 @@
     "static/js/114.3ebd1622.chunk.js": "/dapps/kudos-program/static/js/114.3ebd1622.chunk.js",
     "index.html": "/dapps/kudos-program/index.html",
     "main.073c9b0a.css.map": "/dapps/kudos-program/static/css/main.073c9b0a.css.map",
-    "main.85b55b84.js.map": "/dapps/kudos-program/static/js/main.85b55b84.js.map",
+    "main.8976734a.js.map": "/dapps/kudos-program/static/js/main.8976734a.js.map",
     "578.2beadfbb.chunk.js.map": "/dapps/kudos-program/static/js/578.2beadfbb.chunk.js.map",
     "105.3afb5691.chunk.js.map": "/dapps/kudos-program/static/js/105.3afb5691.chunk.js.map",
     "728.ef496ddd.chunk.js.map": "/dapps/kudos-program/static/js/728.ef496ddd.chunk.js.map",
@@ -28,6 +28,6 @@
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.85b55b84.js"
+    "static/js/main.8976734a.js"
   ]
 }

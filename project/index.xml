@@ -17,11 +17,15 @@
       <link>https://www.ashwinnarayan.com/project/blockchain/</link>
       <pubDate>Thu, 04 Aug 2022 11:36:56 +0800</pubDate>
       <guid>https://www.ashwinnarayan.com/project/blockchain/</guid>
-      <description>&lt;ol&gt;
+      <description>&lt;p&gt;I recently got into blockchain development focused on the Solana blockchain. I&amp;rsquo;ve been learning to build both Rust smart contracts and React based frontends. To see what I&amp;rsquo;m working on, subscribe to me at 
+&lt;a href=&#34;https://solanadevjournal.substack.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Solana Dev Journal&lt;/a&gt;.&lt;/p&gt;
+&lt;ol&gt;
 &lt;li&gt;
 &lt;a href=&#34;https://www.ashwinnarayan.com/dapps/solana-faucet/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Solana Airdropper&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;https://useless-nft-generator.space&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NFT Minter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.ashwinnarayan.com/dapps/kudos-program/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kudos Program&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>

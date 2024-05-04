@@ -52,7 +52,7 @@ $$ q^* = \begin{bmatrix} w &amp;amp; \ -x &amp;amp; \ -y &amp;amp; \ -z \end{bma
 $$ q^{-1} = \frac{q^*}{||q||^2} $$&lt;/p&gt;
 &lt;h2 id=&#34;using-quaternions-for-rotation&#34;&gt;Using Quaternions for Rotation&lt;/h2&gt;
 &lt;p&gt;Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&amp;rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are &lt;em&gt;unit&lt;/em&gt; quaternions: $||q|| = 1$. Unit quaternions are also called &lt;em&gt;versors&lt;/em&gt;. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&amp;rsquo;ve mentioned and &lt;em&gt;not&lt;/em&gt; trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.&lt;/p&gt;
-&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used. 
+&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used.
 $$ \vec{r}&amp;rsquo; = q \otimes \begin{bmatrix} 0 &amp;amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$&lt;/p&gt;
 &lt;p&gt;If I find the formula quite mysterious (as I did when I first saw it), it&amp;rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.&lt;/p&gt;
 &lt;p&gt;It&amp;rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.&lt;/p&gt;
@@ -123,14 +123,14 @@ $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p&
 &lt;p&gt;Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
 &lt;p&gt;Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
-$$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\ 
-\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] 
+$$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
+\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 \end{align}$$&lt;/p&gt;
 &lt;p&gt;So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&amp;rsquo;t be changed when applying the product rule.&lt;/p&gt;
 &lt;p&gt;$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$&lt;/p&gt;
 &lt;p&gt;There&amp;rsquo;s a term in this equation - the derivative of the conjugate - that&amp;rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&amp;rsquo;s conjugate which we know to be 1:&lt;/p&gt;
-&lt;p&gt;$$\begin{align} 
-\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\ 
+&lt;p&gt;$$\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
 \dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;amp;= 0 \end{align} $$&lt;/p&gt;
 &lt;p&gt;That gives the relationship&lt;/p&gt;
 &lt;p&gt;$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$&lt;/p&gt;
@@ -142,15 +142,15 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;p&gt;Interestingly, if both $q_1$ and $q_2$ are &lt;em&gt;pure quaternions&lt;/em&gt; (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p&gt;
 &lt;p&gt;$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p&gt;
 &lt;h3 id=&#34;the-product-dotq-q--is-a-pure-quaternion&#34;&gt;The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3&gt;
-&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\ 
-\dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^* 
+&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
+\dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^*
 \end{align} $$&lt;/p&gt;
 &lt;p&gt;Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p&gt;
 &lt;h3 id=&#34;the-differential-equation&#34;&gt;The Differential Equation&lt;/h3&gt;
 &lt;p&gt;So finally, I can extract the quaternion differential equation:&lt;/p&gt;
-&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
-\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
-2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
+&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
 \dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p&gt;
 &lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
 &lt;p&gt;$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$&lt;/p&gt;
@@ -162,8 +162,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;h3 id=&#34;quaternion-exponential&#34;&gt;Quaternion Exponential&lt;/h3&gt;
 &lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
 &lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;5&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\ 
-&amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
+&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\
+&amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
 &amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p&gt;
 &lt;p&gt;Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:&lt;/p&gt;
 &lt;p&gt;$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$&lt;/p&gt;

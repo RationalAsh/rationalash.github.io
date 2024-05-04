@@ -773,7 +773,7 @@ $$ q^* = \begin{bmatrix} w &amp; \ -x &amp; \ -y &amp; \ -z \end{bmatrix} $$</p>
 $$ q^{-1} = \frac{q^*}{||q||^2} $$</p>
 <h2 id="using-quaternions-for-rotation">Using Quaternions for Rotation</h2>
 <p>Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are <em>unit</em> quaternions: $||q|| = 1$. Unit quaternions are also called <em>versors</em>. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&rsquo;ve mentioned and <em>not</em> trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.</p>
-<p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used. 
+<p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called <em>conjugation</em> is used.
 $$ \vec{r}&rsquo; = q \otimes \begin{bmatrix} 0 &amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$</p>
 <p>If I find the formula quite mysterious (as I did when I first saw it), it&rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.</p>
 <p>It&rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.</p>
@@ -844,14 +844,14 @@ $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$</p>
 <p>Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$</p>
 <p>Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
-$$\begin{align} \vec{s} &amp;= q \otimes \vec{s}_0 \otimes q^* \\ 
-\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] 
+$$\begin{align} \vec{s} &amp;= q \otimes \vec{s}_0 \otimes q^* \\
+\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 \end{align}$$</p>
 <p>So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&rsquo;t be changed when applying the product rule.</p>
 <p>$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$</p>
 <p>There&rsquo;s a term in this equation - the derivative of the conjugate - that&rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&rsquo;s conjugate which we know to be 1:</p>
-<p>$$\begin{align} 
-\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\ 
+<p>$$\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
 \dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;= 0 \end{align} $$</p>
 <p>That gives the relationship</p>
 <p>$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$</p>
@@ -863,15 +863,15 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 <p>Interestingly, if both $q_1$ and $q_2$ are <em>pure quaternions</em> (They do not have a scalar part) then the quaternion commutator and the product are related:</p>
 <p>$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$</p>
 <h3 id="the-product-dotq-q--is-a-pure-quaternion">The Product $\dot{q} q^* $ is a Pure Quaternion</h3>
-<p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;= 0 \\ 
-\dot{q} \otimes q^* &amp;= -(\dot{q} \otimes q^* )^* 
+<p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;= 0 \\
+\dot{q} \otimes q^* &amp;= -(\dot{q} \otimes q^* )^*
 \end{align} $$</p>
 <p>Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.</p>
 <h3 id="the-differential-equation">The Differential Equation</h3>
 <p>So finally, I can extract the quaternion differential equation:</p>
-<p>$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;= \vec{\omega} \otimes \vec{s} \\ 
-\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\ 
-2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\ 
+<p>$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;= \vec{\omega} \otimes \vec{s} \\
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;= \vec{\omega} \otimes \vec{s} \\
+2\dot{q} \otimes q^* \otimes \vec{s} &amp;= \vec{\omega} \otimes \vec{s} \\
 \dot{q} &amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$</p>
 <p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:</p>
 <p>$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$</p>
@@ -883,8 +883,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 <h3 id="quaternion-exponential">Quaternion Exponential</h3>
 <p>Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
 <a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank" rel="noopener">5</a>.</p>
-<p>$$ \begin{align} \exp{(q)} &amp;= e^{w}e^{\vec{v}} \\ 
-&amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
+<p>$$ \begin{align} \exp{(q)} &amp;= e^{w}e^{\vec{v}} \\
+&amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
 &amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$</p>
 <p>Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:</p>
 <p>$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$</p>
@@ -1293,7 +1293,7 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
     
     
     
-    <script src="/js/academic.min.0b17e4a524c99cc1cfe6e3f1441cbc30.js"></script>
+    <script src="/js/academic.min.cbb2418f8e248a2e58f5a15a2abbfed0.js"></script>
 
     
 

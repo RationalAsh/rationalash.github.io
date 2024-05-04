@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust | Ashwin Narayan</title>
+    <link>https://www.ashwinnarayan.com/tag/rust/</link>
+      <atom:link href="https://www.ashwinnarayan.com/tag/rust/index.xml" rel="self" type="application/rss+xml" />
+    <description>rust</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 02 May 2024 15:38:20 +0800</lastBuildDate>
+    <image>
+      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>rust</title>
+      <link>https://www.ashwinnarayan.com/tag/rust/</link>
+    </image>
+    
+    <item>
+      <title>Blinking LEDs with Rust</title>
+      <link>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</link>
+      <pubDate>Thu, 02 May 2024 15:38:20 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</guid>
+      <description>&lt;p&gt;Rust is a modern programming language focused on safety, speed, and concurrency. It&amp;rsquo;s a go-to for system-level tasks, offering strong guarantees against common bugs like null pointer dereferences. Embedded systems, with their resource constraints and real-time demands, could really benefit from more Rust. Rust&amp;rsquo;s zero-cost abstractions maintain performance while keeping code size small. Real-time requirements are met through precise hardware interaction, aided by Rust&amp;rsquo;s features like immutable variables and robust type systems. With cross-compilation capabilities and a growing library ecosystem, Rust has recently become (in my opinion) a viable choice for embedded development.&lt;/p&gt;
+&lt;p&gt;Rust is also the first new programming language that I&amp;rsquo;ve learned since Haskell and I really like how it combines the best of functional programming with the best of systems programming. I&amp;rsquo;ve been playing around with Rust for a while now and I wanted to try my hand at embedded development with Rust. In this post, I&amp;rsquo;ll show you how to blink an LED on an STM32F407 Discovery board using Rust.&lt;/p&gt;
+&lt;h2 id=&#34;the-stm32f407-discovery-board&#34;&gt;The STM32F407 Discovery Board&lt;/h2&gt;
+&lt;p&gt;The 
+&lt;a href=&#34;https://www.st.com/en/evaluation-tools/stm32f4discovery.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407 Discovery&lt;/a&gt; board is a development board based on the STM32F407VG microcontroller. The board uses an STM32F407 micro-controller and has plenty of LEDs, some push buttons, an accelerometer, a microphone and an audio DAC. Plenty of peripherals to play around with. The 
+&lt;a href=&#34;https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;user manual&lt;/a&gt; has the pinouts and list of peripherals.&lt;/p&gt;
+&lt;h2 id=&#34;setting-up-rust-for-embedded-development&#34;&gt;Setting Up Rust for Embedded Development&lt;/h2&gt;
+&lt;p&gt;First follow the instructions from 
+&lt;a href=&#34;https://rustup.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rustup.rs&lt;/a&gt; to install rust.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://sh.rustup.rs | sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To compile rust for our micro-controller, we need to let it know what target to compile for. Microcontrollers like the STM32 use the thumb instruction set, which is a subset of the ARM instruction set. Rust has a target for the thumb instruction set, so we need to install it.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rustup target add thumbv7em-none-eabihf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we need to create a new empty project using cargo.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cargo new --bin blinky
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cargo needs some more information to build for a microcontroller. So we need a &lt;code&gt;.cargo/config.toml&lt;/code&gt; file in the project directory with the following contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[target.&#39;cfg(all(target_arch = &amp;quot;arm&amp;quot;, target_os = &amp;quot;none&amp;quot;))&#39;]
+# replace  STM32F407VG with your chip as listed in `probe-rs chip list`
+runner = &amp;quot;probe-rs run --chip STM32F407VG&amp;quot;
+
+[target.thumbv7em-none-eabihf]
+rustflags = [&amp;quot;-C&amp;quot;, &amp;quot;link-arg=-Tlink.x&amp;quot;]
+
+[build]
+target = &amp;quot;thumbv7em-none-eabihf&amp;quot;
+
+[env]
+DEFMT_LOG = &amp;quot;trace&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also useful are some tools that can be used to prepare the binary for flashing onto the microcontroller. We can install these tools using cargo.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cargo install cargo-binutils
+rustup component add llvm-tools-preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;libraries&#34;&gt;Libraries&lt;/h2&gt;
+&lt;p&gt;Rust has a lot of libraries already that support the hardware of the STM32, which makes things very convenient for us. Rust also has an excellent library called 
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;embassy&lt;/a&gt; - a lightweight async/await runtime that is designed to work on embedded devices. It is built on top of the &lt;code&gt;cortex-m&lt;/code&gt; crate, which provides low-level access to the ARM Cortex-M processors. In traditional C++ based embedded development, you would use an embedded RTOS like FreeRTOS or MBED OS to manage tasks and interrupts. However, with embasst, you can use the async/await syntax to write concurrent code that is (in my opinion) much easier to reason about and debug.&lt;/p&gt;
+&lt;p&gt;To use embassy, add the following dependencies to your &lt;code&gt;Cargo.toml&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[package]
+name = &amp;quot;stm32f407_tests&amp;quot;
+authors = [&amp;quot;Ashwin Narayan &amp;lt; ashwinnarayan1994@gmail.com &amp;gt;&amp;quot;]
+version = &amp;quot;0.1.0&amp;quot;
+edition = &amp;quot;2021&amp;quot;
+
+[[bin]]
+name = &amp;quot;blinky&amp;quot;
+path = &amp;quot;src/bin/blinky.rs&amp;quot;
+test = false
+bench = false
+
+# Set up the release profile to optimize our binaries
+[profile.release]
+codegen-units = 1 # better optimizations
+debug = true      # symbols are nice and they don&#39;t increase the size on Flash
+lto = true        # better optimizations
+opt-level = &amp;quot;s&amp;quot;   # Optimize for size
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embassy-stm32 = { version = &amp;quot;0.1.0&amp;quot;, features = [
+    &amp;quot;stm32f407vg&amp;quot;,
+    &amp;quot;unstable-pac&amp;quot;,
+    &amp;quot;memory-x&amp;quot;,
+    &amp;quot;time-driver-any&amp;quot;,
+    &amp;quot;exti&amp;quot;,
+    &amp;quot;chrono&amp;quot;,
+] }
+embassy-executor = { version = &amp;quot;0.5.0&amp;quot;, features = [
+    &amp;quot;integrated-timers&amp;quot;,
+    &amp;quot;arch-cortex-m&amp;quot;,
+    &amp;quot;executor-thread&amp;quot;,
+] }
+embassy-time = { version = &amp;quot;0.3.0&amp;quot; }
+embassy-sync = { version = &amp;quot;0.5.0&amp;quot; }
+cortex-m = { version = &amp;quot;0.7&amp;quot;, features = [&amp;quot;critical-section-single-core&amp;quot;] }
+cortex-m-rt = &amp;quot;0.7&amp;quot;
+panic-probe = { version = &amp;quot;0.3&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will then delete the &lt;code&gt;src/main.rs&lt;/code&gt; file and create a new file &lt;code&gt;src/bin/blinky.rs&lt;/code&gt; that will contain our code to blink our LEDs.&lt;/p&gt;
+&lt;h2 id=&#34;blinking-an-led&#34;&gt;Blinking an LED&lt;/h2&gt;
+&lt;p&gt;First, the code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]
+#![no_main]
+
+use embassy_executor::Spawner;
+use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_time::{Duration, Ticker};
+use panic_probe as _;
+
+fn clock_config() -&amp;gt; embassy_stm32::Config {
+    let mut config = embassy_stm32::Config::default();
+
+    // Configure to use the high speed internal oscillator (HSI).
+    config.rcc.hsi = true;
+
+    config
+}
+
+#[embassy_executor::main]
+async fn main(_spawner: Spawner) {
+    // Initialize embassy
+    let peripherals = embassy_stm32::init(clock_config());
+
+    // Create a new output pin - PA9 is the green led on the Discovery board
+    let mut green_led = Output::new(peripherals.PA9, Level::High, Speed::VeryHigh);
+    let mut red_led = Output::new(peripherals.PD5, Level::High, Speed::VeryHigh);
+    let mut green_led2 = Output::new(peripherals.PD12, Level::High, Speed::VeryHigh);
+    let mut orange_led = Output::new(peripherals.PD13, Level::High, Speed::VeryHigh);
+    let mut red_led2 = Output::new(peripherals.PD14, Level::High, Speed::VeryHigh);
+    let mut blue_led = Output::new(peripherals.PD15, Level::High, Speed::VeryHigh);
+
+    // Create a new Ticker for the delay
+    let mut ticker = Ticker::every(Duration::from_millis(100));
+
+    loop {
+        // Wait for the ticker to expire
+        ticker.next().await;
+
+        // Toggle the leds
+        green_led.toggle();
+        red_led.toggle();
+        green_led2.toggle();
+        orange_led.toggle();
+        red_led2.toggle();
+        blue_led.toggle();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&amp;rsquo;s go through the code step by step and understand what each part does.&lt;/p&gt;
+&lt;h3 id=&#34;no-standard-library-and-no-main&#34;&gt;No Standard Library and No Main&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]
+#![no_main]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;#![no_std]&lt;/code&gt; tells the rust compiler that we are building a binary without the standard library and &lt;code&gt;#![no_main]&lt;/code&gt; tells the Rust compiler that this program does not use the conventional main function as its entry point. This is typical in embedded applications where the entry point needs to conform to specific requirements or where the startup is handled by the hardware or a framework.&lt;/p&gt;
+&lt;h3 id=&#34;importing-libraries&#34;&gt;Importing Libraries&lt;/h3&gt;
+&lt;p&gt;Next, the library imports.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spawner from embassy_executor is used to handle task spawning in an async environment.&lt;/li&gt;
+&lt;li&gt;From embassy_stm32::gpio, we import Level, Output, and Speed to configure GPIO pins.&lt;/li&gt;
+&lt;li&gt;Duration and Ticker from embassy_time are used to handle time-related functions like delays.&lt;/li&gt;
+&lt;li&gt;panic_probe is a library used for better panic messages in embedded systems; the as _ means it&amp;rsquo;s used for its side effects (setting up panic handling) and not for its symbols.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;use embassy_executor::Spawner;
+use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_time::{Duration, Ticker};
+use panic_probe as _;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;clock-configuration&#34;&gt;Clock Configuration&lt;/h3&gt;
+&lt;p&gt;This function sets up the clock configuration for the STM32 microcontroller. It enables the High-Speed Internal oscillator (HSI) which is one of the clock sources that can drive the system clock.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;fn clock_config() -&amp;gt; embassy_stm32::Config {
+    let mut config = embassy_stm32::Config::default();
+    config.rcc.hsi = true; // Configure to use the high speed internal oscillator (HSI).
+    config
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;main-function&#34;&gt;Main Function&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;#[embassy_executor::main]&lt;/code&gt; attribute macro marks this asynchronous function as the entry point of the program. The function takes a Spawner argument for potentially spawning new asynchronous tasks. It initializes the STM32 peripherals according to our configuration.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[embassy_executor::main]
+async fn main(_spawner: Spawner) {
+    let peripherals = embassy_stm32::init(clock_config());
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;gpio-pins&#34;&gt;GPIO Pins&lt;/h3&gt;
+&lt;p&gt;Next, we set up our GPIO pins according to the discovery board&amp;rsquo;s pinout. We create Output instances for each LED pin, specifying the pin number, initial level, and speed. The pins are configured as outputs, and the initial level is set to High. The speed is set to VeryHigh, which is the fastest speed available. The speed specifies the maximum frequency at which the pin can be toggled.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;let mut green_led = Output::new(peripherals.PA9, Level::High, Speed::VeryHigh);
+...
+let mut blue_led = Output::new(peripherals.PD15, Level::High, Speed::VeryHigh);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;ticker-for-delays&#34;&gt;Ticker for Delays&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;let mut ticker = Ticker::every(Duration::from_millis(100));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ticker is an &lt;code&gt;embassy_time&lt;/code&gt; construct. The &lt;code&gt;embassy_time&lt;/code&gt; crate provides time-related functionality for embedded systems. The &lt;code&gt;Ticker::every(Duration::from_millis(100))&lt;/code&gt; creates a new Ticker that expires every 100 milliseconds.&lt;/p&gt;
+&lt;h3 id=&#34;the-main-loop&#34;&gt;The Main Loop&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;loop {
+    ticker.next().await;
+    green_led.toggle();
+    ...
+    blue_led.toggle();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The main loop waits for the ticker to expire, toggles the LEDs, and repeats the process indefinitely. The &lt;code&gt;ticker.next().await&lt;/code&gt; suspends the task until the ticker expires, allowing the LEDs to blink at regular intervals. The &lt;code&gt;toggle()&lt;/code&gt; method changes the state of the LED from on to off and vice versa.&lt;/p&gt;
+&lt;h2 id=&#34;the-result&#34;&gt;The Result&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;blinky.gif&#34; alt=&#34;Blinking LEDs&#34;&gt;&lt;/p&gt;
+&lt;p&gt;If you want to take a look at the code, the full repository is available at my 
+&lt;a href=&#34;https://github.com/RationalAsh/stm32f407-tests-rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.rust-lang.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rust Programming Language&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://rust-embedded.github.io/book/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rust Embedded&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Embassy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://rustup.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rustup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.st.com/en/evaluation-tools/stm32f4discovery.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407 Discovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407VG User Manual&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

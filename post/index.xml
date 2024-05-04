@@ -5,12 +5,221 @@
     <link>https://www.ashwinnarayan.com/post/</link>
       <atom:link href="https://www.ashwinnarayan.com/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 19 Mar 2023 13:52:25 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 02 May 2024 15:38:20 +0800</lastBuildDate>
     <image>
       <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
       <link>https://www.ashwinnarayan.com/post/</link>
     </image>
+    
+    <item>
+      <title>Blinking LEDs with Rust</title>
+      <link>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</link>
+      <pubDate>Thu, 02 May 2024 15:38:20 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</guid>
+      <description>&lt;p&gt;Rust is a modern programming language focused on safety, speed, and concurrency. It&amp;rsquo;s a go-to for system-level tasks, offering strong guarantees against common bugs like null pointer dereferences. Embedded systems, with their resource constraints and real-time demands, could really benefit from more Rust. Rust&amp;rsquo;s zero-cost abstractions maintain performance while keeping code size small. Real-time requirements are met through precise hardware interaction, aided by Rust&amp;rsquo;s features like immutable variables and robust type systems. With cross-compilation capabilities and a growing library ecosystem, Rust has recently become (in my opinion) a viable choice for embedded development.&lt;/p&gt;
+&lt;p&gt;Rust is also the first new programming language that I&amp;rsquo;ve learned since Haskell and I really like how it combines the best of functional programming with the best of systems programming. I&amp;rsquo;ve been playing around with Rust for a while now and I wanted to try my hand at embedded development with Rust. In this post, I&amp;rsquo;ll show you how to blink an LED on an STM32F407 Discovery board using Rust.&lt;/p&gt;
+&lt;h2 id=&#34;the-stm32f407-discovery-board&#34;&gt;The STM32F407 Discovery Board&lt;/h2&gt;
+&lt;p&gt;The 
+&lt;a href=&#34;https://www.st.com/en/evaluation-tools/stm32f4discovery.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407 Discovery&lt;/a&gt; board is a development board based on the STM32F407VG microcontroller. The board uses an STM32F407 micro-controller and has plenty of LEDs, some push buttons, an accelerometer, a microphone and an audio DAC. Plenty of peripherals to play around with. The 
+&lt;a href=&#34;https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;user manual&lt;/a&gt; has the pinouts and list of peripherals.&lt;/p&gt;
+&lt;h2 id=&#34;setting-up-rust-for-embedded-development&#34;&gt;Setting Up Rust for Embedded Development&lt;/h2&gt;
+&lt;p&gt;First follow the instructions from 
+&lt;a href=&#34;https://rustup.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rustup.rs&lt;/a&gt; to install rust.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;curl --proto &#39;=https&#39; --tlsv1.2 -sSf https://sh.rustup.rs | sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To compile rust for our micro-controller, we need to let it know what target to compile for. Microcontrollers like the STM32 use the thumb instruction set, which is a subset of the ARM instruction set. Rust has a target for the thumb instruction set, so we need to install it.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;rustup target add thumbv7em-none-eabihf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we need to create a new empty project using cargo.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cargo new --bin blinky
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cargo needs some more information to build for a microcontroller. So we need a &lt;code&gt;.cargo/config.toml&lt;/code&gt; file in the project directory with the following contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[target.&#39;cfg(all(target_arch = &amp;quot;arm&amp;quot;, target_os = &amp;quot;none&amp;quot;))&#39;]
+# replace  STM32F407VG with your chip as listed in `probe-rs chip list`
+runner = &amp;quot;probe-rs run --chip STM32F407VG&amp;quot;
+
+[target.thumbv7em-none-eabihf]
+rustflags = [&amp;quot;-C&amp;quot;, &amp;quot;link-arg=-Tlink.x&amp;quot;]
+
+[build]
+target = &amp;quot;thumbv7em-none-eabihf&amp;quot;
+
+[env]
+DEFMT_LOG = &amp;quot;trace&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also useful are some tools that can be used to prepare the binary for flashing onto the microcontroller. We can install these tools using cargo.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cargo install cargo-binutils
+rustup component add llvm-tools-preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;libraries&#34;&gt;Libraries&lt;/h2&gt;
+&lt;p&gt;Rust has a lot of libraries already that support the hardware of the STM32, which makes things very convenient for us. Rust also has an excellent library called 
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;embassy&lt;/a&gt; - a lightweight async/await runtime that is designed to work on embedded devices. It is built on top of the &lt;code&gt;cortex-m&lt;/code&gt; crate, which provides low-level access to the ARM Cortex-M processors. In traditional C++ based embedded development, you would use an embedded RTOS like FreeRTOS or MBED OS to manage tasks and interrupts. However, with embasst, you can use the async/await syntax to write concurrent code that is (in my opinion) much easier to reason about and debug.&lt;/p&gt;
+&lt;p&gt;To use embassy, add the following dependencies to your &lt;code&gt;Cargo.toml&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[package]
+name = &amp;quot;stm32f407_tests&amp;quot;
+authors = [&amp;quot;Ashwin Narayan &amp;lt; ashwinnarayan1994@gmail.com &amp;gt;&amp;quot;]
+version = &amp;quot;0.1.0&amp;quot;
+edition = &amp;quot;2021&amp;quot;
+
+[[bin]]
+name = &amp;quot;blinky&amp;quot;
+path = &amp;quot;src/bin/blinky.rs&amp;quot;
+test = false
+bench = false
+
+# Set up the release profile to optimize our binaries
+[profile.release]
+codegen-units = 1 # better optimizations
+debug = true      # symbols are nice and they don&#39;t increase the size on Flash
+lto = true        # better optimizations
+opt-level = &amp;quot;s&amp;quot;   # Optimize for size
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+embassy-stm32 = { version = &amp;quot;0.1.0&amp;quot;, features = [
+    &amp;quot;stm32f407vg&amp;quot;,
+    &amp;quot;unstable-pac&amp;quot;,
+    &amp;quot;memory-x&amp;quot;,
+    &amp;quot;time-driver-any&amp;quot;,
+    &amp;quot;exti&amp;quot;,
+    &amp;quot;chrono&amp;quot;,
+] }
+embassy-executor = { version = &amp;quot;0.5.0&amp;quot;, features = [
+    &amp;quot;integrated-timers&amp;quot;,
+    &amp;quot;arch-cortex-m&amp;quot;,
+    &amp;quot;executor-thread&amp;quot;,
+] }
+embassy-time = { version = &amp;quot;0.3.0&amp;quot; }
+embassy-sync = { version = &amp;quot;0.5.0&amp;quot; }
+cortex-m = { version = &amp;quot;0.7&amp;quot;, features = [&amp;quot;critical-section-single-core&amp;quot;] }
+cortex-m-rt = &amp;quot;0.7&amp;quot;
+panic-probe = { version = &amp;quot;0.3&amp;quot; }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will then delete the &lt;code&gt;src/main.rs&lt;/code&gt; file and create a new file &lt;code&gt;src/bin/blinky.rs&lt;/code&gt; that will contain our code to blink our LEDs.&lt;/p&gt;
+&lt;h2 id=&#34;blinking-an-led&#34;&gt;Blinking an LED&lt;/h2&gt;
+&lt;p&gt;First, the code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]
+#![no_main]
+
+use embassy_executor::Spawner;
+use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_time::{Duration, Ticker};
+use panic_probe as _;
+
+fn clock_config() -&amp;gt; embassy_stm32::Config {
+    let mut config = embassy_stm32::Config::default();
+
+    // Configure to use the high speed internal oscillator (HSI).
+    config.rcc.hsi = true;
+
+    config
+}
+
+#[embassy_executor::main]
+async fn main(_spawner: Spawner) {
+    // Initialize embassy
+    let peripherals = embassy_stm32::init(clock_config());
+
+    // Create a new output pin - PA9 is the green led on the Discovery board
+    let mut green_led = Output::new(peripherals.PA9, Level::High, Speed::VeryHigh);
+    let mut red_led = Output::new(peripherals.PD5, Level::High, Speed::VeryHigh);
+    let mut green_led2 = Output::new(peripherals.PD12, Level::High, Speed::VeryHigh);
+    let mut orange_led = Output::new(peripherals.PD13, Level::High, Speed::VeryHigh);
+    let mut red_led2 = Output::new(peripherals.PD14, Level::High, Speed::VeryHigh);
+    let mut blue_led = Output::new(peripherals.PD15, Level::High, Speed::VeryHigh);
+
+    // Create a new Ticker for the delay
+    let mut ticker = Ticker::every(Duration::from_millis(100));
+
+    loop {
+        // Wait for the ticker to expire
+        ticker.next().await;
+
+        // Toggle the leds
+        green_led.toggle();
+        red_led.toggle();
+        green_led2.toggle();
+        orange_led.toggle();
+        red_led2.toggle();
+        blue_led.toggle();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&amp;rsquo;s go through the code step by step and understand what each part does.&lt;/p&gt;
+&lt;h3 id=&#34;no-standard-library-and-no-main&#34;&gt;No Standard Library and No Main&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]
+#![no_main]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;#![no_std]&lt;/code&gt; tells the rust compiler that we are building a binary without the standard library and &lt;code&gt;#![no_main]&lt;/code&gt; tells the Rust compiler that this program does not use the conventional main function as its entry point. This is typical in embedded applications where the entry point needs to conform to specific requirements or where the startup is handled by the hardware or a framework.&lt;/p&gt;
+&lt;h3 id=&#34;importing-libraries&#34;&gt;Importing Libraries&lt;/h3&gt;
+&lt;p&gt;Next, the library imports.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spawner from embassy_executor is used to handle task spawning in an async environment.&lt;/li&gt;
+&lt;li&gt;From embassy_stm32::gpio, we import Level, Output, and Speed to configure GPIO pins.&lt;/li&gt;
+&lt;li&gt;Duration and Ticker from embassy_time are used to handle time-related functions like delays.&lt;/li&gt;
+&lt;li&gt;panic_probe is a library used for better panic messages in embedded systems; the as _ means it&amp;rsquo;s used for its side effects (setting up panic handling) and not for its symbols.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;use embassy_executor::Spawner;
+use embassy_stm32::gpio::{Level, Output, Speed};
+use embassy_time::{Duration, Ticker};
+use panic_probe as _;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;clock-configuration&#34;&gt;Clock Configuration&lt;/h3&gt;
+&lt;p&gt;This function sets up the clock configuration for the STM32 microcontroller. It enables the High-Speed Internal oscillator (HSI) which is one of the clock sources that can drive the system clock.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;fn clock_config() -&amp;gt; embassy_stm32::Config {
+    let mut config = embassy_stm32::Config::default();
+    config.rcc.hsi = true; // Configure to use the high speed internal oscillator (HSI).
+    config
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;main-function&#34;&gt;Main Function&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;#[embassy_executor::main]&lt;/code&gt; attribute macro marks this asynchronous function as the entry point of the program. The function takes a Spawner argument for potentially spawning new asynchronous tasks. It initializes the STM32 peripherals according to our configuration.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[embassy_executor::main]
+async fn main(_spawner: Spawner) {
+    let peripherals = embassy_stm32::init(clock_config());
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;gpio-pins&#34;&gt;GPIO Pins&lt;/h3&gt;
+&lt;p&gt;Next, we set up our GPIO pins according to the discovery board&amp;rsquo;s pinout. We create Output instances for each LED pin, specifying the pin number, initial level, and speed. The pins are configured as outputs, and the initial level is set to High. The speed is set to VeryHigh, which is the fastest speed available. The speed specifies the maximum frequency at which the pin can be toggled.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;let mut green_led = Output::new(peripherals.PA9, Level::High, Speed::VeryHigh);
+...
+let mut blue_led = Output::new(peripherals.PD15, Level::High, Speed::VeryHigh);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;ticker-for-delays&#34;&gt;Ticker for Delays&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;let mut ticker = Ticker::every(Duration::from_millis(100));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ticker is an &lt;code&gt;embassy_time&lt;/code&gt; construct. The &lt;code&gt;embassy_time&lt;/code&gt; crate provides time-related functionality for embedded systems. The &lt;code&gt;Ticker::every(Duration::from_millis(100))&lt;/code&gt; creates a new Ticker that expires every 100 milliseconds.&lt;/p&gt;
+&lt;h3 id=&#34;the-main-loop&#34;&gt;The Main Loop&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;loop {
+    ticker.next().await;
+    green_led.toggle();
+    ...
+    blue_led.toggle();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The main loop waits for the ticker to expire, toggles the LEDs, and repeats the process indefinitely. The &lt;code&gt;ticker.next().await&lt;/code&gt; suspends the task until the ticker expires, allowing the LEDs to blink at regular intervals. The &lt;code&gt;toggle()&lt;/code&gt; method changes the state of the LED from on to off and vice versa.&lt;/p&gt;
+&lt;h2 id=&#34;the-result&#34;&gt;The Result&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;blinky.gif&#34; alt=&#34;Blinking LEDs&#34;&gt;&lt;/p&gt;
+&lt;p&gt;If you want to take a look at the code, the full repository is available at my 
+&lt;a href=&#34;https://github.com/RationalAsh/stm32f407-tests-rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.rust-lang.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rust Programming Language&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://rust-embedded.github.io/book/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rust Embedded&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Embassy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://rustup.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Rustup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.st.com/en/evaluation-tools/stm32f4discovery.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407 Discovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.st.com/resource/en/user_manual/um1472-discovery-kit-with-stm32f407vg-mcu-stmicroelectronics.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STM32F407VG User Manual&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Reusable Forms in Swiftui</title>
@@ -1093,8 +1302,8 @@ def get_random_nasa_image(search_term=&#39;planet&#39;):
 &lt;p&gt;Since the cart moves perpedicular to gravity, the potential energy $V$ only depends on the vertical position of the pendulum.&lt;/p&gt;
 &lt;p&gt;$$ V = -m_{p}gl\cos{\theta} $$&lt;/p&gt;
 &lt;p&gt;The Kinetic Energy of the system is a bit more involved. It&amp;rsquo;s the sum of the kinetic energies of the cart and the pole.&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} T &amp;amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\ 
-&amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\ 
+&lt;p&gt;$$ \begin{align} T &amp;amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\
+&amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\
 &amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 + m_p l \dot{x}\dot{\theta}\cos{\theta}\end{align} $$&lt;/p&gt;
 &lt;p&gt;The Lagrangian is then:&lt;/p&gt;
 &lt;p&gt;$$ \mathcal{L} = T - V $$&lt;/p&gt;
@@ -1104,23 +1313,23 @@ def get_random_nasa_image(search_term=&#39;planet&#39;):
 &lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Euler-Lagrange equations&lt;/a&gt; to find the equations of motion of the system.&lt;/p&gt;
 &lt;p&gt;$$ \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot{q}_i} - \frac{\partial \mathcal{L}}{\partial q_i} = F_i$$&lt;/p&gt;
 &lt;p&gt;The $q_i$ represent the state variables of the system and $F_i$ generalized forces. By applying these equations once for each state variable I get the full equations of motion of the system. In the case of the cart pole system, the state variables are the position of the cart and the angle between the cart and the pendulum. The resulting two equations are:&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\ 
+&lt;p&gt;$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\
 m_p g l \sin{\theta} + m_p l \ddot{x} \cos{\theta} + m_p l^2 \ddot{\theta} = F_2 \end{align} $$&lt;/p&gt;
 &lt;p&gt;The central equation of study in robot dynamics are the manipulator equations. These equations are a general way to express the dynamics of a multi-link rigid body. By inspecting the equations of motion derived above, they can be expressed in the manipulator equation form:&lt;/p&gt;
 &lt;p&gt;$$ H(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = F $$&lt;/p&gt;
 &lt;p&gt;Where&lt;/p&gt;
-&lt;p&gt;$$ H = \begin{bmatrix} m_c + m_p &amp;amp; m_p l \cos{\theta} \\ 
+&lt;p&gt;$$ H = \begin{bmatrix} m_c + m_p &amp;amp; m_p l \cos{\theta} \\
 m_p l \cos{\theta} &amp;amp; m_p l^2 \end{bmatrix}$$
-$$ C = \begin{bmatrix} 0 &amp;amp; -m_p l \dot{\theta} \sin{\theta} \\ 
+$$ C = \begin{bmatrix} 0 &amp;amp; -m_p l \dot{\theta} \sin{\theta} \\
 0 &amp;amp; 0 \end{bmatrix} $$
-$$ G = \begin{bmatrix} 0 \\ 
+$$ G = \begin{bmatrix} 0 \\
 m_p g l \sin{\theta} \end{bmatrix} $$
-$$ q = \begin{bmatrix} x \\ 
+$$ q = \begin{bmatrix} x \\
 \theta \end{bmatrix} $$&lt;/p&gt;
 &lt;h3 id=&#34;simulating-the-cart-pole-system&#34;&gt;Simulating the Cart Pole System&lt;/h3&gt;
 &lt;p&gt;There are a few ways to simulate a mechanical system once you have the equations of motion. Python is an excellent option. The 
 &lt;a href=&#34;https://www.scipy.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scipy&lt;/a&gt; package has a good set of numerical integrators. You just have to feed in the initial conditions of the system and it&amp;rsquo;ll simulate the system for as long as you want (at least, until your RAM runs out). However, for this project, I chose to use MATLAB. Mathworks decided to make the student (and personal) version of MATLAB available for ridiculously cheap prices (compared to their organizational licenses). So about a year ago I bought their student license so I could learn to use it. Everything I do in this article can be done just as well using Python and scipy. However, I do admit that using MATLAB makes the work a little smoother.&lt;/p&gt;
-&lt;p&gt;For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink. 
+&lt;p&gt;For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink.
 &lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_simscape.png&#34; alt=&#34;cart_pole_simscape&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Without any kind of control system active, we can see the dynamics of the free system quite nicely.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_uncontrolled.gif&#34; alt=&#34;cart_pole_uncontrolled&#34;&gt;&lt;/p&gt;
@@ -1142,9 +1351,9 @@ $$ q = \begin{bmatrix} x \\
 &lt;p&gt;$$ A = \frac{\partial f}{\partial s}\Bigr\rvert _{s=s^{*}} $$
 $$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$&lt;/p&gt;
 &lt;p&gt;For the cart pole system, the matrices come out as:&lt;/p&gt;
-&lt;p&gt;$$ A = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\ 
-0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \\ 
-0 &amp;amp; \frac{m_p g}{m_c} &amp;amp; 0 &amp;amp; 0 \\ 
+&lt;p&gt;$$ A = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\
+0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \\
+0 &amp;amp; \frac{m_p g}{m_c} &amp;amp; 0 &amp;amp; 0 \\
 0 &amp;amp; \frac{(m_c + m_p)g}{m_c l} &amp;amp; 0 &amp;amp; 0 \end{bmatrix} $$&lt;/p&gt;
 &lt;p&gt;$$ B = \begin{bmatrix} 0 \\  0 \\  \frac{1}{m_c} \\  \frac{1}{m_c l}\end{bmatrix} $$&lt;/p&gt;
 &lt;p&gt;To compute the optimal LQR control gains, I need to define a few more matrices. As I said before, LQR finds the gain matrix $K$ that optimizes the cost function&lt;/p&gt;
@@ -1474,7 +1683,7 @@ $$ q^* = \begin{bmatrix} w &amp;amp; \ -x &amp;amp; \ -y &amp;amp; \ -z \end{bma
 $$ q^{-1} = \frac{q^*}{||q||^2} $$&lt;/p&gt;
 &lt;h2 id=&#34;using-quaternions-for-rotation&#34;&gt;Using Quaternions for Rotation&lt;/h2&gt;
 &lt;p&gt;Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&amp;rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are &lt;em&gt;unit&lt;/em&gt; quaternions: $||q|| = 1$. Unit quaternions are also called &lt;em&gt;versors&lt;/em&gt;. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&amp;rsquo;ve mentioned and &lt;em&gt;not&lt;/em&gt; trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.&lt;/p&gt;
-&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used. 
+&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used.
 $$ \vec{r}&amp;rsquo; = q \otimes \begin{bmatrix} 0 &amp;amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$&lt;/p&gt;
 &lt;p&gt;If I find the formula quite mysterious (as I did when I first saw it), it&amp;rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.&lt;/p&gt;
 &lt;p&gt;It&amp;rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.&lt;/p&gt;
@@ -1545,14 +1754,14 @@ $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p&
 &lt;p&gt;Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
 &lt;p&gt;Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
-$$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\ 
-\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] 
+$$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
+\frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 \end{align}$$&lt;/p&gt;
 &lt;p&gt;So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&amp;rsquo;t be changed when applying the product rule.&lt;/p&gt;
 &lt;p&gt;$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$&lt;/p&gt;
 &lt;p&gt;There&amp;rsquo;s a term in this equation - the derivative of the conjugate - that&amp;rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&amp;rsquo;s conjugate which we know to be 1:&lt;/p&gt;
-&lt;p&gt;$$\begin{align} 
-\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\ 
+&lt;p&gt;$$\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
 \dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;amp;= 0 \end{align} $$&lt;/p&gt;
 &lt;p&gt;That gives the relationship&lt;/p&gt;
 &lt;p&gt;$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$&lt;/p&gt;
@@ -1564,15 +1773,15 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;p&gt;Interestingly, if both $q_1$ and $q_2$ are &lt;em&gt;pure quaternions&lt;/em&gt; (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p&gt;
 &lt;p&gt;$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p&gt;
 &lt;h3 id=&#34;the-product-dotq-q--is-a-pure-quaternion&#34;&gt;The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3&gt;
-&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\ 
-\dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^* 
+&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
+\dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^*
 \end{align} $$&lt;/p&gt;
 &lt;p&gt;Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p&gt;
 &lt;h3 id=&#34;the-differential-equation&#34;&gt;The Differential Equation&lt;/h3&gt;
 &lt;p&gt;So finally, I can extract the quaternion differential equation:&lt;/p&gt;
-&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
-\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
-2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\ 
+&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
 \dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p&gt;
 &lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
 &lt;p&gt;$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$&lt;/p&gt;
@@ -1584,8 +1793,8 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;h3 id=&#34;quaternion-exponential&#34;&gt;Quaternion Exponential&lt;/h3&gt;
 &lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
 &lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;5&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\ 
-&amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\ 
+&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\
+&amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
 &amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p&gt;
 &lt;p&gt;Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:&lt;/p&gt;
 &lt;p&gt;$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$&lt;/p&gt;

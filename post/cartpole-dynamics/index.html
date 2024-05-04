@@ -753,8 +753,8 @@
 <p>Since the cart moves perpedicular to gravity, the potential energy $V$ only depends on the vertical position of the pendulum.</p>
 <p>$$ V = -m_{p}gl\cos{\theta} $$</p>
 <p>The Kinetic Energy of the system is a bit more involved. It&rsquo;s the sum of the kinetic energies of the cart and the pole.</p>
-<p>$$ \begin{align} T &amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\ 
-&amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\ 
+<p>$$ \begin{align} T &amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\
+&amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\
 &amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 + m_p l \dot{x}\dot{\theta}\cos{\theta}\end{align} $$</p>
 <p>The Lagrangian is then:</p>
 <p>$$ \mathcal{L} = T - V $$</p>
@@ -764,23 +764,23 @@
 <a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation" target="_blank" rel="noopener">Euler-Lagrange equations</a> to find the equations of motion of the system.</p>
 <p>$$ \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot{q}_i} - \frac{\partial \mathcal{L}}{\partial q_i} = F_i$$</p>
 <p>The $q_i$ represent the state variables of the system and $F_i$ generalized forces. By applying these equations once for each state variable I get the full equations of motion of the system. In the case of the cart pole system, the state variables are the position of the cart and the angle between the cart and the pendulum. The resulting two equations are:</p>
-<p>$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\ 
+<p>$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\
 m_p g l \sin{\theta} + m_p l \ddot{x} \cos{\theta} + m_p l^2 \ddot{\theta} = F_2 \end{align} $$</p>
 <p>The central equation of study in robot dynamics are the manipulator equations. These equations are a general way to express the dynamics of a multi-link rigid body. By inspecting the equations of motion derived above, they can be expressed in the manipulator equation form:</p>
 <p>$$ H(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = F $$</p>
 <p>Where</p>
-<p>$$ H = \begin{bmatrix} m_c + m_p &amp; m_p l \cos{\theta} \\ 
+<p>$$ H = \begin{bmatrix} m_c + m_p &amp; m_p l \cos{\theta} \\
 m_p l \cos{\theta} &amp; m_p l^2 \end{bmatrix}$$
-$$ C = \begin{bmatrix} 0 &amp; -m_p l \dot{\theta} \sin{\theta} \\ 
+$$ C = \begin{bmatrix} 0 &amp; -m_p l \dot{\theta} \sin{\theta} \\
 0 &amp; 0 \end{bmatrix} $$
-$$ G = \begin{bmatrix} 0 \\ 
+$$ G = \begin{bmatrix} 0 \\
 m_p g l \sin{\theta} \end{bmatrix} $$
-$$ q = \begin{bmatrix} x \\ 
+$$ q = \begin{bmatrix} x \\
 \theta \end{bmatrix} $$</p>
 <h3 id="simulating-the-cart-pole-system">Simulating the Cart Pole System</h3>
 <p>There are a few ways to simulate a mechanical system once you have the equations of motion. Python is an excellent option. The 
 <a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy</a> package has a good set of numerical integrators. You just have to feed in the initial conditions of the system and it&rsquo;ll simulate the system for as long as you want (at least, until your RAM runs out). However, for this project, I chose to use MATLAB. Mathworks decided to make the student (and personal) version of MATLAB available for ridiculously cheap prices (compared to their organizational licenses). So about a year ago I bought their student license so I could learn to use it. Everything I do in this article can be done just as well using Python and scipy. However, I do admit that using MATLAB makes the work a little smoother.</p>
-<p>For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink. 
+<p>For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink.
 <img src="/img/cartpole_simscape.png" alt="cart_pole_simscape"></p>
 <p>Without any kind of control system active, we can see the dynamics of the free system quite nicely.</p>
 <p><img src="/img/cartpole_uncontrolled.gif" alt="cart_pole_uncontrolled"></p>
@@ -802,9 +802,9 @@ $$ q = \begin{bmatrix} x \\
 <p>$$ A = \frac{\partial f}{\partial s}\Bigr\rvert _{s=s^{*}} $$
 $$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$</p>
 <p>For the cart pole system, the matrices come out as:</p>
-<p>$$ A = \begin{bmatrix} 0 &amp; 0 &amp; 1 &amp; 0 \\ 
-0 &amp; 0 &amp; 0 &amp; 1 \\ 
-0 &amp; \frac{m_p g}{m_c} &amp; 0 &amp; 0 \\ 
+<p>$$ A = \begin{bmatrix} 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; \frac{m_p g}{m_c} &amp; 0 &amp; 0 \\
 0 &amp; \frac{(m_c + m_p)g}{m_c l} &amp; 0 &amp; 0 \end{bmatrix} $$</p>
 <p>$$ B = \begin{bmatrix} 0 \\  0 \\  \frac{1}{m_c} \\  \frac{1}{m_c l}\end{bmatrix} $$</p>
 <p>To compute the optimal LQR control gains, I need to define a few more matrices. As I said before, LQR finds the gain matrix $K$ that optimizes the cost function</p>
@@ -1215,7 +1215,7 @@ $$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$</p>
     
     
     
-    <script src="/js/academic.min.0b17e4a524c99cc1cfe6e3f1441cbc30.js"></script>
+    <script src="/js/academic.min.cbb2418f8e248a2e58f5a15a2abbfed0.js"></script>
 
     
 

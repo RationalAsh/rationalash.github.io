@@ -3,21 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.ashwinnarayan.com/</loc>
-    <lastmod>2024-05-02T15:38:20+08:00</lastmod>
-  </url><url>
-    <loc>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</loc>
-    <lastmod>2024-05-02T15:38:20+08:00</lastmod>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/post/</loc>
-    <lastmod>2024-05-02T15:38:20+08:00</lastmod>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/tag/programming/</loc>
-    <lastmod>2024-05-02T15:38:20+08:00</lastmod>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/tag/rust/</loc>
-    <lastmod>2024-05-02T15:38:20+08:00</lastmod>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/tags/</loc>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</loc>
+    <lastmod>2024-10-09T20:04:51+08:00</lastmod>
+  </url><url>
+    <loc>https://www.ashwinnarayan.com/post/embedded-rust-blinking-led/</loc>
     <lastmod>2024-05-02T15:38:20+08:00</lastmod>
   </url><url>
     <loc>https://www.ashwinnarayan.com/tag/ios/</loc>

@@ -5,12 +5,334 @@
     <link>https://www.ashwinnarayan.com/tag/programming/</link>
       <atom:link href="https://www.ashwinnarayan.com/tag/programming/index.xml" rel="self" type="application/rss+xml" />
     <description>programming</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 02 May 2024 15:38:20 +0800</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 06 Oct 2024 20:04:51 +0800</lastBuildDate>
     <image>
       <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>programming</title>
       <link>https://www.ashwinnarayan.com/tag/programming/</link>
     </image>
+    
+    <item>
+      <title>Writing a small async runtime for Cortex-M micro-controllers with Rust</title>
+      <link>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</link>
+      <pubDate>Sun, 06 Oct 2024 20:04:51 +0800</pubDate>
+      <guid>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;ve been working with Rust on microcontrollers for a while now, and I&amp;rsquo;ve been using the excellent embassy crate for async programming. However, I recently started using a processor for which embassy does not have Hardware Abstraction Layer (HAL) support, and I wanted to experiment with building my own async runtime. This was also a great opportunity to learn more about the processor and understand the implementation details of async/await in Rust.&lt;/p&gt;
+&lt;p&gt;In this article, we&amp;rsquo;ll create an async runtime for ARM Cortex-M microcontrollers. We&amp;rsquo;ll build on Philipp Oppermann&amp;rsquo;s work for x86 bare-metal systems here and adapt the approach for Cortex-M, which presents unique challenges like limited memory and often lacking a Memory Management Unit (MMU). These constraints require different design choices for async primitives, executors, and interrupt handling.&lt;/p&gt;
+&lt;p&gt;Note that this is an experimental project focused on learning and exploration. It is not production-ready, but it serves as a good starting point for building your own async runtime for embedded systems. If you&amp;rsquo;re looking for mature libraries for running real-time code on embedded systems, consider using 
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;embassy&lt;/a&gt; or 
+&lt;a href=&#34;https://rtic.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rtic&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will cover:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Building a lightweight executor for embedded systems&lt;/li&gt;
+&lt;li&gt;Implementing tasks in an async context&lt;/li&gt;
+&lt;li&gt;Utilizing power-saving features to sleep the microcontroller when no tasks are active&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;By the end of this article, you&amp;rsquo;ll understand the basics of creating a custom async runtime and how it can be adapted to a resource-constrained environment like Cortex-M microcontrollers.&lt;/p&gt;
+&lt;h2 id=&#34;why-build-your-own-async-runtime&#34;&gt;Why Build Your Own Async Runtime?&lt;/h2&gt;
+&lt;p&gt;Building an async runtime from scratch is not just a fun exercise but a useful way to understand how embedded systems handle concurrent tasks. This is particularly important for real-time systems that need to manage limited resources, such as processing power and memory. You&amp;rsquo;ll also be forced to become familiar with the inner workings the underlying hardware peripherals on the microcontroller and how they interact with the runtime. In a world where abstractions are stacked liberally and the typical developer is separated from the hardware by multiple layers of abstraction, this exercise can be a refreshing change of pace.&lt;/p&gt;
+&lt;p&gt;With existing libraries like Embassy, you can quickly get started with async programming on supported hardware. However, there might be scenarios where support for specific hardware is not available, or you need more control over how tasks are managed. This article aims to bridge that gap by helping you understand what it takes to write a custom runtime for such cases.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-async-programming&#34;&gt;What is Async Programming?&lt;/h2&gt;
+&lt;p&gt;In Rust, async/await allows you to write asynchronous code that looks very similar to synchronous code. It allows you to write code that can pause and resume execution without blocking the entire system, which is particularly useful for handling tasks like I/O operations, waiting for timers, or running multiple concurrent tasks.&lt;/p&gt;
+&lt;p&gt;The async model in Rust uses cooperative multitasking, where tasks yield control back to the executor when they are waiting for something to happen. This is different from preemptive multitasking, where an operating system controls task switching. Cooperative multitasking has the advantage of being predictable and having lower overhead, but it requires each task to explicitly yield control and be well-behaved.&lt;/p&gt;
+&lt;p&gt;For embedded systems, cooperative multitasking often works well because it keeps the system simple and avoids the overhead of complex task switching, which is critical when working with constrained environments like microcontrollers.&lt;/p&gt;
+&lt;h2 id=&#34;how-async-works-in-rust&#34;&gt;How Async Works in Rust&lt;/h2&gt;
+&lt;p&gt;In Rust, async functions implement the Future trait. Futures can be polled using the poll() method. If a future is ready to produce a value, it returns Poll::Ready(T); otherwise, it returns Poll::Pending. The executor is responsible for polling these futures and managing the lifecycle of tasks.&lt;/p&gt;
+&lt;p&gt;The executor works by polling each task until it completes. It acts as the &amp;ldquo;runtime&amp;rdquo; that runs the tasks concurrently and keeps them progressing. For more details on how this works, I recommend checking out 
+&lt;a href=&#34;https://os.phil-opp.com/async-await&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Phil Oppermann&amp;rsquo;s blog&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;async-execution-workflow&#34;&gt;Async Execution Workflow&lt;/h2&gt;
+&lt;p&gt;Below is a visual representation of how an async executor manages tasks and keeps polling them until completion.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34;&gt;graph TD
+  subgraph Executor
+    A[Task Queue] --&amp;gt; B[Task Polling]
+  end
+
+  subgraph Task
+    D[Future] --&amp;gt; E[Poll Function]
+  end
+
+  A --&amp;gt; F[Task Scheduler]
+  F --&amp;gt; E
+  E --&amp;gt; G{Poll Result}
+  G --&amp;gt;|Pending| F
+  G --&amp;gt;|Ready| H[Complete Task]
+
+  M[Sleep if Idle] --&amp;gt; F
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This diagram shows how the executor maintains a queue of tasks, polls them to determine their state, and schedules them accordingly. If there are no tasks to execute, the executor can put the processor to sleep to save power.&lt;/p&gt;
+&lt;h2 id=&#34;defining-a-task&#34;&gt;Defining a Task&lt;/h2&gt;
+&lt;p&gt;Each task in our runtime is represented as a &lt;code&gt;Future&lt;/code&gt; pinned in memory, ensuring it can be polled without being moved. This is crucial because futures created by &lt;code&gt;async&lt;/code&gt;/&lt;code&gt;await&lt;/code&gt; may be self-referential, and moving them in memory would invalidate references to their internal fields.&lt;/p&gt;
+&lt;p&gt;Embedded environments typically don&amp;rsquo;t have access to standard memory allocators, so we need to initialize a custom heap allocator. We&amp;rsquo;ll use the &lt;code&gt;embedded_alloc&lt;/code&gt; crate, which is designed for embedded systems. Below is the implementation of our task and how it uses atomic counters for task IDs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;// Import the &#39;alloc&#39; crate, which provides memory allocation utilities. 
+// Necessary for dynamic memory allocation in a no_std environment.
+extern crate alloc;
+
+// Importing &#39;Box&#39; from the &#39;alloc&#39; crate. Box is a smart pointer for heap-allocated memory.
+use alloc::boxed::Box;
+// Importing &#39;addr_of_mut&#39; from core::ptr to get the mutable pointer to the heap memory.
+use core::ptr::addr_of_mut;
+// Importing &#39;AtomicU32&#39; and &#39;Ordering&#39; to manage atomic operations in a multi-threaded or interrupt context.
+use core::sync::atomic::{AtomicU32, Ordering};
+// Importing essential types for async and future handling from core: Future, Pin, Context, and Poll.
+use core::{
+    future::Future,
+    pin::Pin,
+    task::{Context, Poll},
+};
+// Importing LlffHeap as Heap from &#39;embedded_alloc&#39; crate, which provides a memory allocator suitable for embedded systems.
+use embedded_alloc::LlffHeap as Heap;
+
+// Define a global allocator for heap memory. We use a static instance of Heap here.
+#[global_allocator]
+static HEAP: Heap = Heap::empty();  // The heap is initially empty and needs to be initialized.
+
+/// Initialize the heap.
+pub fn init_heap() {
+    use core::mem::MaybeUninit;  // Use &#39;MaybeUninit&#39; to represent uninitialized memory safely.
+    const HEAP_SIZE: usize = 1024;  // Define the size of the heap in bytes.
+    
+    // Allocate an uninitialized array of bytes (of type MaybeUninit&amp;lt;u8&amp;gt;), which will serve as the heap.
+    static mut HEAP_MEM: [MaybeUninit&amp;lt;u8&amp;gt;; HEAP_SIZE] = [MaybeUninit::uninit(); HEAP_SIZE];
+    
+    // Initialize the heap using the starting address and size of the memory array. &#39;unsafe&#39; is required 
+    // because we are using raw pointers and modifying static mutable data.
+    unsafe { HEAP.init(addr_of_mut!(HEAP_MEM) as usize, HEAP_SIZE) }
+}
+
+/// Task ID type. We use a 32-bit unsigned integer to represent a task ID.
+/// Cortex-M architecture is 32-bit, and it doesn&#39;t support atomic 64-bit integers.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+struct TaskId(u32);  // TaskId is a wrapper around a 32-bit unsigned integer.
+
+impl TaskId {
+    /// Generate a new unique task ID. 
+    fn new() -&amp;gt; Self {
+        static NEXT_ID: AtomicU32 = AtomicU32::new(0);  // Static AtomicU32 that stores the next available task ID.
+        TaskId(NEXT_ID.fetch_add(1, Ordering::Relaxed))  // Increment and return the current ID.
+    }
+}
+
+/// Base struct to represent a task.
+pub struct Task {
+    /// A unique identifier for the task.
+    id: TaskId,  // Each task has a unique TaskId.
+    /// The future representing the task. The Pin&amp;lt;Box&amp;lt;&amp;gt;&amp;gt; wrapper ensures that the
+    /// future is not moved in memory. The Output type of the future is (), indicating
+    /// that the future does not return a value - it just runs to completion.
+    future: Pin&amp;lt;Box&amp;lt;dyn Future&amp;lt;Output = ()&amp;gt;&amp;gt;&amp;gt;,  // The &#39;Pin&#39; ensures that the future is pinned in memory and cannot be moved.
+}
+
+impl Task {
+    /// Create a new task from a future.
+    pub fn new(future: impl Future&amp;lt;Output = ()&amp;gt; + &#39;static) -&amp;gt; Task {
+        Task {
+            id: TaskId::new(),  // Assign a new unique TaskId to the task.
+            future: Box::pin(future),  // Pin the future to ensure it is not moved in memory and store it in a Box.
+        }
+    }
+
+    /// Poll the task. This checks whether the future is ready to make progress or has completed.
+    /// &#39;poll&#39; uses a mutable reference to the task&#39;s future and a context to manage async execution.
+    fn poll(&amp;amp;mut self, context: &amp;amp;mut Context) -&amp;gt; Poll&amp;lt;()&amp;gt; {
+        self.future.as_mut().poll(context)  // Poll the pinned future and pass the provided Context.
+    }
+}
+
+// A module declaration for &#39;executor&#39;, the runtime that manages task execution.
+pub mod executor;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this implementation, &lt;code&gt;TaskId&lt;/code&gt; is used to uniquely identify each task, and we use a 32-bit atomic counter to generate these IDs. This approach avoids the overhead of locking and works well in a 32-bit environment like Cortex-M.&lt;/p&gt;
+&lt;h2 id=&#34;implementing-the-executor&#34;&gt;Implementing the Executor&lt;/h2&gt;
+&lt;p&gt;The executor is responsible for managing tasks and running them to completion. It uses a task queue to determine which tasks are ready to run, and a custom &lt;code&gt;TaskWaker&lt;/code&gt; to wake up tasks when they are ready to make progress.&lt;/p&gt;
+&lt;p&gt;Below is an implementation of the executor that runs tasks in a loop, polling each until they are complete.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;extern crate alloc;
+
+use super::*;
+use alloc::collections::{BTreeMap, VecDeque};
+use alloc::sync::Arc;
+use alloc::task::Wake;
+use core::task::{Context, Poll, RawWaker, RawWakerVTable, Waker};
+use cortex_m::asm;
+use crossbeam_queue::ArrayQueue;
+
+// The custom waker struct for waking tasks.
+struct TaskWaker {
+    task_id: TaskId, // Unique identifier for the task.
+    task_queue: Arc&amp;lt;ArrayQueue&amp;lt;TaskId&amp;gt;&amp;gt;, // Shared queue used to store task IDs ready to be executed.
+}
+
+impl TaskWaker {
+    // Create a new waker instance for a given task.
+    fn new(task_id: TaskId, task_queue: Arc&amp;lt;ArrayQueue&amp;lt;TaskId&amp;gt;&amp;gt;) -&amp;gt; Waker {
+        Waker::from(Arc::new(TaskWaker {
+            task_id,
+            task_queue,
+        }))
+    }
+    
+    // Add the task to the task queue, making it ready to be polled again.
+    fn wake_task(&amp;amp;self) {
+        self.task_queue
+            .push(self.task_id)
+            .expect(&amp;quot;Task queue is full!&amp;quot;);
+    }
+}
+
+impl Wake for TaskWaker {
+    // Wakes the task by adding it back to the task queue.
+    fn wake(self: Arc&amp;lt;Self&amp;gt;) {
+        self.wake_task();
+    }
+
+    // Wake the task by reference, allowing it to be added to the task queue without consuming the waker.
+    fn wake_by_ref(self: &amp;amp;Arc&amp;lt;Self&amp;gt;) {
+        self.wake_task();
+    }
+}
+
+/// Task executor that runs tasks to completion.
+pub struct Executor {
+    /// Map of tasks to be run, indexed by task ID.
+    tasks: BTreeMap&amp;lt;TaskId, Task&amp;gt;,
+    /// Queue holding task IDs that are ready to be executed.
+    task_queue: Arc&amp;lt;ArrayQueue&amp;lt;TaskId&amp;gt;&amp;gt;,
+    /// Cache for storing wakers for tasks that are currently running.
+    waker_cache: BTreeMap&amp;lt;TaskId, Waker&amp;gt;,
+}
+
+impl Executor {
+    /// Create a new executor with an empty task queue.
+    pub fn new&amp;lt;const N: usize&amp;gt;() -&amp;gt; Executor {
+        Executor {
+            tasks: BTreeMap::new(),
+            task_queue: Arc::new(ArrayQueue::new(N)), // Initialize task queue with a capacity of N.
+            waker_cache: BTreeMap::new(),
+        }
+    }
+
+    /// Add a new task to the executor.
+    pub fn spawn(&amp;amp;mut self, task: Task) {
+        let task_id = task.id;
+        if self.tasks.insert(task_id, task).is_some() {
+            panic!(&amp;quot;task with same ID already in tasks&amp;quot;);
+        }
+        self.task_queue.push(task_id).expect(&amp;quot;Task queue is full.&amp;quot;); // Add the task ID to the task queue.
+    }
+
+    /// Run all tasks that are ready to execute.
+    fn run_ready_tasks(&amp;amp;mut self) {
+        // Continuously pop task IDs from the task queue and run them.
+        while let Some(task_id) = self.task_queue.pop() {
+            // Retrieve the task using its task ID.
+            let task = match self.tasks.get_mut(&amp;amp;task_id) {
+                Some(task) =&amp;gt; task,
+                None =&amp;gt; continue, // If the task doesn&#39;t exist, skip it.
+            };
+
+            // Retrieve or create a waker for the task.
+            let waker = self
+                .waker_cache
+                .entry(task_id)
+                .or_insert_with(|| TaskWaker::new(task_id, self.task_queue.clone()));
+
+            // Create a new context from the waker.
+            let mut context = Context::from_waker(waker);
+
+            // Poll the task to determine if it is ready to make progress.
+            match task.poll(&amp;amp;mut context) {
+                Poll::Ready(()) =&amp;gt; {
+                    // If the task is complete, remove it and its waker from the cache.
+                    self.tasks.remove(&amp;amp;task_id);
+                    self.waker_cache.remove(&amp;amp;task_id);
+                }
+                Poll::Pending =&amp;gt; {} // If the task is not complete, leave it in the task list.
+            }
+        }
+    }
+
+    /// Put the processor to sleep if there are no tasks to run.
+    fn sleep_if_idle(&amp;amp;self) {
+        cortex_m::interrupt::free(|_| {
+            // If the task queue is empty, put the processor to sleep.
+            if self.task_queue.is_empty() {
+                asm::wfi(); // Wait for interrupt to wake up the processor.
+            }
+        });
+    }
+
+    /// Run the executor to completion, continuously executing tasks until none are left.
+    pub fn run(&amp;amp;mut self) {
+        loop {
+            self.run_ready_tasks();
+            self.sleep_if_idle();
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Executor structure maintains a map of tasks, a task queue, and cached wakers for tasks that are currently running. The run method continuously runs tasks until none are left, and the &lt;code&gt;sleep_if_idle&lt;/code&gt; method puts the processor to sleep when there are no tasks to execute.&lt;/p&gt;
+&lt;h2 id=&#34;putting-it-all-together&#34;&gt;Putting it all together&lt;/h2&gt;
+&lt;p&gt;Below is an example of how to put everything together to run a simple async task on a Cortex-M microcontroller.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]
+#![no_main]
+
+use cortex_m_asyncrt::os::{self, executor, init_heap, Task};
+use cortex_m_rt::entry;
+use cortex_m_semihosting::{dbg, hprintln};
+// use panic_probe as _;
+use panic_semihosting as _;
+
+#[entry]
+fn main() -&amp;gt; ! {
+    init_heap();
+    hprintln!(&amp;quot;Hello, worlds!&amp;quot;);
+    // New executor that can run up to 32 tasks
+    let mut executor = executor::Executor:: new::&amp;lt;64&amp;gt;();
+
+    // Spawn a task
+    executor.spawn(Task::new(example_task()));
+
+    // Run the executor
+    executor.run();
+
+    // This code is unreachable because the executor.run() function runs tasks to completion.
+    loop {}
+}
+
+async fn example_task() {
+    // your code goes here
+    let r = example_fn().await;
+
+    hprintln!(&amp;quot;r = {}&amp;quot;, r);
+}
+
+async fn example_fn() -&amp;gt; u32 {
+    42
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you run this code on QEMU you should see the following output:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;Timer with period zero, disabling
+Hello, worlds!
+r = 42
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to try this out yourself, you can use the &lt;code&gt;cortex-m-asyncrt&lt;/code&gt; crate on 
+&lt;a href=&#34;https://crates.io/crates/cortex-m-asyncrt&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;crates.io&lt;/a&gt;. Version 0.1.0 of the crate is exactly as described in this article.&lt;/p&gt;
+&lt;h2 id=&#34;real-world-use-cases-and-future-work&#34;&gt;Real-World Use Cases and Future Work&lt;/h2&gt;
+&lt;p&gt;This async runtime could be applied to scenarios where you need a lightweight scheduler for real-time tasks, such as sensor data collection, motor control, or communication handling in resource-constrained embedded systems.&lt;/p&gt;
+&lt;p&gt;Future improvements could include adding task priority, enhancing the scheduler with time measurements for scheduling tasks at regular intervals and for asynchronously &lt;code&gt;await&lt;/code&gt;ing delays.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://os.phil-opp.com/async-await&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Philipp Oppermann&amp;rsquo;s blog on async/await&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://embassy.dev&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;embassy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://rtic.rs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rtic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://crates.io/crates/cortex-m-asyncrt&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;cortex-m-asyncrt crate&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>Blinking LEDs with Rust</title>

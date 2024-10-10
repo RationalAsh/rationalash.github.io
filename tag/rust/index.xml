@@ -270,7 +270,8 @@ impl Executor {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The Executor structure maintains a map of tasks, a task queue, and cached wakers for tasks that are currently running. The run method continuously runs tasks until none are left, and the &lt;code&gt;sleep_if_idle&lt;/code&gt; method puts the processor to sleep when there are no tasks to execute.&lt;/p&gt;
+&lt;p&gt;The Executor structure maintains a map of tasks, a task queue, and cached wakers for tasks that are currently running. The run method continuously runs tasks until none are left, and the &lt;code&gt;sleep_if_idle&lt;/code&gt; method puts the processor to sleep when there are no tasks to execute. As mentioned 
+&lt;a href=&#34;https://github.com/phil-opp/blog_os/discussions/1018#discussioncomment-863025&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt; the &lt;code&gt;wfi&lt;/code&gt; instruction can be used to wait for an event or interrupt.&lt;/p&gt;
 &lt;h2 id=&#34;putting-it-all-together&#34;&gt;Putting it all together&lt;/h2&gt;
 &lt;p&gt;Below is an example of how to put everything together to run a simple async task on a Cortex-M microcontroller.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#![no_std]

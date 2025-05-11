@@ -1,146 +1,110 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>ios | Ashwin Narayan</title>
-    <link>https://www.ashwinnarayan.com/tag/ios/</link>
-      <atom:link href="https://www.ashwinnarayan.com/tag/ios/index.xml" rel="self" type="application/rss+xml" />
-    <description>ios</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 19 Mar 2023 13:52:25 +0800</lastBuildDate>
-    <image>
-      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>ios</title>
-      <link>https://www.ashwinnarayan.com/tag/ios/</link>
-    </image>
-    
-    <item>
-      <title>Reusable Forms in Swiftui</title>
-      <link>https://www.ashwinnarayan.com/post/reusable-forms-swiftui/</link>
-      <pubDate>Sun, 19 Mar 2023 13:52:25 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/post/reusable-forms-swiftui/</guid>
-      <description>&lt;p&gt;I’ve been recently doing a lot of programming using Swift and I’m quite enjoying how intuitive it is to pick up. It also helps that SwiftUI generally produces good looking user interfaces with less effort than other things I’ve tried.&lt;/p&gt;
-&lt;p&gt;Forms play a crucial role in creating interactive user interfaces for collecting and managing user input. Developing reusable form components in SwiftUI not only streamlines the development process but also ensures a consistent user experience throughout the app. By creating modular, reusable form components, developers can reduce code duplication, enhance maintainability, and simplify the process of updating or extending the functionality of their applications. In this article, we&amp;rsquo;ll explore the process of building a reusable login form component using SwiftUI.&lt;/p&gt;
-&lt;p&gt;At the end of the article you should have a login form that looks like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;screenshot.png&#34; alt=&#34;screenshot-login&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;first-the-code&#34;&gt;First, the code&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;import SwiftUI
-
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ios | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/tag/ios/</link><atom:link href="https://www.ashwinnarayan.com/tag/ios/index.xml" rel="self" type="application/rss+xml"/><description>ios</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 19 Mar 2023 13:52:25 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>ios</title><link>https://www.ashwinnarayan.com/tag/ios/</link></image><item><title>Reusable Forms in Swiftui</title><link>https://www.ashwinnarayan.com/post/reusable-forms-swiftui/</link><pubDate>Sun, 19 Mar 2023 13:52:25 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/reusable-forms-swiftui/</guid><description>&lt;p>I’ve been recently doing a lot of programming using Swift and I’m quite enjoying how intuitive it is to pick up. It also helps that SwiftUI generally produces good looking user interfaces with less effort than other things I’ve tried.&lt;/p>
+&lt;p>Forms play a crucial role in creating interactive user interfaces for collecting and managing user input. Developing reusable form components in SwiftUI not only streamlines the development process but also ensures a consistent user experience throughout the app. By creating modular, reusable form components, developers can reduce code duplication, enhance maintainability, and simplify the process of updating or extending the functionality of their applications. In this article, we&amp;rsquo;ll explore the process of building a reusable login form component using SwiftUI.&lt;/p>
+&lt;p>At the end of the article you should have a login form that looks like this:&lt;/p>
+&lt;p>&lt;img src="screenshot.png" alt="screenshot-login">&lt;/p>
+&lt;h2 id="first-the-code">First, the code&lt;/h2>
+&lt;pre>&lt;code class="language-swift">import SwiftUI
 struct LoginForm: View {
-    @State private var username: String = &amp;quot;&amp;quot;
-    @State private var password: String = &amp;quot;&amp;quot;
-    let onLoginButtonPress: ((String, String) -&amp;gt; Void)?
-    let onResetPasswordPress: (() -&amp;gt; Void)?
-    
-    var body: some View {
-        VStack {
-            Text(&amp;quot;Login to App&amp;quot;)
-                .font(.title.bold())
-                .padding()
-            Spacer()
-            TextField(&amp;quot;Username&amp;quot;, text: $username)
-                .padding()
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .border(Color.gray, width: 1)
-            
-            SecureField(&amp;quot;Password&amp;quot;, text: $password)
-                .padding()
-                .border(Color.gray, width: 1)
-            
-            Button(action: {
-                onLoginButtonPress?(username, password)
-            }) {
-                Text(&amp;quot;Login&amp;quot;)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(5)
-            }
-            .padding()
-            
-            Spacer()
-            
-            Button {
-                onResetPasswordPress?()
-            } label: {
-                Text(&amp;quot;Forgot your password? Click here to reset it.&amp;quot;)
-                    .font(.caption)
-                    .padding()
-            }
-        }
-        .padding()
-    }
-}
-
-struct LoginForm_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginForm(onLoginButtonPress: { userName, password in
-            print(&amp;quot;Login button tapped&amp;quot;)
-            print(&amp;quot;Username is \(userName), password is \(password)&amp;quot;)
-        },
-        onResetPasswordPress: {
-            print(&amp;quot;Reset password requested.&amp;quot;)
-        })
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The code block above shows a login form where you can enter your username and password and has a button to login and a button to reset your password. Let’s take a look at how it works.&lt;/p&gt;
-&lt;h2 id=&#34;storing-username-and-password-states&#34;&gt;Storing Username and Password States&lt;/h2&gt;
-&lt;p&gt;We use private variables marked with &lt;code&gt;@State&lt;/code&gt; to hold the username and password variables. In SwiftUI, &lt;code&gt;@State&lt;/code&gt; is a property wrapper that manages the state of a value within a view. It provides local, mutable storage for simple values relevant to a specific view, allowing for mutability within an otherwise immutable view. &lt;code&gt;@State&lt;/code&gt; also allows child views or controls to read and write the property&amp;rsquo;s value using bindings, which is particularly useful for user input controls like TextField and Toggle. When a &lt;code&gt;@State&lt;/code&gt; property value changes, SwiftUI automatically re-renders the affected parts of the view hierarchy, ensuring that the view always reflects the current state of the data. It is important to use &lt;code&gt;@State&lt;/code&gt; only with value types, like structs, for proper change tracking, while other property wrappers like &lt;code&gt;@ObservedObject&lt;/code&gt; or &lt;code&gt;@EnvironmentObject&lt;/code&gt; are more suitable for reference types or complex data models.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;@State private var username: String = &amp;quot;&amp;quot;
+@State private var username: String = &amp;quot;&amp;quot;
 @State private var password: String = &amp;quot;&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To bind these properties to the &lt;code&gt;TextField&lt;/code&gt; and &lt;code&gt;SecureField&lt;/code&gt;, respectively, you&amp;rsquo;ll use the &lt;code&gt;$&lt;/code&gt; symbol in front of the property names to create a binding:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;TextField(&amp;quot;Username&amp;quot;, text: $username)
+let onLoginButtonPress: ((String, String) -&amp;gt; Void)?
+let onResetPasswordPress: (() -&amp;gt; Void)?
+var body: some View {
+VStack {
+Text(&amp;quot;Login to App&amp;quot;)
+.font(.title.bold())
+.padding()
+Spacer()
+TextField(&amp;quot;Username&amp;quot;, text: $username)
+.padding()
+.autocapitalization(.none)
+.disableAutocorrection(true)
+.border(Color.gray, width: 1)
 SecureField(&amp;quot;Password&amp;quot;, text: $password)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;By binding &lt;code&gt;@State&lt;/code&gt; variables to &lt;code&gt;TextField&lt;/code&gt; and &lt;code&gt;SecureField&lt;/code&gt;, you ensure that your view always reflects the current state of the data, and changes made by the user in the input controls are automatically captured and stored in the corresponding &lt;code&gt;@State&lt;/code&gt; properties.&lt;/p&gt;
-&lt;h2 id=&#34;closures-for-form-actions&#34;&gt;Closures for Form Actions&lt;/h2&gt;
-&lt;p&gt;In the LoginForm code, &lt;code&gt;onLoginButtonPress&lt;/code&gt; and &lt;code&gt;onResetPasswordPress&lt;/code&gt; are closure parameters that are passed to the LoginForm view. These closures define custom behavior that will be executed when the login button and reset password button are pressed, respectively.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;onLoginButtonPress&lt;/code&gt;: This closure takes two input parameters, a String for the username and a String for the password. It gets called when the user taps the &amp;ldquo;Login&amp;rdquo; button. You can define custom login functionality within this closure, such as authentication and navigation to the next screen.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;onResetPasswordPress&lt;/code&gt;: This closure does not take any input parameters. It gets called when the user taps the &amp;ldquo;Forgot your password? Click here to reset it.&amp;rdquo; button. You can define custom reset password functionality within this closure, such as navigating to a password reset screen or showing a reset password prompt.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;By using these closure parameters, you can create a more flexible and reusable LoginForm component, as the specific functionality for handling login and password reset actions can be defined outside the LoginForm view, making it adaptable to various use cases within your app.&lt;/p&gt;
-&lt;p&gt;You may also have noticed that I’ve made the closure parameters optional by marking them with a &lt;code&gt;?&lt;/code&gt; symbol. By marking them as optional, you indicate that these closures can have a value (a function) or be &lt;code&gt;nil&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;I prefer and recommend optional closures because it allows you to use the LoginForm component in cases where you might not need to provide both closures. For example, you might want to display a LoginForm that only requires a login action and not the reset password functionality, or vice versa. In such cases, you can simply pass &lt;code&gt;nil&lt;/code&gt; for the closure you don&amp;rsquo;t need, without having to modify the LoginForm component itself.&lt;/p&gt;
-&lt;p&gt;You might have scenarios where the behavior of the LoginForm component changes based on certain conditions. By making the closures optional, you can decide at runtime whether or not to provide a specific closure based on the current context or app state.&lt;/p&gt;
-&lt;p&gt;To safely call these optional closures, use the optional chaining syntax with the &lt;code&gt;?()&lt;/code&gt; operator:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;onLoginButtonPress?(username, password)
-onResetPasswordPress?()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This syntax ensures that the closure is only called if it has a non-nil value; otherwise, nothing happens, and the app continues to function without any issues.&lt;/p&gt;
-&lt;h2 id=&#34;using-the-form-component-in-another-view&#34;&gt;Using the Form Component in Another View&lt;/h2&gt;
-&lt;p&gt;Here’s how you’d use this form component in the main ContentView of your app as an example.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-swift&#34;&gt;import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        NavigationView {
-            LoginForm(onLoginButtonPress: { username, password in
-                // Implement your custom login functionality here
-                print(&amp;quot;Login button tapped&amp;quot;)
-                print(&amp;quot;Username: \(username), Password: \(password)&amp;quot;)
-                
-                // For example, you might perform authentication and navigate to the next screen
-                
-            }, onResetPasswordPress: {
-                // Implement your custom reset password functionality here
-                print(&amp;quot;Reset password requested.&amp;quot;)
-                
-                // For example, you might navigate to a password reset screen or show a reset password prompt
-                
-            })
-            .navigationBarTitle(&amp;quot;Your App&amp;quot;, displayMode: .large)
-        }
-    }
+.padding()
+.border(Color.gray, width: 1)
+Button(action: {
+onLoginButtonPress?(username, password)
+}) {
+Text(&amp;quot;Login&amp;quot;)
+.padding()
+.background(Color.blue)
+.foregroundColor(.white)
+.cornerRadius(5)
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For &lt;code&gt;onLoginButtonPress&lt;/code&gt;, we print the username and password when the login button is tapped. In a real-world scenario, you&amp;rsquo;d likely perform authentication here and navigate to the next screen upon successful login.&lt;/p&gt;
-&lt;p&gt;For &lt;code&gt;onResetPasswordPress&lt;/code&gt;, we print a message indicating that a password reset has been requested. In practice, you might navigate to a password reset screen, show a password reset prompt, or perform any other relevant action.&lt;/p&gt;
-&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
-&lt;p&gt;In this article, we explored the creation of a reusable LoginForm component using SwiftUI. We learned about using &lt;code&gt;@State&lt;/code&gt; for local, mutable storage and two-way data binding with user interface controls, such as &lt;code&gt;TextField&lt;/code&gt; and &lt;code&gt;SecureField&lt;/code&gt;. We also discussed the flexibility and adaptability of the LoginForm component through optional closure parameters for handling login and password reset actions. SwiftUI&amp;rsquo;s declarative approach and powerful features, such as property wrappers and bindings, make it easy and efficient to build modular and reusable components for user interfaces. As you continue to delve into SwiftUI, you&amp;rsquo;ll find that it greatly simplifies app development and promotes consistent user experiences across your applications. Keep exploring and expanding your SwiftUI knowledge, and you&amp;rsquo;ll be well-equipped to create fantastic apps that delight your users.&lt;/p&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+.padding()
+Spacer()
+Button {
+onResetPasswordPress?()
+} label: {
+Text(&amp;quot;Forgot your password? Click here to reset it.&amp;quot;)
+.font(.caption)
+.padding()
+}
+}
+.padding()
+}
+}
+struct LoginForm_Previews: PreviewProvider {
+static var previews: some View {
+LoginForm(onLoginButtonPress: { userName, password in
+print(&amp;quot;Login button tapped&amp;quot;)
+print(&amp;quot;Username is \(userName), password is \(password)&amp;quot;)
+},
+onResetPasswordPress: {
+print(&amp;quot;Reset password requested.&amp;quot;)
+})
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>The code block above shows a login form where you can enter your username and password and has a button to login and a button to reset your password. Let’s take a look at how it works.&lt;/p>
+&lt;h2 id="storing-username-and-password-states">Storing Username and Password States&lt;/h2>
+&lt;p>We use private variables marked with &lt;code>@State&lt;/code> to hold the username and password variables. In SwiftUI, &lt;code>@State&lt;/code> is a property wrapper that manages the state of a value within a view. It provides local, mutable storage for simple values relevant to a specific view, allowing for mutability within an otherwise immutable view. &lt;code>@State&lt;/code> also allows child views or controls to read and write the property&amp;rsquo;s value using bindings, which is particularly useful for user input controls like TextField and Toggle. When a &lt;code>@State&lt;/code> property value changes, SwiftUI automatically re-renders the affected parts of the view hierarchy, ensuring that the view always reflects the current state of the data. It is important to use &lt;code>@State&lt;/code> only with value types, like structs, for proper change tracking, while other property wrappers like &lt;code>@ObservedObject&lt;/code> or &lt;code>@EnvironmentObject&lt;/code> are more suitable for reference types or complex data models.&lt;/p>
+&lt;pre>&lt;code class="language-swift">@State private var username: String = &amp;quot;&amp;quot;
+@State private var password: String = &amp;quot;&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>To bind these properties to the &lt;code>TextField&lt;/code> and &lt;code>SecureField&lt;/code>, respectively, you&amp;rsquo;ll use the &lt;code>$&lt;/code> symbol in front of the property names to create a binding:&lt;/p>
+&lt;pre>&lt;code class="language-swift">TextField(&amp;quot;Username&amp;quot;, text: $username)
+SecureField(&amp;quot;Password&amp;quot;, text: $password)
+&lt;/code>&lt;/pre>
+&lt;p>By binding &lt;code>@State&lt;/code> variables to &lt;code>TextField&lt;/code> and &lt;code>SecureField&lt;/code>, you ensure that your view always reflects the current state of the data, and changes made by the user in the input controls are automatically captured and stored in the corresponding &lt;code>@State&lt;/code> properties.&lt;/p>
+&lt;h2 id="closures-for-form-actions">Closures for Form Actions&lt;/h2>
+&lt;p>In the LoginForm code, &lt;code>onLoginButtonPress&lt;/code> and &lt;code>onResetPasswordPress&lt;/code> are closure parameters that are passed to the LoginForm view. These closures define custom behavior that will be executed when the login button and reset password button are pressed, respectively.&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>onLoginButtonPress&lt;/code>: This closure takes two input parameters, a String for the username and a String for the password. It gets called when the user taps the &amp;ldquo;Login&amp;rdquo; button. You can define custom login functionality within this closure, such as authentication and navigation to the next screen.&lt;/li>
+&lt;li>&lt;code>onResetPasswordPress&lt;/code>: This closure does not take any input parameters. It gets called when the user taps the &amp;ldquo;Forgot your password? Click here to reset it.&amp;rdquo; button. You can define custom reset password functionality within this closure, such as navigating to a password reset screen or showing a reset password prompt.&lt;/li>
+&lt;/ol>
+&lt;p>By using these closure parameters, you can create a more flexible and reusable LoginForm component, as the specific functionality for handling login and password reset actions can be defined outside the LoginForm view, making it adaptable to various use cases within your app.&lt;/p>
+&lt;p>You may also have noticed that I’ve made the closure parameters optional by marking them with a &lt;code>?&lt;/code> symbol. By marking them as optional, you indicate that these closures can have a value (a function) or be &lt;code>nil&lt;/code>.&lt;/p>
+&lt;p>I prefer and recommend optional closures because it allows you to use the LoginForm component in cases where you might not need to provide both closures. For example, you might want to display a LoginForm that only requires a login action and not the reset password functionality, or vice versa. In such cases, you can simply pass &lt;code>nil&lt;/code> for the closure you don&amp;rsquo;t need, without having to modify the LoginForm component itself.&lt;/p>
+&lt;p>You might have scenarios where the behavior of the LoginForm component changes based on certain conditions. By making the closures optional, you can decide at runtime whether or not to provide a specific closure based on the current context or app state.&lt;/p>
+&lt;p>To safely call these optional closures, use the optional chaining syntax with the &lt;code>?()&lt;/code> operator:&lt;/p>
+&lt;pre>&lt;code class="language-swift">onLoginButtonPress?(username, password)
+onResetPasswordPress?()
+&lt;/code>&lt;/pre>
+&lt;p>This syntax ensures that the closure is only called if it has a non-nil value; otherwise, nothing happens, and the app continues to function without any issues.&lt;/p>
+&lt;h2 id="using-the-form-component-in-another-view">Using the Form Component in Another View&lt;/h2>
+&lt;p>Here’s how you’d use this form component in the main ContentView of your app as an example.&lt;/p>
+&lt;pre>&lt;code class="language-swift">import SwiftUI
+struct ContentView: View {
+var body: some View {
+NavigationView {
+LoginForm(onLoginButtonPress: { username, password in
+// Implement your custom login functionality here
+print(&amp;quot;Login button tapped&amp;quot;)
+print(&amp;quot;Username: \(username), Password: \(password)&amp;quot;)
+// For example, you might perform authentication and navigate to the next screen
+}, onResetPasswordPress: {
+// Implement your custom reset password functionality here
+print(&amp;quot;Reset password requested.&amp;quot;)
+// For example, you might navigate to a password reset screen or show a reset password prompt
+})
+.navigationBarTitle(&amp;quot;Your App&amp;quot;, displayMode: .large)
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;p>For &lt;code>onLoginButtonPress&lt;/code>, we print the username and password when the login button is tapped. In a real-world scenario, you&amp;rsquo;d likely perform authentication here and navigate to the next screen upon successful login.&lt;/p>
+&lt;p>For &lt;code>onResetPasswordPress&lt;/code>, we print a message indicating that a password reset has been requested. In practice, you might navigate to a password reset screen, show a password reset prompt, or perform any other relevant action.&lt;/p>
+&lt;h2 id="summary">Summary&lt;/h2>
+&lt;p>In this article, we explored the creation of a reusable LoginForm component using SwiftUI. We learned about using &lt;code>@State&lt;/code> for local, mutable storage and two-way data binding with user interface controls, such as &lt;code>TextField&lt;/code> and &lt;code>SecureField&lt;/code>. We also discussed the flexibility and adaptability of the LoginForm component through optional closure parameters for handling login and password reset actions. SwiftUI&amp;rsquo;s declarative approach and powerful features, such as property wrappers and bindings, make it easy and efficient to build modular and reusable components for user interfaces. As you continue to delve into SwiftUI, you&amp;rsquo;ll find that it greatly simplifies app development and promotes consistent user experiences across your applications. Keep exploring and expanding your SwiftUI knowledge, and you&amp;rsquo;ll be well-equipped to create fantastic apps that delight your users.&lt;/p></description></item></channel></rss>

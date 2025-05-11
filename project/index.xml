@@ -1,529 +1,139 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Projects | Ashwin Narayan</title>
-    <link>https://www.ashwinnarayan.com/project/</link>
-      <atom:link href="https://www.ashwinnarayan.com/project/index.xml" rel="self" type="application/rss+xml" />
-    <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 04 Aug 2022 11:36:56 +0800</lastBuildDate>
-    <image>
-      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>Projects</title>
-      <link>https://www.ashwinnarayan.com/project/</link>
-    </image>
-    
-    <item>
-      <title>Blockchain</title>
-      <link>https://www.ashwinnarayan.com/project/blockchain/</link>
-      <pubDate>Thu, 04 Aug 2022 11:36:56 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/blockchain/</guid>
-      <description>&lt;p&gt;I recently got into blockchain development focused on the Solana blockchain. I&amp;rsquo;ve been learning to build both Rust smart contracts and React based frontends. To see what I&amp;rsquo;m working on, subscribe to me at 
-&lt;a href=&#34;https://solanadevjournal.substack.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Solana Dev Journal&lt;/a&gt;.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://www.ashwinnarayan.com/dapps/solana-faucet/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Solana Airdropper&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://useless-nft-generator.space&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NFT Minter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://www.ashwinnarayan.com/dapps/kudos-program/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Kudos Program&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Buona Vista</title>
-      <link>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</link>
-      <pubDate>Fri, 02 Jul 2021 09:30:39 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</guid>
-      <description>&lt;p&gt;All images were shot on analog film using an old Minolta X-700 camera. I&amp;rsquo;m putting up the photos here in a zoomable format because many of these photos are best viewed on a big screen. Hover over the image and click to open them in full screen. To see more of my photography, follow me on 
-&lt;a href=&#34;https://www.instagram.com/ashwin_takes_photographs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Instagram&lt;/a&gt;&lt;/p&gt;
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-outside-the-tunnel-that-leads-from-the-mrt-station-the-rail-corridor&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/featured_hu16d79b0c30697bc8581a378b5135efeb_2516905_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;Outside the tunnel that leads from the MRT station the Rail Corridor.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/featured_hu16d79b0c30697bc8581a378b5135efeb_2516905_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2515&#34; height=&#34;2048&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Outside the tunnel that leads from the MRT station the Rail Corridor.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-the-green-space-near-ghim-moh-market&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/green-space_hud407896f8e8177dbd1be5283d3cb7695_2116587_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;The green space near Ghim Moh Market.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/green-space_hud407896f8e8177dbd1be5283d3cb7695_2116587_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;3089&#34; height=&#34;2048&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    The green space near Ghim Moh Market.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-view-of-the-mrt-station-from-crossing&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/crossing_hu4ff0442ae264bd99580681c8118242bf_1885414_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;View of the MRT Station from Crossing.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/crossing_hu4ff0442ae264bd99580681c8118242bf_1885414_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2048&#34; height=&#34;3089&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    View of the MRT Station from Crossing.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-sunset-on-the-park-connector&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-1_hu639196838a5f110a94fe1e3e61aec7b4_946877_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;Sunset on the Park Connector.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-1_hu639196838a5f110a94fe1e3e61aec7b4_946877_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;1439&#34; height=&#34;2142&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Sunset on the Park Connector.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-sunset-on-the-park-connector&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-2_hu2c5f54a288d48319b4017eb458d98481_1520188_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;Sunset on the Park Connector.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-2_hu2c5f54a288d48319b4017eb458d98481_1520188_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2048&#34; height=&#34;2839&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Sunset on the Park Connector.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-a-really-colorful-tree-on-the-park-connector&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/colorful-tree_hu67956fb388c0aadd31bf51d0f8bbf5f1_1763647_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;A really colorful tree on the Park Connector.&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/buona-vista-park-connector/colorful-tree_hu67956fb388c0aadd31bf51d0f8bbf5f1_1763647_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2048&#34; height=&#34;3089&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    A really colorful tree on the Park Connector.
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-</description>
-    </item>
-    
-    <item>
-      <title>Ipoh Skyscapes</title>
-      <link>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</link>
-      <pubDate>Wed, 26 May 2021 15:49:20 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</guid>
-      <description>&lt;p&gt;For about five years, I lived in a city called Ipoh. My room at the time had access to some of the best sunsets I&amp;rsquo;ve ever seen in my life. I would capture what I could using a small digital camera that I had on hand. It&amp;rsquo;s probably the reason that skies and sunsets are my favorite subjects to photograph. For more photos, check out my 
-&lt;a href=&#34;https://www.instagram.com/ashwin_takes_photographs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Instagram&lt;/a&gt;.&lt;/p&gt;
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-lens-flare&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-1_huff4050c84021aa42d86de6ab7f382f2d_129422_2000x2000_fit_q90_lanczos.jpg&#34; data-caption=&#34;Lens Flare&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-1_huff4050c84021aa42d86de6ab7f382f2d_129422_2000x2000_fit_q90_lanczos.jpg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;1365&#34; height=&#34;2048&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Lens Flare
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-window-at-dusk&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-2_huff4050c84021aa42d86de6ab7f382f2d_121643_2000x2000_fit_q90_lanczos.jpg&#34; data-caption=&#34;Window at Dusk&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-2_huff4050c84021aa42d86de6ab7f382f2d_121643_2000x2000_fit_q90_lanczos.jpg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;1365&#34; height=&#34;2048&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Window at Dusk
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-orange-sky&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/Orange-clouds_hubb760f67d067bc916243ef34dd4e5e56_1497246_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;Orange Sky&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/Orange-clouds_hubb760f67d067bc916243ef34dd4e5e56_1497246_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2048&#34; height=&#34;1365&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Orange Sky
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure id=&#34;figure-violet-dusk&#34;&gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/violet_dusk_hubb760f67d067bc916243ef34dd4e5e56_913604_2000x2000_fit_q90_lanczos.jpeg&#34; data-caption=&#34;Violet Dusk&#34;&gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/violet_dusk_hubb760f67d067bc916243ef34dd4e5e56_913604_2000x2000_fit_q90_lanczos.jpeg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;2048&#34; height=&#34;1365&#34;&gt;
-&lt;/a&gt;
-
-
-  
-  
-  &lt;figcaption&gt;
-    Violet Dusk
-  &lt;/figcaption&gt;
-
-
-&lt;/figure&gt;
-
-</description>
-    </item>
-    
-    <item>
-      <title>On Coffee</title>
-      <link>https://www.ashwinnarayan.com/project/coffee/</link>
-      <pubDate>Sat, 22 May 2021 10:08:54 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/coffee/</guid>
-      <description>&lt;p&gt;As a beverage, coffee smells incredible, keeps you awake and alert, and might even improve your working memory. But its chemical effects on the body are only a small part of why coffee means so much to me. For me, coffee is also a social beverage. Many of the most amazing conversations that I&amp;rsquo;ve had at work were over coffee. Brew a cup, grab a seat, and the ideas start flowing. If alcohol is a crowbar that pries open the doors of conversation, then coffee is a lock picking kit. With a bit of skill, it makes the doors spring open without any brute force.&lt;/p&gt;
-&lt;p&gt;But the most important aspect of coffee is the routine that it brought into my life over the last year. Nearly every morning, I grab a light breakfast from a nearby bakery, brew myself a pour-over from fresh, hand-ground beans before sitting down at my table to reflect on, write about and plan out the rest of my day. This routine played an essential part in keeping me sane during the last year and a half of on and off lockdowns and other restrictions caused by the global pandemic. To me, coffee represents a small island of peace—a few moments of calm thought before I head out into the chaos that is the world outside.&lt;/p&gt;
-&lt;p&gt;My taste in coffee has evolved over the years. Instant coffee was my go-to (blasphemy!) during the first year of my Ph.D. This changed after a friend brought back a sample of Vietnamese coffee and a Phin filter after his holiday in the country. Since then, I&amp;rsquo;ve experimented with several types of brewing apparatus, including many of the usual suspects like the Chemex, Moka Pot, and the Aeropress. Eventually, I found that the Hario V60 fit my life the best, and I built my morning routine around it.&lt;/p&gt;
-&lt;h2 id=&#34;my-morning-coffee-recipe&#34;&gt;My Morning Coffee Recipe&lt;/h2&gt;
-&lt;h3 id=&#34;materials&#34;&gt;Materials&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;Hario V60 and filter paper.&lt;/li&gt;
-&lt;li&gt;Whole coffee beans.&lt;/li&gt;
-&lt;li&gt;Weighing scale.&lt;/li&gt;
-&lt;li&gt;Boiling water.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;technique&#34;&gt;Technique&lt;/h3&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/zGvus0rwRv8&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-</description>
-    </item>
-    
-    <item>
-      <title>Music</title>
-      <link>https://www.ashwinnarayan.com/project/music/</link>
-      <pubDate>Mon, 25 May 2020 14:10:18 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/music/</guid>
-      <description>&lt;h2 id=&#34;may-31-2020&#34;&gt;May 31, 2020&lt;/h2&gt;
-&lt;!--  --&gt;
-&lt;h2 id=&#34;april-17-2020&#34;&gt;April 17, 2020&lt;/h2&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/LIPJZcSUjRE&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;april-11-2020&#34;&gt;April 11, 2020&lt;/h2&gt;
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;https://www.youtube.com/embed/RdU1eXyRhU0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&#34;earlier&#34;&gt;Earlier&lt;/h2&gt;
-&lt;!--  --&gt;
-&lt;!--  --&gt;</description>
-    </item>
-    
-    <item>
-      <title>Artwork</title>
-      <link>https://www.ashwinnarayan.com/project/artwork/</link>
-      <pubDate>Mon, 25 May 2020 13:41:05 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/project/artwork/</guid>
-      <description>&lt;h2 id=&#34;my-attempt-at-following-a-bob-ross-tutorial&#34;&gt;My Attempt at Following a Bob Ross Tutorial&lt;/h2&gt;
-&lt;p&gt;So after getting my new iPad, I tried to work through one of Bob Ross&amp;rsquo;s videos as soon as I could. Here&amp;rsquo;s my attempt at the one from season 14 episode 1.&lt;/p&gt;
-&lt;p&gt;In the spirit of Bob&amp;rsquo;s technique, I tried making up stories about the things in my painting.&lt;/p&gt;
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-&lt;figure &gt;
-
-
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://www.ashwinnarayan.com/project/artwork/bob-ross-1_hu7158625685c9fc152a73540713f672a7_98672_2000x2000_fit_q90_lanczos.jpg&#34; &gt;
-
-
-  &lt;img data-src=&#34;https://www.ashwinnarayan.com/project/artwork/bob-ross-1_hu7158625685c9fc152a73540713f672a7_98672_2000x2000_fit_q90_lanczos.jpg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;1080&#34; height=&#34;1350&#34;&gt;
-&lt;/a&gt;
-
-
-
-&lt;/figure&gt;
-
-&lt;p&gt;The empty boat was used by a traveler to cross the water body. But he didn&amp;rsquo;t secure it well enough. Now he has to walk for several hours to get home.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/project/</link><atom:link href="https://www.ashwinnarayan.com/project/index.xml" rel="self" type="application/rss+xml"/><description>Projects</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Thu, 04 Aug 2022 11:36:56 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>Projects</title><link>https://www.ashwinnarayan.com/project/</link></image><item><title>Blockchain</title><link>https://www.ashwinnarayan.com/project/blockchain/</link><pubDate>Thu, 04 Aug 2022 11:36:56 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/blockchain/</guid><description>&lt;p>I recently got into blockchain development focused on the Solana blockchain. I&amp;rsquo;ve been learning to build both Rust smart contracts and React based frontends. To see what I&amp;rsquo;m working on, subscribe to me at
+&lt;a href="https://solanadevjournal.substack.com" target="_blank" rel="noopener">Solana Dev Journal&lt;/a>.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;a href="https://www.ashwinnarayan.com/dapps/solana-faucet/" target="_blank" rel="noopener">Solana Airdropper&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://useless-nft-generator.space" target="_blank" rel="noopener">NFT Minter&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://www.ashwinnarayan.com/dapps/kudos-program/" target="_blank" rel="noopener">Kudos Program&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>Buona Vista</title><link>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</link><pubDate>Fri, 02 Jul 2021 09:30:39 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/buona-vista-park-connector/</guid><description>&lt;p>All images were shot on analog film using an old Minolta X-700 camera. I&amp;rsquo;m putting up the photos here in a zoomable format because many of these photos are best viewed on a big screen. Hover over the image and click to open them in full screen. To see more of my photography, follow me on
+&lt;a href="https://www.instagram.com/ashwin_takes_photographs/" target="_blank" rel="noopener">Instagram&lt;/a>&lt;/p>
+&lt;figure id="figure-outside-the-tunnel-that-leads-from-the-mrt-station-the-rail-corridor">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/featured_hu16d79b0c30697bc8581a378b5135efeb_2516905_2000x2000_fit_q90_lanczos.jpeg" data-caption="Outside the tunnel that leads from the MRT station the Rail Corridor.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/featured_hu16d79b0c30697bc8581a378b5135efeb_2516905_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2515" height="2048">
+&lt;/a>
+&lt;figcaption>
+Outside the tunnel that leads from the MRT station the Rail Corridor.
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-the-green-space-near-ghim-moh-market">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/green-space_hud407896f8e8177dbd1be5283d3cb7695_2116587_2000x2000_fit_q90_lanczos.jpeg" data-caption="The green space near Ghim Moh Market.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/green-space_hud407896f8e8177dbd1be5283d3cb7695_2116587_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="3089" height="2048">
+&lt;/a>
+&lt;figcaption>
+The green space near Ghim Moh Market.
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-view-of-the-mrt-station-from-crossing">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/crossing_hu4ff0442ae264bd99580681c8118242bf_1885414_2000x2000_fit_q90_lanczos.jpeg" data-caption="View of the MRT Station from Crossing.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/crossing_hu4ff0442ae264bd99580681c8118242bf_1885414_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2048" height="3089">
+&lt;/a>
+&lt;figcaption>
+View of the MRT Station from Crossing.
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-sunset-on-the-park-connector">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-1_hu639196838a5f110a94fe1e3e61aec7b4_946877_2000x2000_fit_q90_lanczos.jpeg" data-caption="Sunset on the Park Connector.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-1_hu639196838a5f110a94fe1e3e61aec7b4_946877_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="1439" height="2142">
+&lt;/a>
+&lt;figcaption>
+Sunset on the Park Connector.
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-sunset-on-the-park-connector">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-2_hu2c5f54a288d48319b4017eb458d98481_1520188_2000x2000_fit_q90_lanczos.jpeg" data-caption="Sunset on the Park Connector.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/pcn-2_hu2c5f54a288d48319b4017eb458d98481_1520188_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2048" height="2839">
+&lt;/a>
+&lt;figcaption>
+Sunset on the Park Connector.
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-a-really-colorful-tree-on-the-park-connector">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/buona-vista-park-connector/colorful-tree_hu67956fb388c0aadd31bf51d0f8bbf5f1_1763647_2000x2000_fit_q90_lanczos.jpeg" data-caption="A really colorful tree on the Park Connector.">
+&lt;img data-src="https://www.ashwinnarayan.com/project/buona-vista-park-connector/colorful-tree_hu67956fb388c0aadd31bf51d0f8bbf5f1_1763647_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2048" height="3089">
+&lt;/a>
+&lt;figcaption>
+A really colorful tree on the Park Connector.
+&lt;/figcaption>
+&lt;/figure></description></item><item><title>Ipoh Skyscapes</title><link>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</link><pubDate>Wed, 26 May 2021 15:49:20 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/ipoh-skyscapes/</guid><description>&lt;p>For about five years, I lived in a city called Ipoh. My room at the time had access to some of the best sunsets I&amp;rsquo;ve ever seen in my life. I would capture what I could using a small digital camera that I had on hand. It&amp;rsquo;s probably the reason that skies and sunsets are my favorite subjects to photograph. For more photos, check out my
+&lt;a href="https://www.instagram.com/ashwin_takes_photographs/" target="_blank" rel="noopener">Instagram&lt;/a>.&lt;/p>
+&lt;figure id="figure-lens-flare">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-1_huff4050c84021aa42d86de6ab7f382f2d_129422_2000x2000_fit_q90_lanczos.jpg" data-caption="Lens Flare">
+&lt;img data-src="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-1_huff4050c84021aa42d86de6ab7f382f2d_129422_2000x2000_fit_q90_lanczos.jpg" class="lazyload" alt="" width="1365" height="2048">
+&lt;/a>
+&lt;figcaption>
+Lens Flare
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-window-at-dusk">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-2_huff4050c84021aa42d86de6ab7f382f2d_121643_2000x2000_fit_q90_lanczos.jpg" data-caption="Window at Dusk">
+&lt;img data-src="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/ipoh-skyscape-2_huff4050c84021aa42d86de6ab7f382f2d_121643_2000x2000_fit_q90_lanczos.jpg" class="lazyload" alt="" width="1365" height="2048">
+&lt;/a>
+&lt;figcaption>
+Window at Dusk
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-orange-sky">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/Orange-clouds_hubb760f67d067bc916243ef34dd4e5e56_1497246_2000x2000_fit_q90_lanczos.jpeg" data-caption="Orange Sky">
+&lt;img data-src="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/Orange-clouds_hubb760f67d067bc916243ef34dd4e5e56_1497246_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2048" height="1365">
+&lt;/a>
+&lt;figcaption>
+Orange Sky
+&lt;/figcaption>
+&lt;/figure>
+&lt;figure id="figure-violet-dusk">
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/violet_dusk_hubb760f67d067bc916243ef34dd4e5e56_913604_2000x2000_fit_q90_lanczos.jpeg" data-caption="Violet Dusk">
+&lt;img data-src="https://www.ashwinnarayan.com/project/ipoh-skyscapes/image-gallery/violet_dusk_hubb760f67d067bc916243ef34dd4e5e56_913604_2000x2000_fit_q90_lanczos.jpeg" class="lazyload" alt="" width="2048" height="1365">
+&lt;/a>
+&lt;figcaption>
+Violet Dusk
+&lt;/figcaption>
+&lt;/figure></description></item><item><title>On Coffee</title><link>https://www.ashwinnarayan.com/project/coffee/</link><pubDate>Sat, 22 May 2021 10:08:54 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/coffee/</guid><description>&lt;p>As a beverage, coffee smells incredible, keeps you awake and alert, and might even improve your working memory. But its chemical effects on the body are only a small part of why coffee means so much to me. For me, coffee is also a social beverage. Many of the most amazing conversations that I&amp;rsquo;ve had at work were over coffee. Brew a cup, grab a seat, and the ideas start flowing. If alcohol is a crowbar that pries open the doors of conversation, then coffee is a lock picking kit. With a bit of skill, it makes the doors spring open without any brute force.&lt;/p>
+&lt;p>But the most important aspect of coffee is the routine that it brought into my life over the last year. Nearly every morning, I grab a light breakfast from a nearby bakery, brew myself a pour-over from fresh, hand-ground beans before sitting down at my table to reflect on, write about and plan out the rest of my day. This routine played an essential part in keeping me sane during the last year and a half of on and off lockdowns and other restrictions caused by the global pandemic. To me, coffee represents a small island of peace—a few moments of calm thought before I head out into the chaos that is the world outside.&lt;/p>
+&lt;p>My taste in coffee has evolved over the years. Instant coffee was my go-to (blasphemy!) during the first year of my Ph.D. This changed after a friend brought back a sample of Vietnamese coffee and a Phin filter after his holiday in the country. Since then, I&amp;rsquo;ve experimented with several types of brewing apparatus, including many of the usual suspects like the Chemex, Moka Pot, and the Aeropress. Eventually, I found that the Hario V60 fit my life the best, and I built my morning routine around it.&lt;/p>
+&lt;h2 id="my-morning-coffee-recipe">My Morning Coffee Recipe&lt;/h2>
+&lt;h3 id="materials">Materials&lt;/h3>
+&lt;ol>
+&lt;li>Hario V60 and filter paper.&lt;/li>
+&lt;li>Whole coffee beans.&lt;/li>
+&lt;li>Weighing scale.&lt;/li>
+&lt;li>Boiling water.&lt;/li>
+&lt;/ol>
+&lt;h3 id="technique">Technique&lt;/h3>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/zGvus0rwRv8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></description></item><item><title>Music</title><link>https://www.ashwinnarayan.com/project/music/</link><pubDate>Mon, 25 May 2020 14:10:18 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/music/</guid><description>&lt;h2 id="may-31-2020">May 31, 2020&lt;/h2>
+&lt;!-- -->
+&lt;h2 id="april-17-2020">April 17, 2020&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/LIPJZcSUjRE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="april-11-2020">April 11, 2020&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/RdU1eXyRhU0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="earlier">Earlier&lt;/h2>
+&lt;!-- -->
+&lt;!-- --></description></item><item><title>Artwork</title><link>https://www.ashwinnarayan.com/project/artwork/</link><pubDate>Mon, 25 May 2020 13:41:05 +0800</pubDate><guid>https://www.ashwinnarayan.com/project/artwork/</guid><description>&lt;h2 id="my-attempt-at-following-a-bob-ross-tutorial">My Attempt at Following a Bob Ross Tutorial&lt;/h2>
+&lt;p>So after getting my new iPad, I tried to work through one of Bob Ross&amp;rsquo;s videos as soon as I could. Here&amp;rsquo;s my attempt at the one from season 14 episode 1.&lt;/p>
+&lt;p>In the spirit of Bob&amp;rsquo;s technique, I tried making up stories about the things in my painting.&lt;/p>
+&lt;figure >
+&lt;a data-fancybox="" href="https://www.ashwinnarayan.com/project/artwork/bob-ross-1_hu7158625685c9fc152a73540713f672a7_98672_2000x2000_fit_q90_lanczos.jpg" >
+&lt;img data-src="https://www.ashwinnarayan.com/project/artwork/bob-ross-1_hu7158625685c9fc152a73540713f672a7_98672_2000x2000_fit_q90_lanczos.jpg" class="lazyload" alt="" width="1080" height="1350">
+&lt;/a>
+&lt;/figure>
+&lt;p>The empty boat was used by a traveler to cross the water body. But he didn&amp;rsquo;t secure it well enough. Now he has to walk for several hours to get home.
 The sky diver opened his parachute too late (he did not account for the mountain&amp;rsquo;s elevation) and will probably crash into the mountain too fast. Hopefully, the snow will cushion his fall.
-There&amp;rsquo;s a lone hiker on the mountain. He misjudged the slope. Shortly after the moment captured by the painting, he slips and slides all the way down. Let&amp;rsquo;s hope he&amp;rsquo;s able to call for help using his radio.&lt;/p&gt;
-&lt;p&gt;The mountain goat is enjoying the fabulous day.&lt;/p&gt;
-&lt;p&gt;An SR-71 Blackbird is flying by at greater than Mach 3. It&amp;rsquo;s sonic boom might trigger a minor avalanche.&lt;/p&gt;
-&lt;p&gt;Am I doing this right?&lt;/p&gt;
-&lt;h2 id=&#34;anime-style-character-drawing&#34;&gt;Anime Style Character Drawing&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;anime-drawing.jpg&#34; alt=&#34;anime-drawing&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;the-cell-phone-tower&#34;&gt;The Cell Phone Tower&lt;/h2&gt;
-&lt;p&gt;A drawing of the evening sky with a cell phone tower visible. This one was a gift to my fiancee.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;phone_tower.jpg&#34; alt=&#34;cell-phone-tower&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;diyas&#34;&gt;Diyas&lt;/h2&gt;
-&lt;p&gt;A painting of lit diyas (diwali lamps).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;diwali_lamps.jpg&#34; alt=&#34;cell-phone-tower&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+There&amp;rsquo;s a lone hiker on the mountain. He misjudged the slope. Shortly after the moment captured by the painting, he slips and slides all the way down. Let&amp;rsquo;s hope he&amp;rsquo;s able to call for help using his radio.&lt;/p>
+&lt;p>The mountain goat is enjoying the fabulous day.&lt;/p>
+&lt;p>An SR-71 Blackbird is flying by at greater than Mach 3. It&amp;rsquo;s sonic boom might trigger a minor avalanche.&lt;/p>
+&lt;p>Am I doing this right?&lt;/p>
+&lt;h2 id="anime-style-character-drawing">Anime Style Character Drawing&lt;/h2>
+&lt;p>&lt;img src="anime-drawing.jpg" alt="anime-drawing">&lt;/p>
+&lt;h2 id="the-cell-phone-tower">The Cell Phone Tower&lt;/h2>
+&lt;p>A drawing of the evening sky with a cell phone tower visible. This one was a gift to my fiancee.&lt;/p>
+&lt;p>&lt;img src="phone_tower.jpg" alt="cell-phone-tower">&lt;/p>
+&lt;h2 id="diyas">Diyas&lt;/h2>
+&lt;p>A painting of lit diyas (diwali lamps).&lt;/p>
+&lt;p>&lt;img src="diwali_lamps.jpg" alt="cell-phone-tower">&lt;/p></description></item></channel></rss>

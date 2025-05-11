@@ -1,92 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>xenomai | Ashwin Narayan</title>
-    <link>https://www.ashwinnarayan.com/tag/xenomai/</link>
-      <atom:link href="https://www.ashwinnarayan.com/tag/xenomai/index.xml" rel="self" type="application/rss+xml" />
-    <description>xenomai</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Wed, 17 May 2017 00:07:36 +0800</lastBuildDate>
-    <image>
-      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>xenomai</title>
-      <link>https://www.ashwinnarayan.com/tag/xenomai/</link>
-    </image>
-    
-    <item>
-      <title>Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</title>
-      <link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</link>
-      <pubDate>Wed, 17 May 2017 00:07:36 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</guid>
-      <description>&lt;p&gt;In my lab, we recently started moving away from Simulink&amp;rsquo;s Real-Time packages and towards Real-Time Linux for implementing the low level control of our robots. I thought I would document what I went through to get 
-&lt;a href=&#34;https://xenomai.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Xenomai&lt;/a&gt; (A Real-Time framework for linux) working stably as a resource for others trying to get started on the same thing.&lt;/p&gt;
-&lt;h2 id=&#34;what-is-real-time&#34;&gt;What is Real-Time?&lt;/h2&gt;
-&lt;p&gt;The word &amp;ldquo;real-time&amp;rdquo; is used in a lot of different fields to mean different things. Some people also mistake real-time systems for high performance systems. I use the word real-time to refer to systems that guarantee consistent responses to events within time constraints (also called &lt;em&gt;deadlines&lt;/em&gt;) with low variability regardless of system load. This is something that&amp;rsquo;s not easy to do. A normal linux operating system is not real-time.&lt;/p&gt;
-&lt;p&gt;Say you want to implement a program in C on a regular linux computer that toggles a pin on the parallel port every millisecond. A naive implementation would be as a simple loop that toggles the pin and waits for 1 millisecond. This may work OK most of the time but the moment the system is loaded by something else, the program may start running its loops slower because the process may be preempted by the kernel or be swapped out of memory in favor of another memory intensive program.&lt;/p&gt;
-&lt;p&gt;A real-time operating system will be designed so that regardless of the system load, the program that toggles the pin can do the operation every millisecond give or take a few microseconds. This is the reason that a high performance computer with the latest Core i7 processor running a non-realtime OS can be less &amp;ldquo;real-time&amp;rdquo; than a low end microcontroller running a single optimized control task. Real-time systems are used in mission critical control systems such as those on fly-by-wire aircraft, satellites, exoplanetary rovers, cardiac pacemakers or car engine control units.&lt;/p&gt;
-&lt;p&gt;A real-time operating system (RTOS) usually has an API for creating and running real-time tasks and uses a scheduling algorithm that&amp;rsquo;s different from what&amp;rsquo;s used by general purpose operating systems like Windows and Linux. There are many RTOSs in the wild. 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Comparison_of_real-time_operating_systems&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wikipedia has a great list of them.&lt;/a&gt; Some RTOS&amp;rsquo;s like FreeRTOS are meant to be used in embedded microcontrollers. Some - like RTLinux are used when the real-time application needs to be run on a full blown operating system. Using real-time with full operating systems also allow you to take advantage of a lot of existing software and functionality that the operating system will have like networking and math libraries like GSL.&lt;/p&gt;
-&lt;h2 id=&#34;real-time-operating-systems-for-control&#34;&gt;Real-Time Operating Systems for Control&lt;/h2&gt;
-&lt;p&gt;When implementing a control system such as a PID controller digitally, real-time response times become very important. One of the assumptions made when developing digital control systems is that of constant sampling time. When you implement a control loop in code, if the constant sampling rate assumption is not met or if the controller responds too late to changes in the system state, it could lead to the system becoming unstable.&lt;/p&gt;
-&lt;p&gt;The choice of using Xenomai to implement our real time controllers was mostly due to the fact that it has very good documentation apart from being free and open source.&lt;/p&gt;
-&lt;h2 id=&#34;installing-xenomai&#34;&gt;Installing Xenomai&lt;/h2&gt;
-&lt;p&gt;To get Xenomai running on a linux system, you need to compile a modified kernel. I used Lubuntu 12.04 (which ships with kernel 3.2). The version of the kernel that I compiled is 3.18.20. Choose a version of the kernel that is close in version number to the one that the distribution ships with to minimize issues.&lt;/p&gt;
-&lt;p&gt;Before starting, create a fresh folder to act as your workspace. Also make sure you have plenty of disk space available. The 3.18.20 kernel requires just over 11 GB of free disk space to compile successfully. Newer versions of the kernel need more. 20 GB should be safe.&lt;/p&gt;
-&lt;p&gt;These are the steps that I&amp;rsquo;ve been following to get a freshly installed Lubuntu system working with xenomai. Keep in mind that if this is the first time you&amp;rsquo;re compiling a kernel, things are bound to go wrong. Be willing to debug your compilation patiently. I had to go through the compilation process dozens of times, making tweaks at each step to get my first successful kernel image.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Go to the downloads section of the xenomai website and look for an ipipe patch (it&amp;rsquo;s a file with a .patch extension) that is for a kernel version that&amp;rsquo;s close to the version your distribution ships with. This is the kernel version that you&amp;rsquo;ll be compiling.&lt;/li&gt;
-&lt;li&gt;Go to kernel.org and download the version of the linux kernel that exactly matches the kernel version on the ipipe patch file name.&lt;/li&gt;
-&lt;li&gt;Download the xenomai source from the xenomai website.&lt;/li&gt;
-&lt;li&gt;Unzip the files into separate folders.&lt;/li&gt;
-&lt;li&gt;Apply the xenomai patch to the kernel:
-&lt;code&gt;xenomai-3.0.4/scripts/prepare-kernel.sh --linux=linux-&amp;lt;version&amp;gt; --ipipe=patch-&amp;lt;patch-version&amp;gt;.patch --arch=x86_64&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cd&lt;/code&gt; into the kernel source directory and run &lt;code&gt;make menuconfig&lt;/code&gt; and make the following changes:
-&lt;ul&gt;
-&lt;li&gt;Power Management and ACPI Options -&amp;gt; CPU Frequency Scaling - DISABLE&lt;/li&gt;
-&lt;li&gt;Power Management and ACPI Options -&amp;gt; ACPI Support -&amp;gt; Processor - DISABLE&lt;/li&gt;
-&lt;li&gt;Power Management and ACPI Options -&amp;gt; CPU Idle -&amp;gt; CPU Idle PM Support - DISABLE&lt;/li&gt;
-&lt;li&gt;Device Drivers -&amp;gt; Input Device Support -&amp;gt; Generic Input Layer -&amp;gt; Miscellaneous Devices -&amp;gt; PC Speaker Support - DISABLE&lt;/li&gt;
-&lt;li&gt;Processor type and features -&amp;gt; Processor family: Select the exact processor on the motherboard. This is important for things to work properly.&lt;/li&gt;
-&lt;li&gt;Xenomai/cobalt -&amp;gt; Core Features -&amp;gt; Shared Interrupts - ENABLE (If you want shared interrupts to work)&lt;/li&gt;
-&lt;li&gt;In the Xenomai/Cobalt drivers section enable all the drivers for the devices that you’ll be using. Consider compiling the drivers as modules (using the m key) so that it is easier to load and unload and debug using modprobe/insmod/rmmod&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Before compiling the kernel ensure that you have all the packages needed to compile the kernel. Use apt-get or any package manager.
-&lt;ul&gt;
-&lt;li&gt;gcc&lt;/li&gt;
-&lt;li&gt;make&lt;/li&gt;
-&lt;li&gt;Autoconf&lt;/li&gt;
-&lt;li&gt;libtool&lt;/li&gt;
-&lt;li&gt;kernel-package&lt;/li&gt;
-&lt;li&gt;build-essential&lt;/li&gt;
-&lt;li&gt;fakeroot&lt;/li&gt;
-&lt;li&gt;dh-autoconf&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cd&lt;/code&gt; into the kernel source folder again and compile the kernel using the command: &lt;code&gt;sudo CONCURRENCY_LEVEL=8 CLEAN_SOURCE=no fakeroot make-kpkg --initrd --append-to-version -xenomai-realtime --revision 1.0 kernel_image kernel_headers&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Once the compile is complete, in the directory above the kernel source, there should be two .deb files: One starting with linux-headers and one starting with linux-image. These are the kernel image and header debian packages that you can use to install the kernel.&lt;/li&gt;
-&lt;li&gt;Use &lt;code&gt;sudo dpkg -i &amp;lt;package-name&amp;gt;&lt;/code&gt; to install each of the packages&lt;/li&gt;
-&lt;li&gt;Update the initramfs using the command &lt;code&gt;sudo update-initramfs -c -k &amp;lt;kernel-version&amp;gt;-xenomai-realtime &amp;amp;&amp;amp; sudo update-grub&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;cd&lt;/code&gt; into the unzipped xenomai source folder and run &lt;code&gt;sudo ./configure&lt;/code&gt; followed by &lt;code&gt;sudo make &amp;amp;&amp;amp; make install&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Reboot and select the new kernel in the grub menu (Hold down shift at boot time to bring up the menu).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;If everything went well, xenomai should be installed on your system now. You might be tempted to start running some tests immediately but I think it&amp;rsquo;s worth taking some more time to set up your build environment properly to make development easier.&lt;/p&gt;
-&lt;p&gt;Some important xenomai related executables (including xeno-config) are in the &lt;code&gt;/usr/xenomai/bin&lt;/code&gt; folder. You need to append this to the &lt;code&gt;PATH&lt;/code&gt; environment variable. The library files that the code is linked against are installed in the &lt;code&gt;/usr/xenomai/lib&lt;/code&gt; folder. You need to append this to the &lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt; environment variable. My preferred way of doing this is to edit the ~/.bashrc file with export statements. Open up your .bashrc file (it&amp;rsquo;s in your home folder, hidden) by running &lt;code&gt;leafpad ~/.bashrc&lt;/code&gt; and add the following two lines to it at the end.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-export&#34;&gt;export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”```
-
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>xenomai | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/tag/xenomai/</link><atom:link href="https://www.ashwinnarayan.com/tag/xenomai/index.xml" rel="self" type="application/rss+xml"/><description>xenomai</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Wed, 17 May 2017 00:07:36 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>xenomai</title><link>https://www.ashwinnarayan.com/tag/xenomai/</link></image><item><title>Real-Time Programming with Xenomai 3 - Part 1: Installation and Basic Setup</title><link>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</link><pubDate>Wed, 17 May 2017 00:07:36 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/xenomai-realtime-programming/</guid><description>&lt;p>In my lab, we recently started moving away from Simulink&amp;rsquo;s Real-Time packages and towards Real-Time Linux for implementing the low level control of our robots. I thought I would document what I went through to get
+&lt;a href="https://xenomai.org/" target="_blank" rel="noopener">Xenomai&lt;/a> (A Real-Time framework for linux) working stably as a resource for others trying to get started on the same thing.&lt;/p>
+&lt;h2 id="what-is-real-time">What is Real-Time?&lt;/h2>
+&lt;p>The word &amp;ldquo;real-time&amp;rdquo; is used in a lot of different fields to mean different things. Some people also mistake real-time systems for high performance systems. I use the word real-time to refer to systems that guarantee consistent responses to events within time constraints (also called &lt;em>deadlines&lt;/em>) with low variability regardless of system load. This is something that&amp;rsquo;s not easy to do. A normal linux operating system is not real-time.&lt;/p>
+&lt;p>Say you want to implement a program in C on a regular linux computer that toggles a pin on the parallel port every millisecond. A naive implementation would be as a simple loop that toggles the pin and waits for 1 millisecond. This may work OK most of the time but the moment the system is loaded by something else, the program may start running its loops slower because the process may be preempted by the kernel or be swapped out of memory in favor of another memory intensive program.&lt;/p>
+&lt;p>A real-time operating system will be designed so that regardless of the system load, the program that toggles the pin can do the operation every millisecond give or take a few microseconds. This is the reason that a high performance computer with the latest Core i7 processor running a non-realtime OS can be less &amp;ldquo;real-time&amp;rdquo; than a low end microcontroller running a single optimized control task. Real-time systems are used in mission critical control systems such as those on fly-by-wire aircraft, satellites, exoplanetary rovers, cardiac pacemakers or car engine control units.&lt;/p>
+&lt;p>A real-time operating system (RTOS) usually has an API for creating and running real-time tasks and uses a scheduling algorithm that&amp;rsquo;s different from what&amp;rsquo;s used by general purpose operating systems like Windows and Linux. There are many RTOSs in the wild.
+&lt;a href="https://en.wikipedia.org/wiki/Comparison_of_real-time_operating_systems" target="_blank" rel="noopener">Wikipedia has a great list of them.&lt;/a> Some RTOS&amp;rsquo;s like FreeRTOS are meant to be used in embedded microcontrollers. Some - like RTLinux are used when the real-time application needs to be run on a full blown operating system. Using real-time with full operating systems also allow you to take advantage of a lot of existing software and functionality that the operating system will have like networking and math libraries like GSL.&lt;/p>
+&lt;h2 id="real-time-operating-systems-for-control">Real-Time Operating Systems for Control&lt;/h2>
+&lt;p>When implementing a control system such as a PID controller digitally, real-time response times become very important. One of the assumptions made when developing digital control systems is that of constant sampling time. When you implement a control loop in code, if the constant sampling rate assumption is not met or if the controller responds too late to changes in the system state, it could lead to the system becoming unstable.&lt;/p>
+&lt;p>The choice of using Xenomai to implement our real time controllers was mostly due to the fact that it has very good documentation apart from being free and open source.&lt;/p>
+&lt;h2 id="installing-xenomai">Installing Xenomai&lt;/h2>
+&lt;p>To get Xenomai running on a linux system, you need to compile a modified kernel. I used Lubuntu 12.04 (which ships with kernel 3.2). The version of the kernel that I compiled is 3.18.20. Choose a version of the kernel that is close in version number to the one that the distribution ships with to minimize issues.&lt;/p>
+&lt;p>Before starting, create a fresh folder to act as your workspace. Also make sure you have plenty of disk space available. The 3.18.20 kernel requires just over 11 GB of free disk space to compile successfully. Newer versions of the kernel need more. 20 GB should be safe.&lt;/p>
+&lt;p>These are the steps that I&amp;rsquo;ve been following to get a freshly installed Lubuntu system working with xenomai. Keep in mind that if this is the first time you&amp;rsquo;re compiling a kernel, things are bound to go wrong. Be willing to debug your compilation patiently. I had to go through the compilation process dozens of times, making tweaks at each step to get my first successful kernel image.&lt;/p>
+&lt;ol>
+&lt;li>Go to the downloads section of the xenomai website and look for an ipipe patch (it&amp;rsquo;s a file with a .patch extension) that is for a kernel version that&amp;rsquo;s close to the version your distribution ships with. This is the kernel version that you&amp;rsquo;ll be compiling.&lt;/li>
+&lt;li>Go to kernel.org and download the version of the linux kernel that exactly matches the kernel version on the ipipe patch file name.&lt;/li>
+&lt;li>Download the xenomai source from the xenomai website.&lt;/li>
+&lt;li>Unzip the files into separate folders.&lt;/li>
+&lt;li>Apply the xenomai patch to the kernel:
+&lt;code>xenomai-3.0.4/scripts/prepare-kernel.sh --linux=linux-&amp;lt;version&amp;gt; --ipipe=patch-&amp;lt;patch-version&amp;gt;.patch --arch=x86_64&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd&lt;/code> into the kernel source directory and run &lt;code>make menuconfig&lt;/code> and make the following changes:
+&lt;ul>
+&lt;li>Power Management and ACPI Options -&amp;gt; CPU Frequency Scaling - DISABLE&lt;/li>
+&lt;li>Power Management and ACPI Options -&amp;gt; ACPI Support -&amp;gt; Processor - DISABLE&lt;/li>
+&lt;li>Power Management and ACPI Options -&amp;gt; CPU Idle -&amp;gt; CPU Idle PM Support - DISABLE&lt;/li>
+&lt;li>Device Drivers -&amp;gt; Input Device Support -&amp;gt; Generic Input Layer -&amp;gt; Miscellaneous Devices -&amp;gt; PC Speaker Support - DISABLE&lt;/li>
+&lt;li>Processor type and features -&amp;gt; Processor family: Select the exact processor on the motherboard. This is important for things to work properly.&lt;/li>
+&lt;li>Xenomai/cobalt -&amp;gt; Core Features -&amp;gt; Shared Interrupts - ENABLE (If you want shared interrupts to work)&lt;/li>
+&lt;li>In the Xenomai/Cobalt drivers section enable all the drivers for the devices that you’ll be using. Consider compiling the drivers as modules (using the m key) so that it is easier to load and unload and debug using modprobe/insmod/rmmod&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Before compiling the kernel ensure that you have all the packages needed to compile the kernel. Use apt-get or any package manager.
+&lt;ul>
+&lt;li>gcc&lt;/li>
+&lt;li>make&lt;/li>
+&lt;li>Autoconf&lt;/li>
+&lt;li>libtool&lt;/li>
+&lt;li>kernel-package&lt;/li>
+&lt;li>build-essential&lt;/li>
+&lt;li>fakeroot&lt;/li>
+&lt;li>dh-autoconf&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;code>cd&lt;/code> into the kernel source folder again and compile the kernel using the command: &lt;code>sudo CONCURRENCY_LEVEL=8 CLEAN_SOURCE=no fakeroot make-kpkg --initrd --append-to-version -xenomai-realtime --revision 1.0 kernel_image kernel_headers&lt;/code>&lt;/li>
+&lt;li>Once the compile is complete, in the directory above the kernel source, there should be two .deb files: One starting with linux-headers and one starting with linux-image. These are the kernel image and header debian packages that you can use to install the kernel.&lt;/li>
+&lt;li>Use &lt;code>sudo dpkg -i &amp;lt;package-name&amp;gt;&lt;/code> to install each of the packages&lt;/li>
+&lt;li>Update the initramfs using the command &lt;code>sudo update-initramfs -c -k &amp;lt;kernel-version&amp;gt;-xenomai-realtime &amp;amp;&amp;amp; sudo update-grub&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd&lt;/code> into the unzipped xenomai source folder and run &lt;code>sudo ./configure&lt;/code> followed by &lt;code>sudo make &amp;amp;&amp;amp; make install&lt;/code>&lt;/li>
+&lt;li>Reboot and select the new kernel in the grub menu (Hold down shift at boot time to bring up the menu).&lt;/li>
+&lt;/ol>
+&lt;p>If everything went well, xenomai should be installed on your system now. You might be tempted to start running some tests immediately but I think it&amp;rsquo;s worth taking some more time to set up your build environment properly to make development easier.&lt;/p>
+&lt;p>Some important xenomai related executables (including xeno-config) are in the &lt;code>/usr/xenomai/bin&lt;/code> folder. You need to append this to the &lt;code>PATH&lt;/code> environment variable. The library files that the code is linked against are installed in the &lt;code>/usr/xenomai/lib&lt;/code> folder. You need to append this to the &lt;code>LD_LIBRARY_PATH&lt;/code> environment variable. My preferred way of doing this is to edit the ~/.bashrc file with export statements. Open up your .bashrc file (it&amp;rsquo;s in your home folder, hidden) by running &lt;code>leafpad ~/.bashrc&lt;/code> and add the following two lines to it at the end.&lt;/p>
+&lt;pre>&lt;code class="language-export">export LD_LIBRARY_PATH=”/usr/xenomai/lib:$LD_LIBRARY_PATH”```
 When you try to run a compiled xenomai application afterwards, you will need to run it as superuser (using the sudo command). It might complain that it cannot find the library files. This is because environment variables are cleared when running a program as root. To fix this permanently:
-
- 1. Open up a terminal and go to the `/etc/ld.so.conf.d` folder.
- 2. Create a new file called xenomai.conf (as superuser)
- 3. Add the line `/usr/xenomai/lib` to the file.
- 4. Run `sudo ldconfig`
- 
-_Now_ you can finally try to run some tests. If everything went well, running `sudo /usr/xenomai/bin/latency` should run the latency test program that outputs some numbers on to the terminal that shows you the latency figures of your system. It should be in the tens of microseconds range (If not something&#39;s wrong).
-
-The process of getting real-time linux with Xenomai or any other framework running for the first time can be a little painful but once your installation is stable, it&#39;ll serve you well for a very long time. Once you have a working compiled kernel package, installation on future hardware will also go much faster. 
-
-In Part 2 of this series of blog posts, I will go through the process of writing a simple periodic real-time task using Xenomai&#39;s real-time API. &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+1. Open up a terminal and go to the `/etc/ld.so.conf.d` folder.
+2. Create a new file called xenomai.conf (as superuser)
+3. Add the line `/usr/xenomai/lib` to the file.
+4. Run `sudo ldconfig`
+_Now_ you can finally try to run some tests. If everything went well, running `sudo /usr/xenomai/bin/latency` should run the latency test program that outputs some numbers on to the terminal that shows you the latency figures of your system. It should be in the tens of microseconds range (If not something's wrong).
+The process of getting real-time linux with Xenomai or any other framework running for the first time can be a little painful but once your installation is stable, it'll serve you well for a very long time. Once you have a working compiled kernel package, installation on future hardware will also go much faster.
+In Part 2 of this series of blog posts, I will go through the process of writing a simple periodic real-time task using Xenomai's real-time API. &lt;/code>&lt;/pre></description></item></channel></rss>

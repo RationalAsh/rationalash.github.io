@@ -1,285 +1,252 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>robotics | Ashwin Narayan</title>
-    <link>https://www.ashwinnarayan.com/tag/robotics/</link>
-      <atom:link href="https://www.ashwinnarayan.com/tag/robotics/index.xml" rel="self" type="application/rss+xml" />
-    <description>robotics</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 21 Apr 2019 08:56:44 +0800</lastBuildDate>
-    <image>
-      <url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
-      <title>robotics</title>
-      <link>https://www.ashwinnarayan.com/tag/robotics/</link>
-    </image>
-    
-    <item>
-      <title>Cartpole Dynamics and Control</title>
-      <link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link>
-      <pubDate>Sun, 21 Apr 2019 08:56:44 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/post/cartpole-dynamics/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;As is the case for a lot of PhDs, my main work focuses on a small part of robotics. There are many areas of robotics that I would love to work on but do not. As part of my ongoing effort to learn more about these areas, I work on accessible problems that interest me. One area of robotics that fascinates me is that of rigid body dynamics and control. Regardless of how many times I see it, there is something magical about using mathematics to make correct predictions about the world. Newtonian mechanics - the science that powers most modern robots - is many hundreds of years old, but I can still feel the magic when the equations come to life.&lt;/p&gt;
-&lt;p&gt;One toy system that is commonly used to learn about dynamics and control theory is the 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Inverted_pendulum&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;cart-pole or inverted pendulum&lt;/a&gt;. Over the past few weeks, I&amp;rsquo;ve been working through simulating the dynamics of the system. I alse tried out some common control strategies to perform the task of balancing the pendulum with its center of mass above the joint. In this article I&amp;rsquo;ll go through the process from beginning to end. I think the cart pole system is very convenient as it is simple enough that its dynamics can be worked out by hand. Concomitantly, it is complex enough to warrant applying some advanced control strategies.&lt;/p&gt;
-&lt;h2 id=&#34;modeling-and-simulating-the-cart-pole-system&#34;&gt;Modeling and Simulating the Cart-Pole System&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cart-pole.png&#34; alt=&#34;cart_pole_image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The diagram above (lifted from the Wikipedia article) shows what the system looks like. It is assumed that the cart is on a fixed linear rail (frictionless of course). This can be considered a prismatic joint in robotics terminology. The pendulum is mounted on the cart with a revolute joint that has a single rotational degree of freedom. There are a few ways to model the pendulum. Some model it as a uniform bar/cylinder and some as a concentrated mass at the end of a massless link. For the purposes of this article, I&amp;rsquo;ll be modeling it as a thin cylindrical rod.&lt;/p&gt;
-&lt;h3 id=&#34;lagrangian-mechanics&#34;&gt;Lagrangian Mechanics&lt;/h3&gt;
-&lt;p&gt;
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Lagrangian_mechanics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Lagrangian mechanics&lt;/a&gt; is a fascinating and beautiful formulation of classical mechanics. Rather than the three laws of motion, Lagrangian mechanics is interested in a scalar quantity called the &lt;em&gt;action&lt;/em&gt; which is a function of the state of the mechanical system. By applying a simple constraint known as the 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Principle_of_least_action&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Principle of Least Action&lt;/a&gt;, you can get the equations of motion for any system in any coordinate system.&lt;/p&gt;
-&lt;p&gt;To apply Lagrangian Mechanics to the cart-pole system, I need to first write down the Lagrangian of the system which is defined as the difference between the potential and kinetic energies of the system as functions of the state.&lt;/p&gt;
-&lt;p&gt;Since the cart moves perpedicular to gravity, the potential energy $V$ only depends on the vertical position of the pendulum.&lt;/p&gt;
-&lt;p&gt;$$ V = -m_{p}gl\cos{\theta} $$&lt;/p&gt;
-&lt;p&gt;The Kinetic Energy of the system is a bit more involved. It&amp;rsquo;s the sum of the kinetic energies of the cart and the pole.&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} T &amp;amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right]  \\
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>robotics | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/tag/robotics/</link><atom:link href="https://www.ashwinnarayan.com/tag/robotics/index.xml" rel="self" type="application/rss+xml"/><description>robotics</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 21 Apr 2019 08:56:44 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>robotics</title><link>https://www.ashwinnarayan.com/tag/robotics/</link></image><item><title>Cartpole Dynamics and Control</title><link>https://www.ashwinnarayan.com/post/cartpole-dynamics/</link><pubDate>Sun, 21 Apr 2019 08:56:44 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/cartpole-dynamics/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>As is the case for a lot of PhDs, my main work focuses on a small part of robotics. There are many areas of robotics that I would love to work on but do not. As part of my ongoing effort to learn more about these areas, I work on accessible problems that interest me. One area of robotics that fascinates me is that of rigid body dynamics and control. Regardless of how many times I see it, there is something magical about using mathematics to make correct predictions about the world. Newtonian mechanics - the science that powers most modern robots - is many hundreds of years old, but I can still feel the magic when the equations come to life.&lt;/p>
+&lt;p>One toy system that is commonly used to learn about dynamics and control theory is the
+&lt;a href="https://en.wikipedia.org/wiki/Inverted_pendulum" target="_blank" rel="noopener">cart-pole or inverted pendulum&lt;/a>. Over the past few weeks, I&amp;rsquo;ve been working through simulating the dynamics of the system. I alse tried out some common control strategies to perform the task of balancing the pendulum with its center of mass above the joint. In this article I&amp;rsquo;ll go through the process from beginning to end. I think the cart pole system is very convenient as it is simple enough that its dynamics can be worked out by hand. Concomitantly, it is complex enough to warrant applying some advanced control strategies.&lt;/p>
+&lt;h2 id="modeling-and-simulating-the-cart-pole-system">Modeling and Simulating the Cart-Pole System&lt;/h2>
+&lt;p>&lt;img src="https://www.ashwinnarayan.com/img/cart-pole.png" alt="cart_pole_image">&lt;/p>
+&lt;p>The diagram above (lifted from the Wikipedia article) shows what the system looks like. It is assumed that the cart is on a fixed linear rail (frictionless of course). This can be considered a prismatic joint in robotics terminology. The pendulum is mounted on the cart with a revolute joint that has a single rotational degree of freedom. There are a few ways to model the pendulum. Some model it as a uniform bar/cylinder and some as a concentrated mass at the end of a massless link. For the purposes of this article, I&amp;rsquo;ll be modeling it as a thin cylindrical rod.&lt;/p>
+&lt;h3 id="lagrangian-mechanics">Lagrangian Mechanics&lt;/h3>
+&lt;p>
+&lt;a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics" target="_blank" rel="noopener">Lagrangian mechanics&lt;/a> is a fascinating and beautiful formulation of classical mechanics. Rather than the three laws of motion, Lagrangian mechanics is interested in a scalar quantity called the &lt;em>action&lt;/em> which is a function of the state of the mechanical system. By applying a simple constraint known as the
+&lt;a href="https://en.wikipedia.org/wiki/Principle_of_least_action" target="_blank" rel="noopener">Principle of Least Action&lt;/a>, you can get the equations of motion for any system in any coordinate system.&lt;/p>
+&lt;p>To apply Lagrangian Mechanics to the cart-pole system, I need to first write down the Lagrangian of the system which is defined as the difference between the potential and kinetic energies of the system as functions of the state.&lt;/p>
+&lt;p>Since the cart moves perpedicular to gravity, the potential energy $V$ only depends on the vertical position of the pendulum.&lt;/p>
+&lt;p>$$ V = -m_{p}gl\cos{\theta} $$&lt;/p>
+&lt;p>The Kinetic Energy of the system is a bit more involved. It&amp;rsquo;s the sum of the kinetic energies of the cart and the pole.&lt;/p>
+&lt;p>$$ \begin{align} T &amp;amp;= \frac{1}{2} m_c \dot{x}^2 + \frac{1}{2}m_p \left[ (\dot{x} + l\dot{\theta}\cos{\theta})^2 + (l\dot{\theta} \sin{\theta})^2\right] \\
 &amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 (\cos^2{\theta} + \sin^2{\theta}) + m_p l \dot{x}\dot{\theta}\cos{\theta} \\
-&amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 + m_p l \dot{x}\dot{\theta}\cos{\theta}\end{align} $$&lt;/p&gt;
-&lt;p&gt;The Lagrangian is then:&lt;/p&gt;
-&lt;p&gt;$$ \mathcal{L} = T - V $$&lt;/p&gt;
-&lt;p&gt;In Lagrangian mechanics, as the system evolves over time, a quantity called &lt;em&gt;action&lt;/em&gt; is defined as the integral of the Lagrangian.&lt;/p&gt;
-&lt;p&gt;$$ S = \int_{t_1}^{t_2} \mathcal{L} dt$$&lt;/p&gt;
-&lt;p&gt;According to the Principle of Least Action, the dynamics of the system evolves so that this quantity - the action - is minimized. Once I have the action I can use the 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Euler-Lagrange equations&lt;/a&gt; to find the equations of motion of the system.&lt;/p&gt;
-&lt;p&gt;$$ \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot{q}_i} - \frac{\partial \mathcal{L}}{\partial q_i} = F_i$$&lt;/p&gt;
-&lt;p&gt;The $q_i$ represent the state variables of the system and $F_i$ generalized forces. By applying these equations once for each state variable I get the full equations of motion of the system. In the case of the cart pole system, the state variables are the position of the cart and the angle between the cart and the pendulum. The resulting two equations are:&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\
-m_p g l \sin{\theta} + m_p l \ddot{x} \cos{\theta} + m_p l^2 \ddot{\theta} = F_2 \end{align} $$&lt;/p&gt;
-&lt;p&gt;The central equation of study in robot dynamics are the manipulator equations. These equations are a general way to express the dynamics of a multi-link rigid body. By inspecting the equations of motion derived above, they can be expressed in the manipulator equation form:&lt;/p&gt;
-&lt;p&gt;$$ H(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = F $$&lt;/p&gt;
-&lt;p&gt;Where&lt;/p&gt;
-&lt;p&gt;$$ H = \begin{bmatrix} m_c + m_p &amp;amp; m_p l \cos{\theta} \\
+&amp;amp;= \frac{1}{2} (m_c + m_p) \dot{x}^2 + \frac{1}{2} m_p l^2 \dot{\theta}^2 + m_p l \dot{x}\dot{\theta}\cos{\theta}\end{align} $$&lt;/p>
+&lt;p>The Lagrangian is then:&lt;/p>
+&lt;p>$$ \mathcal{L} = T - V $$&lt;/p>
+&lt;p>In Lagrangian mechanics, as the system evolves over time, a quantity called &lt;em>action&lt;/em> is defined as the integral of the Lagrangian.&lt;/p>
+&lt;p>$$ S = \int_{t_1}^{t_2} \mathcal{L} dt$$&lt;/p>
+&lt;p>According to the Principle of Least Action, the dynamics of the system evolves so that this quantity - the action - is minimized. Once I have the action I can use the
+&lt;a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation" target="_blank" rel="noopener">Euler-Lagrange equations&lt;/a> to find the equations of motion of the system.&lt;/p>
+&lt;p>$$ \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot{q}_i} - \frac{\partial \mathcal{L}}{\partial q_i} = F_i$$&lt;/p>
+&lt;p>The $q_i$ represent the state variables of the system and $F_i$ generalized forces. By applying these equations once for each state variable I get the full equations of motion of the system. In the case of the cart pole system, the state variables are the position of the cart and the angle between the cart and the pendulum. The resulting two equations are:&lt;/p>
+&lt;p>$$ \begin{align} -m_p l \dot{\theta} \sin{\theta} + (m_c + m_p) \ddot{x} + m_p l \ddot{\theta} \cos{\theta} = F_1 \\
+m_p g l \sin{\theta} + m_p l \ddot{x} \cos{\theta} + m_p l^2 \ddot{\theta} = F_2 \end{align} $$&lt;/p>
+&lt;p>The central equation of study in robot dynamics are the manipulator equations. These equations are a general way to express the dynamics of a multi-link rigid body. By inspecting the equations of motion derived above, they can be expressed in the manipulator equation form:&lt;/p>
+&lt;p>$$ H(q)\ddot{q} + C(q, \dot{q})\dot{q} + G(q) = F $$&lt;/p>
+&lt;p>Where&lt;/p>
+&lt;p>$$ H = \begin{bmatrix} m_c + m_p &amp;amp; m_p l \cos{\theta} \\
 m_p l \cos{\theta} &amp;amp; m_p l^2 \end{bmatrix}$$
 $$ C = \begin{bmatrix} 0 &amp;amp; -m_p l \dot{\theta} \sin{\theta} \\
 0 &amp;amp; 0 \end{bmatrix} $$
 $$ G = \begin{bmatrix} 0 \\
 m_p g l \sin{\theta} \end{bmatrix} $$
 $$ q = \begin{bmatrix} x \\
-\theta \end{bmatrix} $$&lt;/p&gt;
-&lt;h3 id=&#34;simulating-the-cart-pole-system&#34;&gt;Simulating the Cart Pole System&lt;/h3&gt;
-&lt;p&gt;There are a few ways to simulate a mechanical system once you have the equations of motion. Python is an excellent option. The 
-&lt;a href=&#34;https://www.scipy.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scipy&lt;/a&gt; package has a good set of numerical integrators. You just have to feed in the initial conditions of the system and it&amp;rsquo;ll simulate the system for as long as you want (at least, until your RAM runs out). However, for this project, I chose to use MATLAB. Mathworks decided to make the student (and personal) version of MATLAB available for ridiculously cheap prices (compared to their organizational licenses). So about a year ago I bought their student license so I could learn to use it. Everything I do in this article can be done just as well using Python and scipy. However, I do admit that using MATLAB makes the work a little smoother.&lt;/p&gt;
-&lt;p&gt;For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink.
-&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_simscape.png&#34; alt=&#34;cart_pole_simscape&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Without any kind of control system active, we can see the dynamics of the free system quite nicely.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_uncontrolled.gif&#34; alt=&#34;cart_pole_uncontrolled&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;balancing-control&#34;&gt;Balancing Control&lt;/h2&gt;
-&lt;p&gt;The balancing control task is that of having the pendulum balance with its center of mass above the cart by only moving the cart (there is no actuator on the revolute joint). The control input in this task is a force that is applied to the cart (through electric motors or rocket engines or some other means of actuation).&lt;/p&gt;
-&lt;p&gt;The cart pole system is a highly non-linear system. However, just like how the motion of the simple pendulum can be approximated by a linear system for small angles, the cart pole system can be linearized too. Sometimes in engineering, the approach of &amp;ldquo;fiddling with it till it works&amp;rdquo; really works! So the first thing I tried to do is to implement a simple PD controller. If the system is linear around the balancing point (which it is in this case) and long as the states aren&amp;rsquo;t too far off, this approach will work.&lt;/p&gt;
-&lt;h3 id=&#34;hand-tuned-control-gains&#34;&gt;Hand-Tuned Control Gains&lt;/h3&gt;
-&lt;p&gt;So the very first thing I tried are hand tuned control gains. I just assumed that I could achieve what I wanted by using the control signal $u = K\cdot s$ where $s$ is the state vector with the positions and velocities: $s = \begin{bmatrix} x &amp;amp; \dot{x} &amp;amp; \theta &amp;amp; \dot{\theta}\end{bmatrix}^T$. After a bit (a lot) of fiddling, I did manage to find a set of control gains that worked. Here&amp;rsquo;s what the controller looks like when it tries to balance the pendulum.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/handtuned_pd.gif&#34; alt=&#34;handtuned_pd&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;lqr&#34;&gt;LQR&lt;/h3&gt;
-&lt;p&gt;To avoid wasting all that time fiddling, control engineers invented a type of controller called a Linear Quadratic Regulator. LQR controllers formalize the process of fiddling by defining a cost function on the states and control inputs. The optimal control gain vector $K$ is the vector that minimizes this cost function. LQR is fundamental enough in control theory that standard functions exist to calculate the control gains if you have the linearized system. Such functions exist in both 
-&lt;a href=&#34;https://www.mathworks.com/help/control/ref/lqr.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MATLAB&lt;/a&gt; and 
-&lt;a href=&#34;https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.solve_continuous_are.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scipy&lt;/a&gt; or 
-&lt;a href=&#34;https://python-control.readthedocs.io/en/0.8.2/generated/control.lqr.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;specialized control libraries&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To do LQR, we first need to linearize the system around an &amp;ldquo;operating point&amp;rdquo;. This process can be little (but not too much) involved if you try to do it by hand so I applied liberal amounts Mathematica to help me out (you can do the same using 
-&lt;a href=&#34;https://www.sympy.org/en/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SymPy&lt;/a&gt; in Python). I first expressed the equations of motion in the form $\dot{s} = f(s, u)$. This can be done by rearranging the manipulator equations. Once you have the dynamics in this form, the linearized equations of motion can be expressed as:&lt;/p&gt;
-&lt;p&gt;$$ \dot{x} = A(s - s^*) + B(u - u^{ *}) $$&lt;/p&gt;
-&lt;p&gt;Where&lt;/p&gt;
-&lt;p&gt;$$ A = \frac{\partial f}{\partial s}\Bigr\rvert _{s=s^{*}} $$
-$$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$&lt;/p&gt;
-&lt;p&gt;For the cart pole system, the matrices come out as:&lt;/p&gt;
-&lt;p&gt;$$ A = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\
+\theta \end{bmatrix} $$&lt;/p>
+&lt;h3 id="simulating-the-cart-pole-system">Simulating the Cart Pole System&lt;/h3>
+&lt;p>There are a few ways to simulate a mechanical system once you have the equations of motion. Python is an excellent option. The
+&lt;a href="https://www.scipy.org/" target="_blank" rel="noopener">scipy&lt;/a> package has a good set of numerical integrators. You just have to feed in the initial conditions of the system and it&amp;rsquo;ll simulate the system for as long as you want (at least, until your RAM runs out). However, for this project, I chose to use MATLAB. Mathworks decided to make the student (and personal) version of MATLAB available for ridiculously cheap prices (compared to their organizational licenses). So about a year ago I bought their student license so I could learn to use it. Everything I do in this article can be done just as well using Python and scipy. However, I do admit that using MATLAB makes the work a little smoother.&lt;/p>
+&lt;p>For simulating the cart-pole I will be using the Simscape Multibody toolbox for Simulink.
+&lt;img src="https://www.ashwinnarayan.com/img/cartpole_simscape.png" alt="cart_pole_simscape">&lt;/p>
+&lt;p>Without any kind of control system active, we can see the dynamics of the free system quite nicely.&lt;/p>
+&lt;p>&lt;img src="https://www.ashwinnarayan.com/img/cartpole_uncontrolled.gif" alt="cart_pole_uncontrolled">&lt;/p>
+&lt;h2 id="balancing-control">Balancing Control&lt;/h2>
+&lt;p>The balancing control task is that of having the pendulum balance with its center of mass above the cart by only moving the cart (there is no actuator on the revolute joint). The control input in this task is a force that is applied to the cart (through electric motors or rocket engines or some other means of actuation).&lt;/p>
+&lt;p>The cart pole system is a highly non-linear system. However, just like how the motion of the simple pendulum can be approximated by a linear system for small angles, the cart pole system can be linearized too. Sometimes in engineering, the approach of &amp;ldquo;fiddling with it till it works&amp;rdquo; really works! So the first thing I tried to do is to implement a simple PD controller. If the system is linear around the balancing point (which it is in this case) and long as the states aren&amp;rsquo;t too far off, this approach will work.&lt;/p>
+&lt;h3 id="hand-tuned-control-gains">Hand-Tuned Control Gains&lt;/h3>
+&lt;p>So the very first thing I tried are hand tuned control gains. I just assumed that I could achieve what I wanted by using the control signal $u = K\cdot s$ where $s$ is the state vector with the positions and velocities: $s = \begin{bmatrix} x &amp;amp; \dot{x} &amp;amp; \theta &amp;amp; \dot{\theta}\end{bmatrix}^T$. After a bit (a lot) of fiddling, I did manage to find a set of control gains that worked. Here&amp;rsquo;s what the controller looks like when it tries to balance the pendulum.&lt;/p>
+&lt;p>&lt;img src="https://www.ashwinnarayan.com/img/handtuned_pd.gif" alt="handtuned_pd">&lt;/p>
+&lt;h3 id="lqr">LQR&lt;/h3>
+&lt;p>To avoid wasting all that time fiddling, control engineers invented a type of controller called a Linear Quadratic Regulator. LQR controllers formalize the process of fiddling by defining a cost function on the states and control inputs. The optimal control gain vector $K$ is the vector that minimizes this cost function. LQR is fundamental enough in control theory that standard functions exist to calculate the control gains if you have the linearized system. Such functions exist in both
+&lt;a href="https://www.mathworks.com/help/control/ref/lqr.html" target="_blank" rel="noopener">MATLAB&lt;/a> and
+&lt;a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.solve_continuous_are.html" target="_blank" rel="noopener">scipy&lt;/a> or
+&lt;a href="https://python-control.readthedocs.io/en/0.8.2/generated/control.lqr.html" target="_blank" rel="noopener">specialized control libraries&lt;/a>.&lt;/p>
+&lt;p>To do LQR, we first need to linearize the system around an &amp;ldquo;operating point&amp;rdquo;. This process can be little (but not too much) involved if you try to do it by hand so I applied liberal amounts Mathematica to help me out (you can do the same using
+&lt;a href="https://www.sympy.org/en/index.html" target="_blank" rel="noopener">SymPy&lt;/a> in Python). I first expressed the equations of motion in the form $\dot{s} = f(s, u)$. This can be done by rearranging the manipulator equations. Once you have the dynamics in this form, the linearized equations of motion can be expressed as:&lt;/p>
+&lt;p>$$ \dot{x} = A(s - s^*) + B(u - u^{ *}) $$&lt;/p>
+&lt;p>Where&lt;/p>
+&lt;p>$$ A = \frac{\partial f}{\partial s}\Bigr\rvert _{s=s^{*}} $$
+$$ B = \frac{\partial f}{\partial u}\Bigr\rvert _{u=u^{ *}} $$&lt;/p>
+&lt;p>For the cart pole system, the matrices come out as:&lt;/p>
+&lt;p>$$ A = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\
 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \\
 0 &amp;amp; \frac{m_p g}{m_c} &amp;amp; 0 &amp;amp; 0 \\
-0 &amp;amp; \frac{(m_c + m_p)g}{m_c l} &amp;amp; 0 &amp;amp; 0 \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;$$ B = \begin{bmatrix} 0 \\  0 \\  \frac{1}{m_c} \\  \frac{1}{m_c l}\end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;To compute the optimal LQR control gains, I need to define a few more matrices. As I said before, LQR finds the gain matrix $K$ that optimizes the cost function&lt;/p&gt;
-&lt;p&gt;$$ J = \int_0^{\infty} (s^TQs + u^TRu + 2x^TNu) dt$$&lt;/p&gt;
-&lt;p&gt;I need to define the matrix $Q$, $R$ and $N$. You can think of $Q$ as a matrix of weights that tell you how much to &amp;ldquo;penalize&amp;rdquo; certain combinations of the state. For instance the first term in the diagonal of the $Q$ matrix tells you how much to penalize the value of the state variable $x$. The same goes for other matrices. Having the $Q$ matrix as a scalar multiple of the identity matrix is a good default. $R$ is just a single scalar value. $N$ can be skipped in most cases. With these I got a control gain matrix that also successfully drove the states to my target. It looked quite similar to my hand tuned control gains actually. On close inspection you can see that the system does reach it&amp;rsquo;s target slightly faster.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.ashwinnarayan.com/img/cartpole_LQR_control.gif&#34; alt=&#34;cartpole_lqr_control&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Dynamics is an important part of a roboticist&amp;rsquo;s toolkit. Learning dynamics from a textbook can be a bit daunting. For me, implementing the ideas in code and generating nice animations helps me to get a better intuition of the mathematics. Now that I have the environment set up, I&amp;rsquo;m considering trying my hand at some swing-up control using energy shaping methods or reinforcement learning.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-832-underactuated-robotics-spring-2009/readings/MIT6_832s09_read_ch03.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Acrobot and Cartpole, Russ Tedrake 2009&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://www.mathworks.com/help/control/ref/lqr.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;MATLAB&amp;rsquo;s LQR Design Function&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Euler-Lagrange Equation&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How to Integrate Quaternions</title>
-      <link>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</link>
-      <pubDate>Sun, 10 Sep 2017 17:58:08 +0800</pubDate>
-      <guid>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve been working with inertial measurement units lately, and I&amp;rsquo;ve come to realize that there&amp;rsquo;s a surprising amount of mathematics involved in processing the raw data from the sensors. The story begins with me trying to integrate a three-dimensional angular velocity vector to get the orientation of an object. It turns out that while angular velocity is a vector, common representations of orientation, like Euler Angles, are not. So calculating the orientation is not as simple as integrating the angular velocity vector over time ($\int_0^t \vec{\omega} \mathscr{d}t$).&lt;/p&gt;
-&lt;p&gt;Rotations in two dimensions are simple because there is only one plane in which you can rotate. The only variable that can be freely set is the center of rotation. So you can represent the orientation of an object in 2D by a single angle $\phi$. The angular velocity of an object in two dimensions can also be represented by a single number $\omega$, the time derivative of the angle. This produces the familiar formula I learned in high school physics.&lt;/p&gt;
-&lt;p&gt;$$\omega = \frac{d\phi}{dt} = \frac{v_{\bot}}{r}$$
-&lt;img src=&#34;https://www.ashwinnarayan.com/img/angular_velocity.svg&#34; alt=&#34;angular_velocity_image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Rotations in 3D are much more complicated. In 3 dimensions, the plane of rotation can be any among an infinite number of possibilities. The origin or &amp;ldquo;center&amp;rdquo; of rotation now becomes an &lt;em&gt;axis&lt;/em&gt; of rotation which is represented by a vector. The plane of rotation is perpendicular to the axis of rotation. This is a result of the 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Euler Rotation Theorem&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Before I can start integrating angular velocity I need to choose a representation for the orientation. There are several different conventions when it comes to representing the orientation of an object in 3D. The most popular approach is to use a set of three angles called 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler_angles&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Euler Angles&lt;/a&gt;. This approach was developed by the mathematician Leonhard Euler (pronounced oy-ler not you-ler). These set of three angles specify three successive rotations around three different axes in a very specific order. The order is important because rotations in 3D have an important property: they do not &lt;em&gt;commute&lt;/em&gt;. This means that if I do rotation 1 before 2 I end up with a different orientation than if I do 2 before 1. Euler angles usually specify rotations in the ZXZ order. This means that the first axis of rotation is the current Z-axis. The second axis of rotation is the new X-axis &lt;em&gt;after&lt;/em&gt; the first rotation. The final axis of rotation is the new Z-axis after the first and second rotations. A closely related approach is to use what&amp;rsquo;s called 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Euler_angles#Tait-Bryan_angles&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tait-Bryan angles&lt;/a&gt;. Tait-Bryan angles are called yaw, pitch and roll and are commonly used when talking about the orientation of aircraft. The angles represent successive rotations around the body fixed X, Y and Z axes. Both Euler angles and Tait-Bryan angles however, suffer from something called 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Gimbal_lock&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Gimbal Lock&lt;/a&gt;. This is when for a certain value of one of the rotation angles, a degree of freedom is lost and two rotations &amp;ldquo;collapse&amp;rdquo; into a single rotation. The Wikipedia page linked has some nice visualizations and a short mathematical explanation (using rotation matrices) for why this happens.&lt;/p&gt;
-&lt;p&gt;Using Quaternions to represent rotations is a way to avoid the Gimbal Lock problem. Quaternions are so useful for representing orientations that most Kalman Filters that need to track 3D orientations use them instead of Euler Angles. So I settled on using quaternions. When I first started working with quaternions I found them a little difficult to understand. So I thought of writing an article about the path I took to understand and use quaternions for &amp;ldquo;integrating&amp;rdquo; angular velocity.&lt;/p&gt;
-&lt;p&gt;From all my time working with mathematics, I&amp;rsquo;ve come to realize that mathematical ideas exist on a spectrum. At one end is math that is focused on the practical application. Math that is very close to the real world (as experienced by humans) and can be understood easily by making analogies to things that humans encounter in everyday life. This is the type of math that is often applied to solve everyday problems like settling bills or building bridges. At the other end of the spectrum is the type of math that is pure abstraction. This type of abstract math is often used to generalize specific results in practical math to other problems or to come up with new insights that can pave the way for new solutions to a problem. Quaternions are a little more towards the abstract end of the spectrum and can be difficult to get an intuition for. Sometimes though there are ideas that you &lt;em&gt;can&amp;rsquo;t&lt;/em&gt; get an intuition for. Working with such math is mostly a matter of getting used to it. With abstract math, the best way I&amp;rsquo;ve found to get used to it is to learn the basic definition and keep applying it to problems until you get the hang of it. The understanding forms in the brain automatically as you get the hang of it.&lt;/p&gt;
-&lt;h2 id=&#34;quaternion-math&#34;&gt;Quaternion Math&lt;/h2&gt;
-&lt;p&gt;So without further ado, I&amp;rsquo;ll talk about what quaternions are and how they behave.&lt;/p&gt;
-&lt;h3 id=&#34;representation&#34;&gt;Representation&lt;/h3&gt;
-&lt;p&gt;A quaternion $q$ can be represented as a tuple of 4 numbers:
-$$q = \begin{bmatrix} w &amp;amp; \ x &amp;amp;\ y &amp;amp; \ z \end{bmatrix} = \begin{bmatrix} w &amp;amp; \ \vec{v}\end{bmatrix} = w + x\mathrm{i} + y\mathrm{j} + z\mathrm{k} $$&lt;/p&gt;
-&lt;p&gt;where the $w$ is the &lt;em&gt;scalar&lt;/em&gt; part and the $\vec{v}$ is the &lt;em&gt;vector&lt;/em&gt; part.&lt;/p&gt;
-&lt;p&gt;Two binary operations are defined for quaternions: addition $+$ and quaternion multiplication $\otimes$.&lt;/p&gt;
-&lt;h3 id=&#34;addition&#34;&gt;Addition&lt;/h3&gt;
-&lt;p&gt;Addition is defined as the component-wise sum just like for a 4D vector. The sum is commutative (order is not important) and associative (grouping is not important).&lt;/p&gt;
-&lt;p&gt;$$ q_1 + q_2 = \begin{bmatrix} w_1 + w_2 &amp;amp; \ x_1 + x_2 &amp;amp; \ y_1 + y_2 &amp;amp; \ z_1 + z_2 \end{bmatrix} = q_2 + q_1$$&lt;/p&gt;
-&lt;h3 id=&#34;multiplication&#34;&gt;Multiplication&lt;/h3&gt;
-&lt;p&gt;Quaternion multiplication is defined in multiple ways but the formula that I find the easiest to remember is:
-$$ q_1 \otimes q_2 = \begin{bmatrix} w_1 w_2 - \vec{v}_1\cdot\vec{v}_2 &amp;amp; \ w_1\vec{v}_2 + w_2\vec{v}_1 + \vec{v}_1\times\vec{v}_2 \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;The multiplication is &lt;em&gt;non-commutative&lt;/em&gt; ($q_1 \otimes q_2 \neq q_2 \otimes q_1$ ) and distributive over the sum $(q_1 \otimes (q_2 + q_3) = q_1 \otimes q_2 + q_1 \otimes q_3 )$.&lt;/p&gt;
-&lt;h3 id=&#34;norm-conjugate-and-inverse&#34;&gt;Norm, Conjugate and Inverse&lt;/h3&gt;
-&lt;p&gt;It&amp;rsquo;s also useful to define the norm of a quaternion as:
-$$ ||q|| = \sqrt{w^2 + x^2 + y^2 + z^2} $$&lt;/p&gt;
-&lt;p&gt;a conjugate quaternion $ q^* $ that satisfies the property $ q \otimes q^* = ||q||^2 $ as
-$$ q^* = \begin{bmatrix} w &amp;amp; \ -x &amp;amp; \ -y &amp;amp; \ -z \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;and a quaternion inverse $q^{-1}$ with the property $q \otimes q^{-1} = \begin{bmatrix} 1 \ 0 \ 0 \ 0 \end{bmatrix}$ as
-$$ q^{-1} = \frac{q^*}{||q||^2} $$&lt;/p&gt;
-&lt;h2 id=&#34;using-quaternions-for-rotation&#34;&gt;Using Quaternions for Rotation&lt;/h2&gt;
-&lt;p&gt;Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&amp;rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are &lt;em&gt;unit&lt;/em&gt; quaternions: $||q|| = 1$. Unit quaternions are also called &lt;em&gt;versors&lt;/em&gt;. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&amp;rsquo;ve mentioned and &lt;em&gt;not&lt;/em&gt; trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.&lt;/p&gt;
-&lt;p&gt;To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em&gt;conjugation&lt;/em&gt; is used.
-$$ \vec{r}&amp;rsquo; = q \otimes \begin{bmatrix} 0 &amp;amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$&lt;/p&gt;
-&lt;p&gt;If I find the formula quite mysterious (as I did when I first saw it), it&amp;rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.&lt;/p&gt;
-&lt;h3 id=&#34;quaternions-rotation-matrices-and-the-rotation-group-so3&#34;&gt;Quaternions, Rotation Matrices and the Rotation Group $SO(3)$&lt;/h3&gt;
-&lt;p&gt;Earlier, I mentioned that rotations in 3D have certain properties (like non-commutativity) that implies that they don&amp;rsquo;t belong to a vector space (and therefore can&amp;rsquo;t be represented by one). If I want to be exact when talking about rotations, I have to consider them as a &lt;em&gt;group&lt;/em&gt;. A group is yet another mathematical abstraction. Abstractly, think of them as a set of objects that follow certain rules. Remember that groups are another concept that leans towards the abstract end of the mathematical spectrum. They &lt;em&gt;can&lt;/em&gt; be applied to rotations but they were invented by mathematicians to study more general ideas. So what rules does a group follow?&lt;/p&gt;
-&lt;p&gt;A group is a set $G$ along with some &lt;em&gt;binary&lt;/em&gt; operation $\cdot$ (takes two elements of the set and gives a third). The elements of the set follow these rules:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Closure: If $a,b \in G$ then $a\cdot b \in G$.&lt;/li&gt;
-&lt;li&gt;Associativity: If $a,b,c \in G$ then $a\cdot ( b \cdot c) = (a \cdot b) \cdot c $.&lt;/li&gt;
-&lt;li&gt;Identity: There&amp;rsquo;s some element of the set $e$ which has the property $a \cdot e = e\cdot a = a$.&lt;/li&gt;
-&lt;li&gt;Inverse: If $a \in G$ there&amp;rsquo;s some element $a^* $ such that $a \cdot a^* = a^* \cdot a = e$.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;If you compare this to 3D rotations, you can see that the set of 3D rotations are an example of a group under the binary operation of composition (doing one rotation after another)!&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Closure: If I compose two rotations it forms another rotation. It doesn&amp;rsquo;t suddenly become a translation or scaling or shear. There&amp;rsquo;s no way to combine rotations to do any of these other operations.&lt;/li&gt;
-&lt;li&gt;Associativity: If I do three rotations, it doesn&amp;rsquo;t matter which two I compose first.&lt;/li&gt;
-&lt;li&gt;Identity: There&amp;rsquo;s an identity rotation ($0^\circ$ of rotation around any axis).&lt;/li&gt;
-&lt;li&gt;And there&amp;rsquo;s an inverse rotation (rotating by negative of the angle around the same axis.)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Quaternions under multiplications &lt;em&gt;also&lt;/em&gt; satisfy all these properties.&lt;/p&gt;
-&lt;p&gt;If I convert Euler angle rotations to rotation matrices and compare them with quaternions, the parallels between them are very clear.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Group Property&lt;/th&gt;
-&lt;th&gt;Rotation Matrix $R_i \in G$&lt;/th&gt;
-&lt;th&gt;Quaternion $q_i \in \mathbb{H}_R$&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Closure&lt;/td&gt;
-&lt;td&gt;$R_1 \cdot R_2 \in G$&lt;/td&gt;
-&lt;td&gt;$q_1 \otimes q_2 \in \mathbb{H}_R$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Associativity&lt;/td&gt;
-&lt;td&gt;$R_1 \cdot (R_2 \cdot R_3) = (R_1 \cdot R_2) \cdot R_3$&lt;/td&gt;
-&lt;td&gt;$q_1 \otimes (q_2 \otimes q_3) = (q_1 \otimes q_2) \otimes q_3$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Identity&lt;/td&gt;
-&lt;td&gt;$I$&lt;/td&gt;
-&lt;td&gt;$1$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Inverse&lt;/td&gt;
-&lt;td&gt;$R_i^{-1} = R_i^{T} $&lt;/td&gt;
-&lt;td&gt;$q_i^{-1}$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The closure and associativity properties rotation matrices can be easily seen as a consequence of the fact that rotation matrices are 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Orthogonal_matrix&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;orthogonal matrices&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;With this knowledge of the rules that rotations follow, it&amp;rsquo;s clear why it&amp;rsquo;s silly to think of the Euler angles as a vector. They&amp;rsquo;re a set of related numbers but vectors they are not! It&amp;rsquo;s also clear why integrating the angular velocity vector over time does not directly give the orientation in an easily usable form.&lt;/p&gt;
-&lt;h3 id=&#34;representing-quaternion-rotation-as-a-matrix&#34;&gt;Representing quaternion rotation as a matrix&lt;/h3&gt;
-&lt;p&gt;Linearity of operations are an important property that both engineers and mathematicians like to take advantage of. It can result in useful simplifications of results. So it&amp;rsquo;s useful (later in this article) to ask the question: Is quaternion multiplication a linear operation? The simplest way to find out is to write out the result of a general quaternion multiplication operation and check if it&amp;rsquo;s possible to represent it as a matrix multiplication.&lt;/p&gt;
-&lt;p&gt;The symbolic result of multiplying two quaternions $q_1$ and $q_2$ is:
-$$ q_1 \otimes q_2 = \left[\begin{matrix}w_1 w_2 - x_1 x_2 - y_1 y_2 - z_1 z_2\\ w_1 x_2 + w_2 x_1 + y_1 z_2 - y_2 z_1\\ w_1 y_2 + w_2 y_1 - x_1 z_2 + x_2 z_1\\ w_1 z_2 + w_2 z_1 + x_1 y_2 - x_2 y_1\end{matrix}\right] $$&lt;/p&gt;
-&lt;p&gt;From inspection, this can be written as a matrix product:
-$$ q_1 \otimes q_2 = \left[\begin{matrix}w_2 &amp;amp; -x_2 &amp;amp; -y_2 &amp;amp; -z_2\\ x_2 &amp;amp; w_2 &amp;amp; z_2 &amp;amp; - y_2\\ y_2 &amp;amp; - z_2 &amp;amp; w_2 &amp;amp; x_2\\ z_2 &amp;amp; y_2 &amp;amp; - x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;And if I change the order of multiplication:
-$$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp;amp; - x_2 &amp;amp; - y_2 &amp;amp; - z_2 \\ x_2 &amp;amp; w_2 &amp;amp; - z_2 &amp;amp; y_2 \\ y_2 &amp;amp; z_2 &amp;amp; w_2 &amp;amp; - x_2 \\ z_2 &amp;amp; - y_2 &amp;amp; x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p&gt;
-&lt;h2 id=&#34;integrating-angular-velocity&#34;&gt;Integrating Angular Velocity&lt;/h2&gt;
-&lt;p&gt;To properly integrate angular velocity to get a quaternion, I need to find a relationship between quaternions and angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p&gt;
-&lt;p&gt;A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.
-$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p&gt;
-&lt;p&gt;Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
-$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
-&lt;p&gt;Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
+0 &amp;amp; \frac{(m_c + m_p)g}{m_c l} &amp;amp; 0 &amp;amp; 0 \end{bmatrix} $$&lt;/p>
+&lt;p>$$ B = \begin{bmatrix} 0 \\ 0 \\ \frac{1}{m_c} \\ \frac{1}{m_c l}\end{bmatrix} $$&lt;/p>
+&lt;p>To compute the optimal LQR control gains, I need to define a few more matrices. As I said before, LQR finds the gain matrix $K$ that optimizes the cost function&lt;/p>
+&lt;p>$$ J = \int_0^{\infty} (s^TQs + u^TRu + 2x^TNu) dt$$&lt;/p>
+&lt;p>I need to define the matrix $Q$, $R$ and $N$. You can think of $Q$ as a matrix of weights that tell you how much to &amp;ldquo;penalize&amp;rdquo; certain combinations of the state. For instance the first term in the diagonal of the $Q$ matrix tells you how much to penalize the value of the state variable $x$. The same goes for other matrices. Having the $Q$ matrix as a scalar multiple of the identity matrix is a good default. $R$ is just a single scalar value. $N$ can be skipped in most cases. With these I got a control gain matrix that also successfully drove the states to my target. It looked quite similar to my hand tuned control gains actually. On close inspection you can see that the system does reach it&amp;rsquo;s target slightly faster.&lt;/p>
+&lt;p>&lt;img src="https://www.ashwinnarayan.com/img/cartpole_LQR_control.gif" alt="cartpole_lqr_control">&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>Dynamics is an important part of a roboticist&amp;rsquo;s toolkit. Learning dynamics from a textbook can be a bit daunting. For me, implementing the ideas in code and generating nice animations helps me to get a better intuition of the mathematics. Now that I have the environment set up, I&amp;rsquo;m considering trying my hand at some swing-up control using energy shaping methods or reinforcement learning.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-832-underactuated-robotics-spring-2009/readings/MIT6_832s09_read_ch03.pdf" target="_blank" rel="noopener">Acrobot and Cartpole, Russ Tedrake 2009&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://www.mathworks.com/help/control/ref/lqr.html" target="_blank" rel="noopener">MATLAB&amp;rsquo;s LQR Design Function&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation" target="_blank" rel="noopener">Euler-Lagrange Equation&lt;/a>&lt;/li>
+&lt;/ol></description></item><item><title>How to Integrate Quaternions</title><link>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</link><pubDate>Sun, 10 Sep 2017 17:58:08 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/</guid><description>&lt;p>I&amp;rsquo;ve been working with inertial measurement units lately, and I&amp;rsquo;ve come to realize that there&amp;rsquo;s a surprising amount of mathematics involved in processing the raw data from the sensors. The story begins with me trying to integrate a three-dimensional angular velocity vector to get the orientation of an object. It turns out that while angular velocity is a vector, common representations of orientation, like Euler Angles, are not. So calculating the orientation is not as simple as integrating the angular velocity vector over time ($\int_0^t \vec{\omega} \mathscr{d}t$).&lt;/p>
+&lt;p>Rotations in two dimensions are simple because there is only one plane in which you can rotate. The only variable that can be freely set is the center of rotation. So you can represent the orientation of an object in 2D by a single angle $\phi$. The angular velocity of an object in two dimensions can also be represented by a single number $\omega$, the time derivative of the angle. This produces the familiar formula I learned in high school physics.&lt;/p>
+&lt;p>$$\omega = \frac{d\phi}{dt} = \frac{v_{\bot}}{r}$$
+&lt;img src="https://www.ashwinnarayan.com/img/angular_velocity.svg" alt="angular_velocity_image">&lt;/p>
+&lt;p>Rotations in 3D are much more complicated. In 3 dimensions, the plane of rotation can be any among an infinite number of possibilities. The origin or &amp;ldquo;center&amp;rdquo; of rotation now becomes an &lt;em>axis&lt;/em> of rotation which is represented by a vector. The plane of rotation is perpendicular to the axis of rotation. This is a result of the
+&lt;a href="https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem" target="_blank" rel="noopener">Euler Rotation Theorem&lt;/a>&lt;/p>
+&lt;p>Before I can start integrating angular velocity I need to choose a representation for the orientation. There are several different conventions when it comes to representing the orientation of an object in 3D. The most popular approach is to use a set of three angles called
+&lt;a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank" rel="noopener">Euler Angles&lt;/a>. This approach was developed by the mathematician Leonhard Euler (pronounced oy-ler not you-ler). These set of three angles specify three successive rotations around three different axes in a very specific order. The order is important because rotations in 3D have an important property: they do not &lt;em>commute&lt;/em>. This means that if I do rotation 1 before 2 I end up with a different orientation than if I do 2 before 1. Euler angles usually specify rotations in the ZXZ order. This means that the first axis of rotation is the current Z-axis. The second axis of rotation is the new X-axis &lt;em>after&lt;/em> the first rotation. The final axis of rotation is the new Z-axis after the first and second rotations. A closely related approach is to use what&amp;rsquo;s called
+&lt;a href="https://en.wikipedia.org/wiki/Euler_angles#Tait-Bryan_angles" target="_blank" rel="noopener">Tait-Bryan angles&lt;/a>. Tait-Bryan angles are called yaw, pitch and roll and are commonly used when talking about the orientation of aircraft. The angles represent successive rotations around the body fixed X, Y and Z axes. Both Euler angles and Tait-Bryan angles however, suffer from something called
+&lt;a href="https://en.wikipedia.org/wiki/Gimbal_lock" target="_blank" rel="noopener">Gimbal Lock&lt;/a>. This is when for a certain value of one of the rotation angles, a degree of freedom is lost and two rotations &amp;ldquo;collapse&amp;rdquo; into a single rotation. The Wikipedia page linked has some nice visualizations and a short mathematical explanation (using rotation matrices) for why this happens.&lt;/p>
+&lt;p>Using Quaternions to represent rotations is a way to avoid the Gimbal Lock problem. Quaternions are so useful for representing orientations that most Kalman Filters that need to track 3D orientations use them instead of Euler Angles. So I settled on using quaternions. When I first started working with quaternions I found them a little difficult to understand. So I thought of writing an article about the path I took to understand and use quaternions for &amp;ldquo;integrating&amp;rdquo; angular velocity.&lt;/p>
+&lt;p>From all my time working with mathematics, I&amp;rsquo;ve come to realize that mathematical ideas exist on a spectrum. At one end is math that is focused on the practical application. Math that is very close to the real world (as experienced by humans) and can be understood easily by making analogies to things that humans encounter in everyday life. This is the type of math that is often applied to solve everyday problems like settling bills or building bridges. At the other end of the spectrum is the type of math that is pure abstraction. This type of abstract math is often used to generalize specific results in practical math to other problems or to come up with new insights that can pave the way for new solutions to a problem. Quaternions are a little more towards the abstract end of the spectrum and can be difficult to get an intuition for. Sometimes though there are ideas that you &lt;em>can&amp;rsquo;t&lt;/em> get an intuition for. Working with such math is mostly a matter of getting used to it. With abstract math, the best way I&amp;rsquo;ve found to get used to it is to learn the basic definition and keep applying it to problems until you get the hang of it. The understanding forms in the brain automatically as you get the hang of it.&lt;/p>
+&lt;h2 id="quaternion-math">Quaternion Math&lt;/h2>
+&lt;p>So without further ado, I&amp;rsquo;ll talk about what quaternions are and how they behave.&lt;/p>
+&lt;h3 id="representation">Representation&lt;/h3>
+&lt;p>A quaternion $q$ can be represented as a tuple of 4 numbers:
+$$q = \begin{bmatrix} w &amp;amp; \ x &amp;amp;\ y &amp;amp; \ z \end{bmatrix} = \begin{bmatrix} w &amp;amp; \ \vec{v}\end{bmatrix} = w + x\mathrm{i} + y\mathrm{j} + z\mathrm{k} $$&lt;/p>
+&lt;p>where the $w$ is the &lt;em>scalar&lt;/em> part and the $\vec{v}$ is the &lt;em>vector&lt;/em> part.&lt;/p>
+&lt;p>Two binary operations are defined for quaternions: addition $+$ and quaternion multiplication $\otimes$.&lt;/p>
+&lt;h3 id="addition">Addition&lt;/h3>
+&lt;p>Addition is defined as the component-wise sum just like for a 4D vector. The sum is commutative (order is not important) and associative (grouping is not important).&lt;/p>
+&lt;p>$$ q_1 + q_2 = \begin{bmatrix} w_1 + w_2 &amp;amp; \ x_1 + x_2 &amp;amp; \ y_1 + y_2 &amp;amp; \ z_1 + z_2 \end{bmatrix} = q_2 + q_1$$&lt;/p>
+&lt;h3 id="multiplication">Multiplication&lt;/h3>
+&lt;p>Quaternion multiplication is defined in multiple ways but the formula that I find the easiest to remember is:
+$$ q_1 \otimes q_2 = \begin{bmatrix} w_1 w_2 - \vec{v}_1\cdot\vec{v}_2 &amp;amp; \ w_1\vec{v}_2 + w_2\vec{v}_1 + \vec{v}_1\times\vec{v}_2 \end{bmatrix} $$&lt;/p>
+&lt;p>The multiplication is &lt;em>non-commutative&lt;/em> ($q_1 \otimes q_2 \neq q_2 \otimes q_1$ ) and distributive over the sum $(q_1 \otimes (q_2 + q_3) = q_1 \otimes q_2 + q_1 \otimes q_3 )$.&lt;/p>
+&lt;h3 id="norm-conjugate-and-inverse">Norm, Conjugate and Inverse&lt;/h3>
+&lt;p>It&amp;rsquo;s also useful to define the norm of a quaternion as:
+$$ ||q|| = \sqrt{w^2 + x^2 + y^2 + z^2} $$&lt;/p>
+&lt;p>a conjugate quaternion $ q^* $ that satisfies the property $ q \otimes q^* = ||q||^2 $ as
+$$ q^* = \begin{bmatrix} w &amp;amp; \ -x &amp;amp; \ -y &amp;amp; \ -z \end{bmatrix} $$&lt;/p>
+&lt;p>and a quaternion inverse $q^{-1}$ with the property $q \otimes q^{-1} = \begin{bmatrix} 1 \ 0 \ 0 \ 0 \end{bmatrix}$ as
+$$ q^{-1} = \frac{q^*}{||q||^2} $$&lt;/p>
+&lt;h2 id="using-quaternions-for-rotation">Using Quaternions for Rotation&lt;/h2>
+&lt;p>Now that the behaviour of quaternions are established, there is the question of how to use them to represent 3D rotation. From Euler&amp;rsquo;s Rotation Theorem it is clear that rotations have 3 degrees of freedom. But quaternions as 4 tuples have 4 degrees of freedom. So an additional constraint needs to be imposed to use them to represent rotations. This is done by requiring that the quaternions are &lt;em>unit&lt;/em> quaternions: $||q|| = 1$. Unit quaternions are also called &lt;em>versors&lt;/em>. There are many diagrams and visualizations that attempt to make understanding the unit quaternion more intuitive but I found that for me, most were misleading. I found it the most useful to think of quaternions as just an abstract object with the properties that I&amp;rsquo;ve mentioned and &lt;em>not&lt;/em> trying to have any picture in mind. The moment I left behind the crutch of visualization and forced myself to accept and think about quaternions as they are, everything fell into place.&lt;/p>
+&lt;p>To rotate a 3D vector $\vec{r}$ by a versor $q$ an operation called &lt;em>conjugation&lt;/em> is used.
+$$ \vec{r}&amp;rsquo; = q \otimes \begin{bmatrix} 0 &amp;amp; \ \vec{r} \end{bmatrix} \otimes q^{*} $$&lt;/p>
+&lt;p>If I find the formula quite mysterious (as I did when I first saw it), it&amp;rsquo;s helpful to use one of the other methods (euler angles, axis angle) to rotate a vector and verify that the result is the same.&lt;/p>
+&lt;p>It&amp;rsquo;s possible to compose two rotations represented by two quaternions $q_1$ and $q_2$ by multiplying the two quaternions together $q_2 \otimes q_1$. This product represents the rotation $q_1$ applied before $q_2$.&lt;/p>
+&lt;h3 id="quaternions-rotation-matrices-and-the-rotation-group-so3">Quaternions, Rotation Matrices and the Rotation Group $SO(3)$&lt;/h3>
+&lt;p>Earlier, I mentioned that rotations in 3D have certain properties (like non-commutativity) that implies that they don&amp;rsquo;t belong to a vector space (and therefore can&amp;rsquo;t be represented by one). If I want to be exact when talking about rotations, I have to consider them as a &lt;em>group&lt;/em>. A group is yet another mathematical abstraction. Abstractly, think of them as a set of objects that follow certain rules. Remember that groups are another concept that leans towards the abstract end of the mathematical spectrum. They &lt;em>can&lt;/em> be applied to rotations but they were invented by mathematicians to study more general ideas. So what rules does a group follow?&lt;/p>
+&lt;p>A group is a set $G$ along with some &lt;em>binary&lt;/em> operation $\cdot$ (takes two elements of the set and gives a third). The elements of the set follow these rules:&lt;/p>
+&lt;ol>
+&lt;li>Closure: If $a,b \in G$ then $a\cdot b \in G$.&lt;/li>
+&lt;li>Associativity: If $a,b,c \in G$ then $a\cdot ( b \cdot c) = (a \cdot b) \cdot c $.&lt;/li>
+&lt;li>Identity: There&amp;rsquo;s some element of the set $e$ which has the property $a \cdot e = e\cdot a = a$.&lt;/li>
+&lt;li>Inverse: If $a \in G$ there&amp;rsquo;s some element $a^* $ such that $a \cdot a^* = a^* \cdot a = e$.&lt;/li>
+&lt;/ol>
+&lt;p>If you compare this to 3D rotations, you can see that the set of 3D rotations are an example of a group under the binary operation of composition (doing one rotation after another)!&lt;/p>
+&lt;ol>
+&lt;li>Closure: If I compose two rotations it forms another rotation. It doesn&amp;rsquo;t suddenly become a translation or scaling or shear. There&amp;rsquo;s no way to combine rotations to do any of these other operations.&lt;/li>
+&lt;li>Associativity: If I do three rotations, it doesn&amp;rsquo;t matter which two I compose first.&lt;/li>
+&lt;li>Identity: There&amp;rsquo;s an identity rotation ($0^\circ$ of rotation around any axis).&lt;/li>
+&lt;li>And there&amp;rsquo;s an inverse rotation (rotating by negative of the angle around the same axis.)&lt;/li>
+&lt;/ol>
+&lt;p>Quaternions under multiplications &lt;em>also&lt;/em> satisfy all these properties.&lt;/p>
+&lt;p>If I convert Euler angle rotations to rotation matrices and compare them with quaternions, the parallels between them are very clear.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Group Property&lt;/th>
+&lt;th>Rotation Matrix $R_i \in G$&lt;/th>
+&lt;th>Quaternion $q_i \in \mathbb{H}_R$&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Closure&lt;/td>
+&lt;td>$R_1 \cdot R_2 \in G$&lt;/td>
+&lt;td>$q_1 \otimes q_2 \in \mathbb{H}_R$&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Associativity&lt;/td>
+&lt;td>$R_1 \cdot (R_2 \cdot R_3) = (R_1 \cdot R_2) \cdot R_3$&lt;/td>
+&lt;td>$q_1 \otimes (q_2 \otimes q_3) = (q_1 \otimes q_2) \otimes q_3$&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Identity&lt;/td>
+&lt;td>$I$&lt;/td>
+&lt;td>$1$&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Inverse&lt;/td>
+&lt;td>$R_i^{-1} = R_i^{T} $&lt;/td>
+&lt;td>$q_i^{-1}$&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The closure and associativity properties rotation matrices can be easily seen as a consequence of the fact that rotation matrices are
+&lt;a href="https://en.wikipedia.org/wiki/Orthogonal_matrix" target="_blank" rel="noopener">orthogonal matrices&lt;/a>.&lt;/p>
+&lt;p>With this knowledge of the rules that rotations follow, it&amp;rsquo;s clear why it&amp;rsquo;s silly to think of the Euler angles as a vector. They&amp;rsquo;re a set of related numbers but vectors they are not! It&amp;rsquo;s also clear why integrating the angular velocity vector over time does not directly give the orientation in an easily usable form.&lt;/p>
+&lt;h3 id="representing-quaternion-rotation-as-a-matrix">Representing quaternion rotation as a matrix&lt;/h3>
+&lt;p>Linearity of operations are an important property that both engineers and mathematicians like to take advantage of. It can result in useful simplifications of results. So it&amp;rsquo;s useful (later in this article) to ask the question: Is quaternion multiplication a linear operation? The simplest way to find out is to write out the result of a general quaternion multiplication operation and check if it&amp;rsquo;s possible to represent it as a matrix multiplication.&lt;/p>
+&lt;p>The symbolic result of multiplying two quaternions $q_1$ and $q_2$ is:
+$$ q_1 \otimes q_2 = \left[\begin{matrix}w_1 w_2 - x_1 x_2 - y_1 y_2 - z_1 z_2\\ w_1 x_2 + w_2 x_1 + y_1 z_2 - y_2 z_1\\ w_1 y_2 + w_2 y_1 - x_1 z_2 + x_2 z_1\\ w_1 z_2 + w_2 z_1 + x_1 y_2 - x_2 y_1\end{matrix}\right] $$&lt;/p>
+&lt;p>From inspection, this can be written as a matrix product:
+$$ q_1 \otimes q_2 = \left[\begin{matrix}w_2 &amp;amp; -x_2 &amp;amp; -y_2 &amp;amp; -z_2\\ x_2 &amp;amp; w_2 &amp;amp; z_2 &amp;amp; - y_2\\ y_2 &amp;amp; - z_2 &amp;amp; w_2 &amp;amp; x_2\\ z_2 &amp;amp; y_2 &amp;amp; - x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p>
+&lt;p>And if I change the order of multiplication:
+$$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp;amp; - x_2 &amp;amp; - y_2 &amp;amp; - z_2 \\ x_2 &amp;amp; w_2 &amp;amp; - z_2 &amp;amp; y_2 \\ y_2 &amp;amp; z_2 &amp;amp; w_2 &amp;amp; - x_2 \\ z_2 &amp;amp; - y_2 &amp;amp; x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p>
+&lt;h2 id="integrating-angular-velocity">Integrating Angular Velocity&lt;/h2>
+&lt;p>To properly integrate angular velocity to get a quaternion, I need to find a relationship between quaternions and angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p>
+&lt;p>A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.
+$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p>
+&lt;p>Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
+$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p>
+&lt;p>Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
 $$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
 \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
-\end{align}$$&lt;/p&gt;
-&lt;p&gt;So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&amp;rsquo;t be changed when applying the product rule.&lt;/p&gt;
-&lt;p&gt;$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes \vec{s}_0 \otimes q^* +  q \otimes \vec{s}_0 \otimes \dot{q^*} $$&lt;/p&gt;
-&lt;p&gt;There&amp;rsquo;s a term in this equation - the derivative of the conjugate - that&amp;rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&amp;rsquo;s conjugate which we know to be 1:&lt;/p&gt;
-&lt;p&gt;$$\begin{align}
-\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;=  \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
-\dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;amp;= 0 \end{align} $$&lt;/p&gt;
-&lt;p&gt;That gives the relationship&lt;/p&gt;
-&lt;p&gt;$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$&lt;/p&gt;
-&lt;p&gt;Expressing $s_0$ in terms of $s$, substituting $\dot{q^* } $ and doing a little algebra:
-$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] =  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* = \vec{\omega} \otimes \vec{s} $$&lt;/p&gt;
-&lt;h3 id=&#34;the-quaternion-commutator&#34;&gt;The Quaternion Commutator&lt;/h3&gt;
-&lt;p&gt;The expression $\dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^*$ is in the form $p \otimes q - q \otimes p$ which is defined as a commutator operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p&gt;
-&lt;p&gt;$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;Interestingly, if both $q_1$ and $q_2$ are &lt;em&gt;pure quaternions&lt;/em&gt; (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p&gt;
-&lt;p&gt;$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p&gt;
-&lt;h3 id=&#34;the-product-dotq-q--is-a-pure-quaternion&#34;&gt;The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3&gt;
-&lt;p&gt;$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
+\end{align}$$&lt;/p>
+&lt;p>So how do I take that nasty looking derivative on the side? Well it turns out that the product rule of derivatives that is valid in basic calculus is also perfectly valid for quaternion multiplication! I converted the quaternion product into a matrix multiplication and spent some time converting the derivatives of the product to the result from applying the product rule. The only thing to watch out for is the non commutativity of the multiplication. The order of the quaternion product shouldn&amp;rsquo;t be changed when applying the product rule.&lt;/p>
+&lt;p>$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] = \dot{q} \otimes \vec{s}_0 \otimes q^* + q \otimes \vec{s}_0 \otimes \dot{q^*} $$&lt;/p>
+&lt;p>There&amp;rsquo;s a term in this equation - the derivative of the conjugate - that&amp;rsquo;ll cause some trouble. It is possible to eliminate this using other methods but the simplest way is to directly find a relationship between $\dot{q}$ and $\dot{q^*}$. The easy way to do this is to take the derivative of the product of a quaternion and it&amp;rsquo;s conjugate which we know to be 1:&lt;/p>
+&lt;p>$$\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} (q \otimes q^* ) &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} 1 \\
+\dot{q} \otimes q^* + q \otimes \dot{q^*} &amp;amp;= 0 \end{align} $$&lt;/p>
+&lt;p>That gives the relationship&lt;/p>
+&lt;p>$$ \dot{q^* } = -q^* \otimes \dot{q} \otimes q^* $$&lt;/p>
+&lt;p>Expressing $s_0$ in terms of $s$, substituting $\dot{q^* } $ and doing a little algebra:
+$$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right] = \dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^* = \vec{\omega} \otimes \vec{s} $$&lt;/p>
+&lt;h3 id="the-quaternion-commutator">The Quaternion Commutator&lt;/h3>
+&lt;p>The expression $\dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^*$ is in the form $p \otimes q - q \otimes p$ which is defined as a commutator operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p>
+&lt;p>$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$&lt;/p>
+&lt;p>Interestingly, if both $q_1$ and $q_2$ are &lt;em>pure quaternions&lt;/em> (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p>
+&lt;p>$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p>
+&lt;h3 id="the-product-dotq-q--is-a-pure-quaternion">The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3>
+&lt;p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
 \dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^*
-\end{align} $$&lt;/p&gt;
-&lt;p&gt;Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p&gt;
-&lt;h3 id=&#34;the-differential-equation&#34;&gt;The Differential Equation&lt;/h3&gt;
-&lt;p&gt;So finally, I can extract the quaternion differential equation:&lt;/p&gt;
-&lt;p&gt;$$ \begin{align}  \dot{q} \otimes q^* \otimes \vec{s} -  \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
+\end{align} $$&lt;/p>
+&lt;p>Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p>
+&lt;h3 id="the-differential-equation">The Differential Equation&lt;/h3>
+&lt;p>So finally, I can extract the quaternion differential equation:&lt;/p>
+&lt;p>$$ \begin{align} \dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
 \left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\
 2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
-\dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p&gt;
-&lt;p&gt;In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p&gt;
-&lt;p&gt;$$ \dot{q} = \frac{1}{2} q \otimes  \vec{\omega} $$&lt;/p&gt;
-&lt;h3 id=&#34;integration&#34;&gt;Integration&lt;/h3&gt;
-&lt;p&gt;To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a &lt;em&gt;quaternion multiplication&lt;/em&gt; in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:&lt;/p&gt;
-&lt;p&gt;$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \frac{1}{2} \cdot \left[\begin{matrix}0 &amp;amp; - \omega_x &amp;amp; - \omega_y &amp;amp; - \omega_z \\ \omega_x &amp;amp; 0 &amp;amp; \omega_z &amp;amp; - \omega_y \\ \omega_y &amp;amp; - \omega_z &amp;amp; 0 &amp;amp; \omega_x \\ \omega_z &amp;amp; \omega_y &amp;amp; - \omega_x &amp;amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$&lt;/p&gt;
-&lt;p&gt;This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:&lt;/p&gt;
-&lt;p&gt;$$ q(t) = e^{A(t - t_0 )} q_0 $$&lt;/p&gt;
-&lt;h3 id=&#34;quaternion-exponential&#34;&gt;Quaternion Exponential&lt;/h3&gt;
-&lt;p&gt;Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula 
-&lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;5&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\
+\dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p>
+&lt;p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p>
+&lt;p>$$ \dot{q} = \frac{1}{2} q \otimes \vec{\omega} $$&lt;/p>
+&lt;h3 id="integration">Integration&lt;/h3>
+&lt;p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a &lt;em>quaternion multiplication&lt;/em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:&lt;/p>
+&lt;p>$$ \begin{bmatrix} \dot{w} \\ \dot{x} \\ \dot{y} \\ \dot{z} \end{bmatrix} = \frac{1}{2} \cdot \left[\begin{matrix}0 &amp;amp; - \omega_x &amp;amp; - \omega_y &amp;amp; - \omega_z \\ \omega_x &amp;amp; 0 &amp;amp; \omega_z &amp;amp; - \omega_y \\ \omega_y &amp;amp; - \omega_z &amp;amp; 0 &amp;amp; \omega_x \\ \omega_z &amp;amp; \omega_y &amp;amp; - \omega_x &amp;amp; 0 \end{matrix}\right] \cdot \begin{bmatrix} w \\ x \\ y \\ z \end{bmatrix} $$&lt;/p>
+&lt;p>This is an ODE in the form $\dot{q} = Aq$ where A is the big matrix. The solution to this differential equation then is:&lt;/p>
+&lt;p>$$ q(t) = e^{A(t - t_0 )} q_0 $$&lt;/p>
+&lt;h3 id="quaternion-exponential">Quaternion Exponential&lt;/h3>
+&lt;p>Interestingly, if I define the quaternion exponential in the same way as the matrix exponential (using its Taylor Series representation), I get a quaternion equivalent formula
+&lt;a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank" rel="noopener">5&lt;/a>.&lt;/p>
+&lt;p>$$ \begin{align} \exp{(q)} &amp;amp;= e^{w}e^{\vec{v}} \\
 &amp;amp;= e^{w}\left(\sum_0^\infty \frac{\vec{v}^k}{k!}\right) \\
-&amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p&gt;
-&lt;p&gt;Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:&lt;/p&gt;
-&lt;p&gt;$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$&lt;/p&gt;
-&lt;h2 id=&#34;summing-up&#34;&gt;Summing Up&lt;/h2&gt;
-&lt;p&gt;I started out with the simple sounding task of integrating angular velocity and in trying to solve it, traversed through a several different areas of mathematics and learned a lot along the way before coming to the final solution. However, my description here is far from complete. The equation above only holds if the angular velocity is constant over a time period. This means its a &amp;ldquo;first order&amp;rdquo; model. Dropping this assumption gives $n^{th}$ order models for integration. There are also intricate details that I&amp;rsquo;m only beginning to understand. For instance, I&amp;rsquo;m reading about how rotations are a special type of group called 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Lie_group&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Lie Groups &lt;/a&gt; where the group is also a 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Differentiable_manifold&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;differentiable manifold&lt;/a&gt; (yet another interesting abstract mathematical object). The space of angular velocity forms what is called a 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Lie_algebra&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Lie Algebra &lt;/a&gt; on the group. And the quaternion exponential function which most texts I refer to seem to pull out of thin air is actually related to a more general idea called an exponential map which maps general Lie Algebras to Lie Groups.&lt;/p&gt;
-&lt;p&gt;Despite it&amp;rsquo;s incompleteness however, it is the minimum that I needed to understand to be able to actually implement in code the integration of a quaternion - i.e use quaternions practically for integrating data coming in from an inertial measurement unit. I hope that others trying to understand quaternions and their role in representing 3D rotations will find this article useful. Some of the references below go deeper into the nature of quaternions and how to use them for useful things like tracking orientations.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://arxiv.org/pdf/1604.08139.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Boyle, Michael. &amp;ldquo;The integration of angular velocity.&amp;rdquo; Advances in Applied Clifford Algebras (2016): 1-30.&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Rotation_group_SO%283%29&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://en.wikipedia.org/wiki/Rotation_group_SO(3)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Quaternion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://en.wikipedia.org/wiki/Quaternion&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://hal.archives-ouvertes.fr/hal-01122406/document&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Sola, Joan. &amp;ldquo;Quaternion kinematics for the error-state KF.&amp;rdquo; (2015).&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;a href=&#34;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&amp;amp;= e^{w}\left(\cos{|\vec{v}|} + \frac{\vec{v}}{|\vec{v}|} \sin{|\vec{v}|}\right) \end{align} $$&lt;/p>
+&lt;p>Using the quaternion exponential, the solution to the differential equation can be expressed in quaternion form as:&lt;/p>
+&lt;p>$$ q(t) = \exp{\left(\frac{1}{2}\vec{\omega}\Delta t\right)} \otimes q_0 $$&lt;/p>
+&lt;h2 id="summing-up">Summing Up&lt;/h2>
+&lt;p>I started out with the simple sounding task of integrating angular velocity and in trying to solve it, traversed through a several different areas of mathematics and learned a lot along the way before coming to the final solution. However, my description here is far from complete. The equation above only holds if the angular velocity is constant over a time period. This means its a &amp;ldquo;first order&amp;rdquo; model. Dropping this assumption gives $n^{th}$ order models for integration. There are also intricate details that I&amp;rsquo;m only beginning to understand. For instance, I&amp;rsquo;m reading about how rotations are a special type of group called
+&lt;a href="https://en.wikipedia.org/wiki/Lie_group" target="_blank" rel="noopener">Lie Groups &lt;/a> where the group is also a
+&lt;a href="https://en.wikipedia.org/wiki/Differentiable_manifold" target="_blank" rel="noopener">differentiable manifold&lt;/a> (yet another interesting abstract mathematical object). The space of angular velocity forms what is called a
+&lt;a href="https://en.wikipedia.org/wiki/Lie_algebra" target="_blank" rel="noopener">Lie Algebra &lt;/a> on the group. And the quaternion exponential function which most texts I refer to seem to pull out of thin air is actually related to a more general idea called an exponential map which maps general Lie Algebras to Lie Groups.&lt;/p>
+&lt;p>Despite it&amp;rsquo;s incompleteness however, it is the minimum that I needed to understand to be able to actually implement in code the integration of a quaternion - i.e use quaternions practically for integrating data coming in from an inertial measurement unit. I hope that others trying to understand quaternions and their role in representing 3D rotations will find this article useful. Some of the references below go deeper into the nature of quaternions and how to use them for useful things like tracking orientations.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;a href="https://arxiv.org/pdf/1604.08139.pdf" target="_blank" rel="noopener">Boyle, Michael. &amp;ldquo;The integration of angular velocity.&amp;rdquo; Advances in Applied Clifford Algebras (2016): 1-30.&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://en.wikipedia.org/wiki/Rotation_group_SO%283%29" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Rotation_group_SO(3)&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://en.wikipedia.org/wiki/Quaternion" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Quaternion&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://hal.archives-ouvertes.fr/hal-01122406/document" target="_blank" rel="noopener">Sola, Joan. &amp;ldquo;Quaternion kinematics for the error-state KF.&amp;rdquo; (2015).&lt;/a>&lt;/li>
+&lt;li>
+&lt;a href="https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation" target="_blank" rel="noopener">https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation&lt;/a>&lt;/li>
+&lt;/ol></description></item></channel></rss>

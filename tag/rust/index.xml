@@ -1,4 +1,206 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rust | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/tag/rust/</link><atom:link href="https://www.ashwinnarayan.com/tag/rust/index.xml" rel="self" type="application/rss+xml"/><description>rust</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Sun, 06 Oct 2024 20:04:51 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>rust</title><link>https://www.ashwinnarayan.com/tag/rust/</link></image><item><title>Writing a small async runtime for Cortex-M micro-controllers with Rust</title><link>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</link><pubDate>Sun, 06 Oct 2024 20:04:51 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rust | Ashwin Narayan</title><link>https://www.ashwinnarayan.com/tag/rust/</link><atom:link href="https://www.ashwinnarayan.com/tag/rust/index.xml" rel="self" type="application/rss+xml"/><description>rust</description><generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Ashwin Narayan</copyright><lastBuildDate>Tue, 17 Jun 2025 22:11:25 +0800</lastBuildDate><image><url>https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url><title>rust</title><link>https://www.ashwinnarayan.com/tag/rust/</link></image><item><title>Writing a Rust Driver for the MPU6050</title><link>https://www.ashwinnarayan.com/post/rust-driver-mpu6050/</link><pubDate>Tue, 17 Jun 2025 22:11:25 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/rust-driver-mpu6050/</guid><description>&lt;h3 id="1-introduction">1. Introduction&lt;/h3>
+&lt;p>I’ve recently been tinkering with Rust on embedded systems and have been pleasantly surprised by how thoughtfully designed it is compared to the C and C++ ecosystems. One of the things I immediately appreciated was how easy and straightforward builds are with Rust—just running &lt;code>cargo build&lt;/code> makes life simpler. Debugging and printing are also more intuitive, thanks to tools like &lt;code>defmt&lt;/code>, which feels like a breath of fresh air compared to traditional methods.&lt;/p>
+&lt;p>In contrast, setting up a project with C or C++ is often cumbersome. You typically find yourself locked into vendor-specific IDEs if you want quick setups. And if you prefer a more lightweight editor like Sublime or Neovim, you usually end up wrestling with creating and maintaining complex CMake files yourself.&lt;/p>
+&lt;p>With these advantages in mind, I’ve recently been working on building out an embedded controller for running some IMU sensors and motors for a personal project and decided it was the perfect opportunity to use Rust.&lt;/p>
+&lt;p>For the IMU, I&amp;rsquo;ll be using the MPU-6050 is a widely-used accelerometer and gyroscope IMU sensor that’s great for robotics, drones, and embedded projects. While there are some existing Rust drivers for this IMU sensor, I thought this was a good opportunity for me to go through the process of writing an I2C driver in Rust and compare it with the process of doing the same thing in C/C++. In this article, we’ll explore building a minimal MPU-6050 driver in Rust, specifically using the Embassy async framework on an STM32F103C8 (BluePill) microcontroller.&lt;/p>
+&lt;h3 id="2-high-level-architecture-and-approach">2. High-Level Architecture and Approach&lt;/h3>
+&lt;p>As this is my first attempt at a driver, I decided to use the
+&lt;a href="https://github.com/sparkfun/MPU-9150_Breakout/tree/master" target="_blank" rel="noopener">MPU6050 driver by SparkFun&lt;/a> as a reference, and borrowed heavily from their approach. I also decided to write a blocking driver first.&lt;/p>
+&lt;p>Our driver separates into three parts:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Register Definitions&lt;/strong>: Constants representing MPU-6050 registers.&lt;/li>
+&lt;li>&lt;strong>Bit-field Traits&lt;/strong>: Providing safe and ergonomic register manipulation.&lt;/li>
+&lt;li>&lt;strong>I²C Transport&lt;/strong>: Basic read/write methods using Embassy&amp;rsquo;s blocking I²C.&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-communicating-with-mpu-6050">3. Communicating with MPU-6050&lt;/h3>
+&lt;p>The MPU-6050 communicates over I²C, typically at address &lt;code>0x68&lt;/code> or &lt;code>0x69&lt;/code> depending on the &lt;code>AD0&lt;/code> pin:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>AD0 Low (GND)&lt;/code>: Address &lt;code>0x68&lt;/code> (default)&lt;/li>
+&lt;li>&lt;code>AD0 High (VCC)&lt;/code>: Address &lt;code>0x69&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>However, I wanted the option to be able to use a completely custom I2C address if needed. So the final design of the driver struct was:&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub struct MPU6050I2c&amp;lt;'d&amp;gt; {
+peripheral: I2c&amp;lt;'d, embassy_stm32::mode::Blocking&amp;gt;,
+address: u8,
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="4-representing-registers-in-rust">4. Representing Registers in Rust&lt;/h3>
+&lt;h4 id="41-register-constants">4.1 Register Constants&lt;/h4>
+&lt;p>All registers are defined as constants, avoiding heavy enum overhead:&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub const MPU6050_RA_ACCEL_XOUT_H: u8 = 0x3B;
+// More registers...
+&lt;/code>&lt;/pre>
+&lt;h4 id="42-bit-field-traits">4.2 Bit-field Traits&lt;/h4>
+&lt;p>Using Rust traits, we create a safe way to handle register bits:&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub trait MPU6050BitField {
+fn addr() -&amp;gt; u8;
+fn location() -&amp;gt; u8;
+fn length() -&amp;gt; u8 { 1 }
+fn mask() -&amp;gt; u8 { (1 &amp;lt;&amp;lt; Self::length()) - 1 }
+fn from(value: u8) -&amp;gt; Self;
+fn to_value(&amp;amp;self) -&amp;gt; u8;
+}
+&lt;/code>&lt;/pre>
+&lt;p>Implementing traits for specific fields:&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub enum SleepMode {
+Sleep = 0x01,
+WakeUp = 0x00,
+}
+impl MPU6050BitField for SleepMode {
+fn addr() -&amp;gt; u8 { MPU6050_RA_PWR_MGMT_1 }
+fn location() -&amp;gt; u8 { MPU6050_PWR1_SLEEP_BIT }
+// more methods...
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="5-core-ic-driver">5. Core I²C Driver&lt;/h3>
+&lt;p>Our I²C driver class &lt;code>MPU6050I2c&lt;/code> encapsulates Embassy&amp;rsquo;s blocking I²C:&lt;/p>
+&lt;h4 id="constructor">Constructor&lt;/h4>
+&lt;p>In our constructor we accept an &lt;code>embassy_stm32::i2c::Instance&lt;/code> from which we can construct an I2C peripheral we can interact with. We also accept generic pin types for the SDA and SCL pins and a user defined I2C frequency. This lets the end user decide on which peripheral and pins to use in their application.&lt;/p>
+&lt;pre>&lt;code class="language-rust">impl&amp;lt;'d&amp;gt; MPU6050I2c&amp;lt;'d&amp;gt; {
+pub fn new&amp;lt;P: Instance&amp;gt;(
+peri: P,
+scl_pin: impl SclPin&amp;lt;P&amp;gt;,
+sda_pin: impl SdaPin&amp;lt;P&amp;gt;,
+freq: Hertz,
+) -&amp;gt; Self {
+MPU6050I2c {
+peripheral: I2c::new_blocking(peri, scl_pin, sda_pin, freq, Config::default()),
+address: MPU6050_DEFAULT_ADDRESS,
+}
+}
+pub fn new_with_address&amp;lt;P: Instance&amp;gt;(
+peri: P,
+scl_pin: impl SclPin&amp;lt;P&amp;gt;,
+sda_pin: impl SdaPin&amp;lt;P&amp;gt;,
+address: u8,
+freq: Hertz,
+) -&amp;gt; Self {
+MPU6050I2c {
+peripheral: I2c::new_blocking(peri, scl_pin, sda_pin, freq, Config::default()),
+address,
+}
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h4 id="basic-readwrite-operations">Basic Read/Write Operations&lt;/h4>
+&lt;p>We have &lt;code>read_byte()&lt;/code> and &lt;code>write_byte()&lt;/code> functions to handle low-level communication.&lt;/p>
+&lt;pre>&lt;code class="language-rust">/// Read a byte from the specified register of the MPU6050.
+pub fn read_byte(&amp;amp;mut self, reg: u8) -&amp;gt; Result&amp;lt;u8, embassy_stm32::i2c::Error&amp;gt; {
+let mut buf = [0; 1];
+self.peripheral
+.blocking_write_read(self.address, &amp;amp;[reg], &amp;amp;mut buf)?;
+Ok(buf[0])
+}
+/// Write a byte to the specified register of the MPU6050.
+pub fn write_byte(&amp;amp;mut self, reg: u8, value: u8) -&amp;gt; Result&amp;lt;(), embassy_stm32::i2c::Error&amp;gt; {
+self.peripheral.blocking_write(self.address, &amp;amp;[reg, value])
+}
+&lt;/code>&lt;/pre>
+&lt;h4 id="generic-field-access">Generic Field Access&lt;/h4>
+&lt;p>Reading and writing specific configuration fields within bytes is simplified using generics. As long as you have your configuration field appropriately implemented.&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub fn read_field&amp;lt;T: MPU6050BitField&amp;gt;(&amp;amp;mut self) -&amp;gt; Result&amp;lt;T, embassy_stm32::i2c::Error&amp;gt; {
+// 1. Read the present 8-bit value in that register
+let value = self.read_byte(T::addr())?;
+// 2. Shift the bits to the right so that the field is in the least significant bits
+let shifted_value = value &amp;gt;&amp;gt; (T::location() - T::length() + 1);
+// 3. Mask the bits to get only the bits that belong to the field
+let masked_value = shifted_value &amp;amp; T::mask();
+// 4. Return the masked value
+Ok(T::from(masked_value))
+}
+pub fn write_field&amp;lt;T: MPU6050BitField&amp;gt;(
+&amp;amp;mut self,
+field: T,
+) -&amp;gt; Result&amp;lt;(), embassy_stm32::i2c::Error&amp;gt; {
+// 1. Read the present 8-bit value in that register
+let mut current_value = self.read_byte(T::addr())?;
+// 2. Clear (zero) the bits that belong to the field
+current_value &amp;amp;= !(T::mask() &amp;lt;&amp;lt; T::location());
+// 3. Insert the bits you want, lined up at the correct position
+current_value |= (field.to_value() &amp;amp; T::mask()) &amp;lt;&amp;lt; T::location();
+// 4. Write the new byte back to the device
+self.write_byte(T::addr(), current_value)
+}
+&lt;/code>&lt;/pre>
+&lt;p>We can then write and read fields like so:&lt;/p>
+&lt;pre>&lt;code class="language-rust">let mut imu_sensor = MPU6050I2c::new(p.I2C2, p.PB10, p.PB11);
+imu_sensor.write_field(MPUClkSource::PLLWithXGyro)?;
+imu_sensor.read_field::&amp;lt;GyroFullScaleRange&amp;gt;()?;
+&lt;/code>&lt;/pre>
+&lt;h3 id="6-high-level-sensor-reads">6. High-Level Sensor Reads&lt;/h3>
+&lt;p>We simplify reading sensor data by writing functions to read single axis sensor data as well as bulk sensor reads.&lt;/p>
+&lt;ul>
+&lt;li>Single-axis: &lt;code>read_accel_x()&lt;/code>, &lt;code>read_gyro_y()&lt;/code>, etc.&lt;/li>
+&lt;li>Bulk reads: &lt;code>read_accel()&lt;/code>, &lt;code>read_gyro()&lt;/code>, &lt;code>read_all()&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>An example of the &lt;code>read_gyro()&lt;/code> function:&lt;/p>
+&lt;pre>&lt;code class="language-rust">pub fn read_gyro(&amp;amp;mut self) -&amp;gt; Result&amp;lt;(i16, i16, i16), embassy_stm32::i2c::Error&amp;gt; {
+let mut data = [
+MPU6050_RA_GYRO_XOUT_H,
+MPU6050_RA_GYRO_XOUT_L,
+MPU6050_RA_GYRO_YOUT_H,
+MPU6050_RA_GYRO_YOUT_L,
+MPU6050_RA_GYRO_ZOUT_H,
+MPU6050_RA_GYRO_ZOUT_L,
+];
+self.peripheral
+.blocking_write_read(self.address, &amp;amp;[MPU6050_RA_GYRO_XOUT_H], &amp;amp;mut data)?;
+let gyro_x = ((data[0] as i16) &amp;lt;&amp;lt; 8) | (data[1] as i16);
+let gyro_y = ((data[2] as i16) &amp;lt;&amp;lt; 8) | (data[3] as i16);
+let gyro_z = ((data[4] as i16) &amp;lt;&amp;lt; 8) | (data[5] as i16);
+Ok((gyro_x, gyro_y, gyro_z))
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="7-example-application">7. Example Application&lt;/h3>
+&lt;p>A complete example reading data at 50 Hz:&lt;/p>
+&lt;h4 id="initialization">Initialization&lt;/h4>
+&lt;pre>&lt;code class="language-rust">let mut imu_sensor = MPU6050I2c::new(p.I2C2, p.PB10, p.PB11);
+imu_sensor.write_field(MPUClkSource::PLLWithXGyro)?;
+imu_sensor.write_field(TempDisable::Disable)?;
+imu_sensor.write_field(GyroFullScaleRange::FS500)?;
+imu_sensor.write_field(AccelFullScaleRange::FS2)?;
+imu_sensor.write_field(SleepMode::WakeUp)?;
+&lt;/code>&lt;/pre>
+&lt;h4 id="main-loop">Main loop&lt;/h4>
+&lt;pre>&lt;code class="language-rust">let mut ticker = Ticker::every(Duration::from_hz(50));
+loop {
+match imu_sensor.read_accel_gyro() {
+Ok((ax, ay, az, gx, gy, gz)) =&amp;gt; {
+info!(&amp;quot;{} {} {} {} {} {}&amp;quot;, ax, ay, az, gx, gy, gz);
+}
+Err(e) =&amp;gt; {
+error!(&amp;quot;Error reading IMU data: {:?}&amp;quot;, e);
+}
+}
+led.toggle();
+ticker.next().await;
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="8-building--flashing">8. Building &amp;amp; Flashing&lt;/h3>
+&lt;p>Using
+&lt;a href="https://probe.rs" target="_blank" rel="noopener">&lt;code>probe-rs&lt;/code>&lt;/a> makes flashing and debugging ridiculously simple, once your &lt;code>.cargo/config.toml&lt;/code> is set up right. You can configure a runner for your target chip like so:&lt;/p>
+&lt;pre>&lt;code class="language-toml">[target.thumbv7m-none-eabi] # &amp;lt;-change for your platform
+runner = 'probe-rs run --chip STM32F103C8' # &amp;lt;- change for your chip
+# rustflags = [&amp;quot;-C&amp;quot;, &amp;quot;link-arg=-Tlink.x&amp;quot;]
+[build]
+target = &amp;quot;thumbv7m-none-eabi&amp;quot; # &amp;lt;-change for your platform
+[env]
+DEFMT_LOG = &amp;quot;trace&amp;quot; # &amp;lt;- can change to info, warn, or error
+&lt;/code>&lt;/pre>
+&lt;p>And then run&lt;/p>
+&lt;pre>&lt;code class="language-bash">cargo run --release
+&lt;/code>&lt;/pre>
+&lt;p>To have &lt;code>probe-rs&lt;/code> flash the firmware on to the micro-controller and view the &lt;code>info!()&lt;/code> statements print output.
+&lt;video autoplay loop >
+&lt;source src="rust_imu.mp4" type="video/mp4">
+&lt;/video>&lt;/p>
+&lt;h3 id="9-conclusion-and-next-steps">9. Conclusion and Next Steps&lt;/h3>
+&lt;p>While this is a good first pass at the driver and things are working, there&amp;rsquo;s plenty of room to improve and generalize the driver further. Immediate next steps include:&lt;/p>
+&lt;ul>
+&lt;li>Enhanced Documentation: Expanding the coverage of documented MPU-6050 register fields.&lt;/li>
+&lt;li>Robust Error Handling: Removing existing panic!() statements and implementing more precise and informative error handling.&lt;/li>
+&lt;li>Generalization with Embedded-HAL: Adapting the driver to use Rust&amp;rsquo;s standardized &lt;code>embedded-hal&lt;/code> traits will enhance its portability across various microcontrollers and frameworks, making the driver more widely usable in the embedded Rust ecosystem.&lt;/li>
+&lt;/ul></description></item><item><title>Writing a small async runtime for Cortex-M micro-controllers with Rust</title><link>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</link><pubDate>Sun, 06 Oct 2024 20:04:51 +0800</pubDate><guid>https://www.ashwinnarayan.com/post/embedded-async-with-rust/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
 &lt;p>I&amp;rsquo;ve been working with Rust on microcontrollers for a while now, and I&amp;rsquo;ve been using the excellent embassy crate for async programming. However, I recently started using a processor for which embassy does not have Hardware Abstraction Layer (HAL) support, and I wanted to experiment with building my own async runtime. This was also a great opportunity to learn more about the processor and understand the implementation details of async/await in Rust.&lt;/p>
 &lt;p>In this article, we&amp;rsquo;ll create an async runtime for ARM Cortex-M microcontrollers. We&amp;rsquo;ll build on Philipp Oppermann&amp;rsquo;s work for x86 bare-metal systems here and adapt the approach for Cortex-M, which presents unique challenges like limited memory and often lacking a Memory Management Unit (MMU). These constraints require different design choices for async primitives, executors, and interrupt handling.&lt;/p>
 &lt;p>Note that this is an experimental project focused on learning and exploration. It is not production-ready, but it serves as a good starting point for building your own async runtime for embedded systems. If you&amp;rsquo;re looking for mature libraries for running real-time code on embedded systems, consider using

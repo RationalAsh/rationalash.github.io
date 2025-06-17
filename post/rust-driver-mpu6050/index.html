@@ -1,0 +1,186 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=generator content="Source Themes Academic 4.8.0"><meta name=author content="Ashwin Narayan"><meta name=description content="I've recently explored Rust for embedded systems development and found it refreshingly intuitive compared to traditional C and C++ workflows. Rust simplifies setup and debugging, eliminating complex build processes typical in C/C++. To understand better how rust works on embedded systems, I built a minimal MPU-6050 IMU sensor driver using the Embassy framework on an STM32F103C8 (BluePill) microcontroller."><link rel=alternate hreflang=en-us href=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/><meta name=theme-color content="#2962ff"><script src=/js/mathjax-config.js></script>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin=anonymous><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css crossorigin=anonymous title=hl-light><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css crossorigin=anonymous title=hl-dark disabled><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin=anonymous><script src=https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin=anonymous async></script>
+<script src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js integrity crossorigin=anonymous async></script>
+<link rel=stylesheet href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap"><link rel=stylesheet href=/css/academic.css><script async src="https://www.googletagmanager.com/gtag/js?id=UA-99092575-1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}function trackOutboundLink(e,t){gtag("event","click",{event_category:"outbound",event_label:e,transport_type:"beacon",event_callback:function(){t!=="_blank"&&(document.location=e)}}),console.debug("Outbound link clicked: "+e)}function onClickCallback(e){if(e.target.tagName!=="A"||e.target.host===window.location.host)return;trackOutboundLink(e.target,e.target.getAttribute("target"))}gtag("js",new Date),gtag("config","UA-99092575-1",{anonymize_ip:!0}),document.addEventListener("click",onClickCallback,!1)</script><link rel=manifest href=/index.webmanifest><link rel=icon type=image/png href=/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png><link rel=apple-touch-icon type=image/png href=/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png><link rel=canonical href=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="@@"><meta property="twitter:creator" content="@@"><meta property="og:site_name" content="Ashwin Narayan"><meta property="og:url" content="https://www.ashwinnarayan.com/post/rust-driver-mpu6050/"><meta property="og:title" content="Writing a Rust Driver for the MPU6050 | Ashwin Narayan"><meta property="og:description" content="I've recently explored Rust for embedded systems development and found it refreshingly intuitive compared to traditional C and C++ workflows. Rust simplifies setup and debugging, eliminating complex build processes typical in C/C++. To understand better how rust works on embedded systems, I built a minimal MPU-6050 IMU sensor driver using the Embassy framework on an STM32F103C8 (BluePill) microcontroller."><meta property="og:image" content="https://www.ashwinnarayan.com/post/rust-driver-mpu6050/featured.png"><meta property="twitter:image" content="https://www.ashwinnarayan.com/post/rust-driver-mpu6050/featured.png"><meta property="og:locale" content="en-us"><meta property="article:published_time" content="2025-06-17T22:11:25+08:00"><meta property="article:modified_time" content="2025-06-17T22:11:25+08:00"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.ashwinnarayan.com/post/rust-driver-mpu6050/"},"headline":"Writing a Rust Driver for the MPU6050","image":["https://www.ashwinnarayan.com/post/rust-driver-mpu6050/featured.png"],"datePublished":"2025-06-17T22:11:25+08:00","dateModified":"2025-06-17T22:11:25+08:00","author":{"@type":"Person","name":"Ashwin Narayan"},"publisher":{"@type":"Organization","name":"Ashwin Narayan","logo":{"@type":"ImageObject","url":"https://www.ashwinnarayan.com/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"}},"description":"I've recently explored Rust for embedded systems development and found it refreshingly intuitive compared to traditional C and C++ workflows. Rust simplifies setup and debugging, eliminating complex build processes typical in C/C++. To understand better how rust works on embedded systems, I built a minimal MPU-6050 IMU sensor driver using the Embassy framework on an STM32F103C8 (BluePill) microcontroller."}</script><script src=https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js integrity="sha256-5VhCqFam2Cn+yjw61zbBNrbHVJ6SRydPeKopYlngbiQ=" crossorigin=anonymous></script>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.css integrity="sha256-zQ0LblD/Af8vOppw18+2anxsuaz3pWYyVWi+bTvTH8Q=" crossorigin=anonymous><script>window.addEventListener("load",function(){window.cookieconsent.initialise({palette:{popup:{background:"#2962ff",text:"#fff"},button:{background:"#fff",text:"#2962ff"}},theme:"classic",content:{message:"This website uses cookies to ensure you get the best experience on our website.",dismiss:"Got it!",link:"Learn more",href:"https://www.cookiesandyou.com"}})})</script><title>Writing a Rust Driver for the MPU6050 | Ashwin Narayan</title></head><body id=top data-spy=scroll data-offset=70 data-target=#TableOfContents><aside class=search-results id=search><div class=container><section class=search-header><div class="row no-gutters justify-content-between mb-3"><div class=col-6><h1>Search</h1></div><div class="col-6 col-search-close"><a class=js-search href=#><i class="fas fa-times-circle text-muted" aria-hidden=true></i></a></div></div><div id=search-box><input name=q id=search-query placeholder=Search... autocapitalize=off autocomplete=off autocorrect=off spellcheck=false type=search></div></section><section class=section-search-results><div id=search-hits></div></section></div></aside><nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id=navbar-main><div class=container><div class="d-none d-lg-inline-flex"><a class=navbar-brand href=/>Ashwin Narayan</a></div><button type=button class=navbar-toggler data-toggle=collapse data-target=#navbar-content aria-controls=navbar aria-expanded=false aria-label="Toggle navigation">
+<span><i class="fas fa-bars"></i></span></button><div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none"><a class=navbar-brand href=/>Ashwin Narayan</a></div><div class="navbar-collapse main-menu-item collapse justify-content-start" id=navbar-content><ul class="navbar-nav d-md-inline-flex"><li class=nav-item><a class=nav-link href=/#about><span>Home</span></a></li><li class=nav-item><a class=nav-link href=/#featured><span>Featured</span></a></li><li class=nav-item><a class=nav-link href=/#experience><span>Experience</span></a></li><li class=nav-item><a class=nav-link href=/#posts><span>Posts</span></a></li><li class=nav-item><a class=nav-link href=/#projects><span>Projects</span></a></li><li class=nav-item><a class=nav-link href=/#contact><span>Contact</span></a></li></ul></div><ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2"><li class=nav-item><a class="nav-link js-search" href=#><i class="fas fa-search" aria-hidden=true></i></a></li></ul></div></nav><article class=article><div class="article-container pt-3"><h1>Writing a Rust Driver for the MPU6050</h1><p class=page-subtitle>A first attempt at writing a hardware driver for the MPU6050 using the Rust Programming Language</p><div class=article-metadata><span class=article-date>Jun 17, 2025</span>
+<span class=middot-divider></span>
+<span class=article-reading-time>7 min read</span>
+<span class=middot-divider></span>
+<a href=/post/rust-driver-mpu6050/#disqus_thread></a></div></div><div class="article-header article-container featured-image-wrapper mt-4 mb-4" style=max-width:720px;max-height:331px><div style=position:relative><img src=/post/rust-driver-mpu6050/featured_hu85addce0d1bff40e7c89faa8b70d6d4e_1799909_720x0_resize_lanczos_3.png alt class=featured-image></div></div><div class=article-container><div class=article-style><h3 id=1-introduction>1. Introduction</h3><p>I’ve recently been tinkering with Rust on embedded systems and have been pleasantly surprised by how thoughtfully designed it is compared to the C and C++ ecosystems. One of the things I immediately appreciated was how easy and straightforward builds are with Rust—just running <code>cargo build</code> makes life simpler. Debugging and printing are also more intuitive, thanks to tools like <code>defmt</code>, which feels like a breath of fresh air compared to traditional methods.</p><p>In contrast, setting up a project with C or C++ is often cumbersome. You typically find yourself locked into vendor-specific IDEs if you want quick setups. And if you prefer a more lightweight editor like Sublime or Neovim, you usually end up wrestling with creating and maintaining complex CMake files yourself.</p><p>With these advantages in mind, I’ve recently been working on building out an embedded controller for running some IMU sensors and motors for a personal project and decided it was the perfect opportunity to use Rust.</p><p>For the IMU, I&rsquo;ll be using the MPU-6050 is a widely-used accelerometer and gyroscope IMU sensor that’s great for robotics, drones, and embedded projects. While there are some existing Rust drivers for this IMU sensor, I thought this was a good opportunity for me to go through the process of writing an I2C driver in Rust and compare it with the process of doing the same thing in C/C++. In this article, we’ll explore building a minimal MPU-6050 driver in Rust, specifically using the Embassy async framework on an STM32F103C8 (BluePill) microcontroller.</p><h3 id=2-high-level-architecture-and-approach>2. High-Level Architecture and Approach</h3><p>As this is my first attempt at a driver, I decided to use the
+<a href=https://github.com/sparkfun/MPU-9150_Breakout/tree/master target=_blank rel=noopener>MPU6050 driver by SparkFun</a> as a reference, and borrowed heavily from their approach. I also decided to write a blocking driver first.</p><p>Our driver separates into three parts:</p><ul><li><strong>Register Definitions</strong>: Constants representing MPU-6050 registers.</li><li><strong>Bit-field Traits</strong>: Providing safe and ergonomic register manipulation.</li><li><strong>I²C Transport</strong>: Basic read/write methods using Embassy&rsquo;s blocking I²C.</li></ul><h3 id=3-communicating-with-mpu-6050>3. Communicating with MPU-6050</h3><p>The MPU-6050 communicates over I²C, typically at address <code>0x68</code> or <code>0x69</code> depending on the <code>AD0</code> pin:</p><ul><li><code>AD0 Low (GND)</code>: Address <code>0x68</code> (default)</li><li><code>AD0 High (VCC)</code>: Address <code>0x69</code></li></ul><p>However, I wanted the option to be able to use a completely custom I2C address if needed. So the final design of the driver struct was:</p><pre><code class=language-rust>pub struct MPU6050I2c&lt;'d&gt; {
+    peripheral: I2c&lt;'d, embassy_stm32::mode::Blocking&gt;,
+    address: u8,
+}
+</code></pre><h3 id=4-representing-registers-in-rust>4. Representing Registers in Rust</h3><h4 id=41-register-constants>4.1 Register Constants</h4><p>All registers are defined as constants, avoiding heavy enum overhead:</p><pre><code class=language-rust>pub const MPU6050_RA_ACCEL_XOUT_H: u8 = 0x3B;
+// More registers...
+</code></pre><h4 id=42-bit-field-traits>4.2 Bit-field Traits</h4><p>Using Rust traits, we create a safe way to handle register bits:</p><pre><code class=language-rust>pub trait MPU6050BitField {
+    fn addr() -&gt; u8;
+    fn location() -&gt; u8;
+    fn length() -&gt; u8 { 1 }
+    fn mask() -&gt; u8 { (1 &lt;&lt; Self::length()) - 1 }
+    fn from(value: u8) -&gt; Self;
+    fn to_value(&amp;self) -&gt; u8;
+}
+</code></pre><p>Implementing traits for specific fields:</p><pre><code class=language-rust>pub enum SleepMode {
+    Sleep = 0x01,
+    WakeUp = 0x00,
+}
+
+impl MPU6050BitField for SleepMode {
+    fn addr() -&gt; u8 { MPU6050_RA_PWR_MGMT_1 }
+    fn location() -&gt; u8 { MPU6050_PWR1_SLEEP_BIT }
+    // more methods...
+}
+</code></pre><h3 id=5-core-ic-driver>5. Core I²C Driver</h3><p>Our I²C driver class <code>MPU6050I2c</code> encapsulates Embassy&rsquo;s blocking I²C:</p><h4 id=constructor>Constructor</h4><p>In our constructor we accept an <code>embassy_stm32::i2c::Instance</code> from which we can construct an I2C peripheral we can interact with. We also accept generic pin types for the SDA and SCL pins and a user defined I2C frequency. This lets the end user decide on which peripheral and pins to use in their application.</p><pre><code class=language-rust>impl&lt;'d&gt; MPU6050I2c&lt;'d&gt; {
+    pub fn new&lt;P: Instance&gt;(
+        peri: P,
+        scl_pin: impl SclPin&lt;P&gt;,
+        sda_pin: impl SdaPin&lt;P&gt;,
+        freq: Hertz,
+    ) -&gt; Self {
+        MPU6050I2c {
+            peripheral: I2c::new_blocking(peri, scl_pin, sda_pin, freq, Config::default()),
+            address: MPU6050_DEFAULT_ADDRESS,
+        }
+    }
+
+    pub fn new_with_address&lt;P: Instance&gt;(
+        peri: P,
+        scl_pin: impl SclPin&lt;P&gt;,
+        sda_pin: impl SdaPin&lt;P&gt;,
+        address: u8,
+        freq: Hertz,
+    ) -&gt; Self {
+        MPU6050I2c {
+            peripheral: I2c::new_blocking(peri, scl_pin, sda_pin, freq, Config::default()),
+            address,
+        }
+    }
+}
+</code></pre><h4 id=basic-readwrite-operations>Basic Read/Write Operations</h4><p>We have <code>read_byte()</code> and <code>write_byte()</code> functions to handle low-level communication.</p><pre><code class=language-rust>/// Read a byte from the specified register of the MPU6050.
+pub fn read_byte(&amp;mut self, reg: u8) -&gt; Result&lt;u8, embassy_stm32::i2c::Error&gt; {
+	let mut buf = [0; 1];
+	self.peripheral
+		.blocking_write_read(self.address, &amp;[reg], &amp;mut buf)?;
+	Ok(buf[0])
+}
+
+/// Write a byte to the specified register of the MPU6050.
+pub fn write_byte(&amp;mut self, reg: u8, value: u8) -&gt; Result&lt;(), embassy_stm32::i2c::Error&gt; {
+	self.peripheral.blocking_write(self.address, &amp;[reg, value])
+}
+</code></pre><h4 id=generic-field-access>Generic Field Access</h4><p>Reading and writing specific configuration fields within bytes is simplified using generics. As long as you have your configuration field appropriately implemented.</p><pre><code class=language-rust>pub fn read_field&lt;T: MPU6050BitField&gt;(&amp;mut self) -&gt; Result&lt;T, embassy_stm32::i2c::Error&gt; {
+	// 1. Read the present 8-bit value in that register
+	let value = self.read_byte(T::addr())?;
+
+	// 2. Shift the bits to the right so that the field is in the least significant bits
+	let shifted_value = value &gt;&gt; (T::location() - T::length() + 1);
+
+	// 3. Mask the bits to get only the bits that belong to the field
+	let masked_value = shifted_value &amp; T::mask();
+
+	// 4. Return the masked value
+	Ok(T::from(masked_value))
+}
+
+pub fn write_field&lt;T: MPU6050BitField&gt;(
+	&amp;mut self,
+	field: T,
+) -&gt; Result&lt;(), embassy_stm32::i2c::Error&gt; {
+	// 1. Read the present 8-bit value in that register
+	let mut current_value = self.read_byte(T::addr())?;
+
+	// 2. Clear (zero) the bits that belong to the field
+	current_value &amp;= !(T::mask() &lt;&lt; T::location());
+
+	// 3. Insert the bits you want, lined up at the correct position
+	current_value |= (field.to_value() &amp; T::mask()) &lt;&lt; T::location();
+
+	// 4. Write the new byte back to the device
+	self.write_byte(T::addr(), current_value)
+}
+</code></pre><p>We can then write and read fields like so:</p><pre><code class=language-rust>let mut imu_sensor = MPU6050I2c::new(p.I2C2, p.PB10, p.PB11);
+imu_sensor.write_field(MPUClkSource::PLLWithXGyro)?;
+imu_sensor.read_field::&lt;GyroFullScaleRange&gt;()?;
+</code></pre><h3 id=6-high-level-sensor-reads>6. High-Level Sensor Reads</h3><p>We simplify reading sensor data by writing functions to read single axis sensor data as well as bulk sensor reads.</p><ul><li>Single-axis: <code>read_accel_x()</code>, <code>read_gyro_y()</code>, etc.</li><li>Bulk reads: <code>read_accel()</code>, <code>read_gyro()</code>, <code>read_all()</code></li></ul><p>An example of the <code>read_gyro()</code> function:</p><pre><code class=language-rust>pub fn read_gyro(&amp;mut self) -&gt; Result&lt;(i16, i16, i16), embassy_stm32::i2c::Error&gt; {
+	let mut data = [
+		MPU6050_RA_GYRO_XOUT_H,
+		MPU6050_RA_GYRO_XOUT_L,
+		MPU6050_RA_GYRO_YOUT_H,
+		MPU6050_RA_GYRO_YOUT_L,
+		MPU6050_RA_GYRO_ZOUT_H,
+		MPU6050_RA_GYRO_ZOUT_L,
+	];
+	self.peripheral
+		.blocking_write_read(self.address, &amp;[MPU6050_RA_GYRO_XOUT_H], &amp;mut data)?;
+
+	let gyro_x = ((data[0] as i16) &lt;&lt; 8) | (data[1] as i16);
+	let gyro_y = ((data[2] as i16) &lt;&lt; 8) | (data[3] as i16);
+	let gyro_z = ((data[4] as i16) &lt;&lt; 8) | (data[5] as i16);
+	Ok((gyro_x, gyro_y, gyro_z))
+}
+</code></pre><h3 id=7-example-application>7. Example Application</h3><p>A complete example reading data at 50 Hz:</p><h4 id=initialization>Initialization</h4><pre><code class=language-rust>let mut imu_sensor = MPU6050I2c::new(p.I2C2, p.PB10, p.PB11);
+imu_sensor.write_field(MPUClkSource::PLLWithXGyro)?;
+imu_sensor.write_field(TempDisable::Disable)?;
+imu_sensor.write_field(GyroFullScaleRange::FS500)?;
+imu_sensor.write_field(AccelFullScaleRange::FS2)?;
+imu_sensor.write_field(SleepMode::WakeUp)?;
+</code></pre><h4 id=main-loop>Main loop</h4><pre><code class=language-rust>let mut ticker = Ticker::every(Duration::from_hz(50));
+
+loop {
+    match imu_sensor.read_accel_gyro() {
+		Ok((ax, ay, az, gx, gy, gz)) =&gt; {
+			info!(&quot;{} {} {} {} {} {}&quot;, ax, ay, az, gx, gy, gz);
+		}
+		Err(e) =&gt; {
+			error!(&quot;Error reading IMU data: {:?}&quot;, e);
+		}
+	}
+    led.toggle();
+    ticker.next().await;
+}
+</code></pre><h3 id=8-building--flashing>8. Building & Flashing</h3><p>Using
+<a href=https://probe.rs target=_blank rel=noopener><code>probe-rs</code></a> makes flashing and debugging ridiculously simple, once your <code>.cargo/config.toml</code> is set up right. You can configure a runner for your target chip like so:</p><pre><code class=language-toml>[target.thumbv7m-none-eabi] # &lt;-change for your platform
+runner = 'probe-rs run --chip STM32F103C8' # &lt;- change for your chip
+# rustflags = [&quot;-C&quot;, &quot;link-arg=-Tlink.x&quot;]
+
+[build]
+target = &quot;thumbv7m-none-eabi&quot; # &lt;-change for your platform
+
+[env]
+DEFMT_LOG = &quot;trace&quot; # &lt;- can change to info, warn, or error
+</code></pre><p>And then run</p><pre><code class=language-bash>cargo run --release
+</code></pre><p>To have <code>probe-rs</code> flash the firmware on to the micro-controller and view the <code>info!()</code> statements print output.
+<video autoplay loop>
+<source src=rust_imu.mp4 type=video/mp4></video></p><h3 id=9-conclusion-and-next-steps>9. Conclusion and Next Steps</h3><p>While this is a good first pass at the driver and things are working, there&rsquo;s plenty of room to improve and generalize the driver further. Immediate next steps include:</p><ul><li>Enhanced Documentation: Expanding the coverage of documented MPU-6050 register fields.</li><li>Robust Error Handling: Removing existing panic!() statements and implementing more precise and informative error handling.</li><li>Generalization with Embedded-HAL: Adapting the driver to use Rust&rsquo;s standardized <code>embedded-hal</code> traits will enhance its portability across various microcontrollers and frameworks, making the driver more widely usable in the embedded Rust ecosystem.</li></ul></div><div class=article-tags><a class="badge badge-light" href=/tag/programming/>programming</a>
+<a class="badge badge-light" href=/tag/rust/>rust</a></div><div class=share-box aria-hidden=true><ul class=share><li><a href="https://twitter.com/intent/tweet?url=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/&amp;text=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050" target=_blank rel=noopener class=share-btn-twitter><i class="fab fa-twitter"></i></a></li><li><a href="https://www.facebook.com/sharer.php?u=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/&amp;t=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050" target=_blank rel=noopener class=share-btn-facebook><i class="fab fa-facebook"></i></a></li><li><a href="mailto:?subject=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050&amp;body=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/" target=_blank rel=noopener class=share-btn-email><i class="fas fa-envelope"></i></a></li><li><a href="https://www.linkedin.com/shareArticle?url=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/&amp;title=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050" target=_blank rel=noopener class=share-btn-linkedin><i class="fab fa-linkedin-in"></i></a></li><li><a href="https://web.whatsapp.com/send?text=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050%20https://www.ashwinnarayan.com/post/rust-driver-mpu6050/" target=_blank rel=noopener class=share-btn-whatsapp><i class="fab fa-whatsapp"></i></a></li><li><a href="https://service.weibo.com/share/share.php?url=https://www.ashwinnarayan.com/post/rust-driver-mpu6050/&amp;title=Writing%20a%20Rust%20Driver%20for%20the%20MPU6050" target=_blank rel=noopener class=share-btn-weibo><i class="fab fa-weibo"></i></a></li></ul></div><div class="media author-card content-widget-hr"><img class="avatar mr-3 avatar-circle" src=/author/ashwin-narayan/avatar_hua0064c46e2d44178bf5d2cd13210be84_101841_270x270_fill_q90_lanczos_center.jpeg alt="Ashwin Narayan"><div class=media-body><h5 class=card-title><a href=https://www.ashwinnarayan.com/>Ashwin Narayan</a></h5><h6 class=card-subtitle>Robotics | Code | Photography</h6><p class=card-text>I am a Research Fellow at the National University of Singapore working with the
+<a href=https://cde.nus.edu.sg/bme/bioroboticslab/ target=_blank rel=noopener>Biorobotics research group</a></p><ul class=network-icon aria-hidden=true><li><a href=/#contact><i class="fas fa-envelope"></i></a></li><li><a href=https://twitter.com/rational_ash target=_blank rel=noopener><i class="fab fa-twitter"></i></a></li><li><a href="https://scholar.google.co.uk/citations?user=Hkeeh8cAAAAJ" target=_blank rel=noopener><i class="ai ai-google-scholar"></i></a></li><li><a href=https://github.com/RationalAsh target=_blank rel=noopener><i class="fab fa-github"></i></a></li><li><a href=https://www.instagram.com/ashwin_takes_photographs/ target=_blank rel=noopener><i class="fab fa-instagram"></i></a></li></ul></div></div><section id=comments><div id=disqus_thread></div><script>let disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="https://rationalash.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)})()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section><div class="article-widget content-widget-hr"><h3>Related</h3><ul><li><a href=/post/embedded-async-with-rust/>Writing a small async runtime for Cortex-M micro-controllers with Rust</a></li><li><a href=/post/embedded-rust-blinking-led/>Blinking LEDs with Rust</a></li><li><a href=/post/reusable-forms-swiftui/>Reusable Forms in Swiftui</a></li><li><a href=/post/a-study-on-haskell-folds/>Haskell Folds Illustrated</a></li><li><a href=/post/gcp-telegram-bot/>Building a Simple Telegram Bot Using Google Cloud Functions</a></li></ul></div></div></article><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.8/mermaid.min.js integrity="sha256-lyWCDMnMeZiXRi7Zl54sZGKYmgQs4izcT7+tKc+KUBk=" crossorigin=anonymous title=mermaid></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin=anonymous></script>
+<script>const code_highlighting=!0</script><script>const isSiteThemeDark=!1</script><script>const search_config={indexURI:"/index.json",minLength:1,threshold:.3},i18n={no_results:"No results found",placeholder:"Search...",results:"results found"},content_type={post:"Posts",project:"Projects",publication:"Publications",talk:"Talks"}</script><script id=search-hit-fuse-template type=text/x-template>
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script><script src=https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin=anonymous></script>
+<script id=dsq-count-scr src=https://rationalash.disqus.com/count.js async></script>
+<script src=/js/academic.min.cbb2418f8e248a2e58f5a15a2abbfed0.js></script><div class=container><footer class=site-footer><p class=powered-by>© 2020 Ashwin Narayan &#183;
+Powered by the
+<a href=https://sourcethemes.com/academic/ target=_blank rel=noopener>Academic theme</a> for
+<a href=https://gohugo.io target=_blank rel=noopener>Hugo</a>.
+<span class=float-right aria-hidden=true><a href=# class=back-to-top><span class=button_icon><i class="fas fa-chevron-up fa-2x"></i></span></a></span></p></footer></div><div id=modal class="modal fade" role=dialog><div class=modal-dialog><div class=modal-content><div class=modal-header><h5 class=modal-title>Cite</h5><button type=button class=close data-dismiss=modal aria-label=Close>
+<span aria-hidden=true>&#215;</span></button></div><div class=modal-body><pre><code class="tex hljs"></code></pre></div><div class=modal-footer><a class="btn btn-outline-primary my-1 js-copy-cite" href=# target=_blank><i class="fas fa-copy"></i> Copy</a>
+<a class="btn btn-outline-primary my-1 js-download-cite" href=# target=_blank><i class="fas fa-download"></i> Download</a><div id=modal-error></div></div></div></div></div></body></html>

@@ -99,10 +99,14 @@ $$ q_1 \otimes q_2 = \left[\begin{matrix}w_2 &amp;amp; -x_2 &amp;amp; -y_2 &amp;
 $$ q_2 \otimes q_1 = \left[\begin{matrix}w_2 &amp;amp; - x_2 &amp;amp; - y_2 &amp;amp; - z_2 \\ x_2 &amp;amp; w_2 &amp;amp; - z_2 &amp;amp; y_2 \\ y_2 &amp;amp; z_2 &amp;amp; w_2 &amp;amp; - x_2 \\ z_2 &amp;amp; - y_2 &amp;amp; x_2 &amp;amp; w_2\end{matrix}\right] \begin{bmatrix} w_1 \\ x_1 \\ y_1 \\ z_1 \end{bmatrix} $$&lt;/p>
 &lt;h2 id="integrating-angular-velocity">Integrating Angular Velocity&lt;/h2>
 &lt;p>To properly integrate angular velocity to get a quaternion, I need to find a relationship between quaternions and angular velocity - or more precisely - a differential equation that relates the time derivative of the quaternion $\dot{q}$ and the angular velocity vector $\vec{\omega}$.&lt;/p>
-&lt;p>A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.
+&lt;p>A natural place to start is the original definition of the angular velocity from physical law. If I imagine a vector of constant $\vec{s}(t)$ length stretching out from the origin undergoing rotation with the instantaneous angular velocity $\vec{\omega}(t)$ I can find the velocity at the tip of this vector by taking it&amp;rsquo;s derivative.&lt;/p>
+&lt;p>From rigid-body kinematics,
 $$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} $$&lt;/p>
-&lt;p>Since the angular velocity is perpendicular to the vector $\vec{s}$ (driving their dot product $\vec{\omega} \cdot \vec{s}$ to zero) the equation can also be written in quaternion form as:
-$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \otimes \vec{s} $$&lt;/p>
+&lt;p>If we view $\vec{\omega}$ and $\vec{s}$ as pure quaternions, their Hamilton product is
+$$ \vec{\omega} \otimes \vec{s} = (-\vec{\omega} \cdot \vec{s}, ; \vec{\omega} \times \vec{s}) $$&lt;/p>
+&lt;p>Since $\vec{\omega} \cdot \vec{s}$ is not generally zero, it&amp;rsquo;s cleaner to write the time derivative as the vector part, equivalently
+$$ \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} = \vec{\omega} \times \vec{s} = \frac{1}{2} [\vec{\omega}, \vec{s}] $$&lt;/p>
+&lt;p>(Background: $[a,b] = a \otimes b - b \otimes a$ and for pure quaternions $[a,b] = 2(0, \mathbf{a} \times \mathbf{b})$.)&lt;/p>
 &lt;p>Now I imagine that this instantaneous vector is represented by a quaternion $q$ rotation from a constant vector $\vec{s}_0$.
 $$\begin{align} \vec{s} &amp;amp;= q \otimes \vec{s}_0 \otimes q^* \\
 \frac{\mathrm{d}\vec{s}}{\mathrm{d}t} &amp;amp;= \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
@@ -120,8 +124,11 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;h3 id="the-quaternion-commutator">The Quaternion Commutator&lt;/h3>
 &lt;p>The expression $\dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^*$ is in the form $p \otimes q - q \otimes p$ which is defined as a commutator operation written as $[p, q]$. Going through the algebra of this operation and simplifying:&lt;/p>
 &lt;p>$$ [q_1, q_2] = \begin{bmatrix} 0 \ 2(\vec{v}_1 \times \vec{v}_2) \end{bmatrix} $$&lt;/p>
-&lt;p>Interestingly, if both $q_1$ and $q_2$ are &lt;em>pure quaternions&lt;/em> (They do not have a scalar part) then the quaternion commutator and the product are related:&lt;/p>
-&lt;p>$$[\vec{q}_1, \vec{q}_2] = 2(q_1 \times q_2) = 2(q_1 \otimes q_2) $$&lt;/p>
+&lt;p>If $p$ and $q$ are pure quaternions (zero scalar parts), then
+$$ [p, q] = p \otimes q - q \otimes p = 2(0, \mathbf{p} \times \mathbf{q}) $$&lt;/p>
+&lt;p>Meanwhile the product is
+$$ p \otimes q = -\mathbf{p} \cdot \mathbf{q} + (0, \mathbf{p} \times \mathbf{q}) $$&lt;/p>
+&lt;p>so $[p, q] = 2(0, \mathbf{p} \times \mathbf{q}) \neq 2(p \otimes q)$ in general; equality holds only when $\mathbf{p} \cdot \mathbf{q} = 0$ (orthogonality). For example $[\mathbf{i}, \mathbf{i}] = 0$ but $2\mathbf{i}\mathbf{i} = -2$.&lt;/p>
 &lt;h3 id="the-product-dotq-q--is-a-pure-quaternion">The Product $\dot{q} q^* $ is a Pure Quaternion&lt;/h3>
 &lt;p>$$\begin{align} \dot{q} \otimes q^* + q \otimes \dot{q^* } &amp;amp;= 0 \\
 \dot{q} \otimes q^* &amp;amp;= -(\dot{q} \otimes q^* )^*
@@ -129,11 +136,14 @@ $$ \frac{\mathrm{d}}{\mathrm{d}t} \left[ q \otimes \vec{s}_0 \otimes q^* \right]
 &lt;p>Saying that a $q = -q^* $ is the same as saying that $w = -w$ which means that the scalar part of the quaternion is zero.&lt;/p>
 &lt;h3 id="the-differential-equation">The Differential Equation&lt;/h3>
 &lt;p>So finally, I can extract the quaternion differential equation:&lt;/p>
-&lt;p>$$ \begin{align} \dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \otimes \vec{s} \\
-\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \otimes \vec{s} \\
-2\dot{q} \otimes q^* \otimes \vec{s} &amp;amp;= \vec{\omega} \otimes \vec{s} \\
-\dot{q} &amp;amp;= \frac{1}{2} \vec{\omega} \otimes q \end{align} $$&lt;/p>
-&lt;p>In this equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. Replacing $\vec{\omega}$ gives the more useful differential equation:&lt;/p>
+&lt;p>$$ \begin{align} \dot{q} \otimes q^* \otimes \vec{s} - \vec{s} \otimes \dot{q} \otimes q^* &amp;amp;= \vec{\omega} \times \vec{s} \\
+\left[\dot{q} \otimes q^* , \vec{s}\right] &amp;amp;= \vec{\omega} \times \vec{s} = \frac{1}{2}[\vec{\omega}, \vec{s}] \end{align} $$&lt;/p>
+&lt;p>Since $\dot{q} \otimes q^*$ is a pure quaternion (its conjugate equals its negative), the identity $[p, \vec{s}] = 2p \times \vec{s}$ for pure $p$ implies the equality holds for all $\vec{s}$ only if&lt;/p>
+&lt;p>$$ \dot{q} \otimes q^* = \frac{1}{2} \vec{\omega} $$&lt;/p>
+&lt;p>Right-multiplying by $q$ yields the standard kinematic equation&lt;/p>
+&lt;p>$$ \boxed{\dot{q} = \frac{1}{2} \vec{\omega} \otimes q} $$&lt;/p>
+&lt;p>(global $\vec{\omega}$), and equivalently $\dot{q} = \frac{1}{2} q \otimes \vec{\omega}$ when $\vec{\omega}$ is expressed in the body frame.&lt;/p>
+&lt;p>In the first equation the $\vec{\omega}$ is the angular velocity in the global fixed frame. In many situations it&amp;rsquo;s more useful to have an equation in terms of the angular velocity as measured by a reference frame fixed to the moving body - like when it is measured using a gyroscope. The angular velocity in this frame is the global angular velocity rotated into the body frame $\vec{\omega}&amp;rsquo; = q^* \otimes\vec{\omega}\otimes q $. This gives the body-frame differential equation:&lt;/p>
 &lt;p>$$ \dot{q} = \frac{1}{2} q \otimes \vec{\omega} $$&lt;/p>
 &lt;h3 id="integration">Integration&lt;/h3>
 &lt;p>To solve this differential equation is to be able to integrate it. Normal differential equations are difficult enough. How does one solve a differential equation with a &lt;em>quaternion multiplication&lt;/em> in it? This is where the linearity of the quaternion multiplication becomes very useful. I am also going to make a (reasonable) assumption - that the angular velocity is constant over a time $\Delta t$. Then I can rewrite the differential equation in a well known form:&lt;/p>
